@@ -17,6 +17,7 @@ class DateWidget(AnchorLayout):
                             font_size=15
                             )
         
+        self.add_widget(self.time_label)
         
         Clock.schedule_interval(self.update_time, 60)
         
