@@ -22,16 +22,17 @@ class WeatherWidget (AnchorLayout):
         #Weather
         #self.add_widget(Label(text=getWeatherReducedByCityId()['weather']))
 
-        #self.add_widget(Image(source=switch_demo(getWeatherReducedByCityId()['weather']),
-        self.add_widget(Image(source="imageFile.jpeg",
-                allow_stretch=True, keep_ratio=False,
-                size_hint =(.1, .1),
-                pos_hint ={"x":0.3, "y":0.1}
+        #self.add_widget(Image(source=switch_demo(getWeatherReducedByCityId()['weather']), 
+
+        self.add_widget(Image(source="images/icons/weather_medmin/001-cloud.png",
+                #allow_stretch=True, keep_ratio=False,
+                #size_hint =(.1, .1),
+                #pos_hint ={"x":0.3, "y":0.1}
                 ))
 
         
 def switch_demo(argument):
-    path = ""
+    path = "images/icons/"
     switcher = {
         "Clear": "01.png",
         2: "February",
@@ -46,7 +47,7 @@ def switch_demo(argument):
         11: "November",
         12: "December"
     }
-    return switcher[argument]
+    return path+switcher[argument]
         
 def getWeatherReducedByCityId(city_id='6361046', units="metric"):
     """
