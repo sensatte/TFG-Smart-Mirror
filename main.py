@@ -9,6 +9,7 @@ from kivy.uix.label import Label
 from customWidgets.NewsWidget import NewsWidget
 from customWidgets.ClockWidget import ClockWidget
 from customWidgets.RootLayout import RootLayout
+from customWidgets.DateWidget import DateWidget
   
 class SmartMirrorApp(App):
       
@@ -21,7 +22,10 @@ class SmartMirrorApp(App):
         widgets.append(news_widget)
 
         clock = ClockWidget()  
-        widgets.append (clock)
+        widgets.append(clock)
+
+        date = DateWidget()  
+        widgets.append(date)
         
         sad_cat = Image(source="imageFile.jpeg",
                         allow_stretch=True, keep_ratio=False,
