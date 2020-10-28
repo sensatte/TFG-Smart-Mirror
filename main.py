@@ -10,6 +10,7 @@ from customWidgets.NewsWidget import NewsWidget
 from customWidgets.ClockWidget import ClockWidget
 from customWidgets.RootLayout import RootLayout
 from customWidgets.DateWidget import DateWidget
+from customWidgets.WeatherWidget import WeatherWidget
   
 class SmartMirrorApp(App):
       
@@ -26,8 +27,11 @@ class SmartMirrorApp(App):
 
         date = DateWidget()  
         widgets.append(date)
+
+        weather = WeatherWidget()  
+        widgets.append(weather)
         
-        sad_cat = Image(source="imageFile.jpeg",
+        sad_cat = Image(source="images/imageFile.jpeg",
                         allow_stretch=True, keep_ratio=False,
                         size_hint =(.1, .1),
                         pos_hint ={"x":0.1, "y":0.1}
