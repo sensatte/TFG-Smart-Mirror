@@ -14,40 +14,41 @@ class WeatherWidget (AnchorLayout):
         self.anchor_x = 'center'
         self.anchor_y = 'center'
         self.size_hint =(.2, .2)
-        self.pos_hint ={"x":0.05, "y":0.75}
-
-        #Temperature
-        #self.add_widget(Label(text=str(int(getWeatherReducedByCityId()['temp']))+"º"))
+        self.pos_hint ={"x":0.045, "y":0.75}
 
         #Weather
-        #self.add_widget(Label(text=getWeatherReducedByCityId()['weather']))
-
-        #self.add_widget(Image(source=switch_demo(getWeatherReducedByCityId()['weather']), 
-
-        self.add_widget(Image(source="images/icons/weather_medmin/001-cloud.png",
-                #allow_stretch=True, keep_ratio=False,
-                #size_hint =(.1, .1),
-                #pos_hint ={"x":0.3, "y":0.1}
+        self.add_widget(Image(source=switch_demo(getWeatherReducedByCityId()['weather'],2), 
+                allow_stretch=True, keep_ratio=False,
+                size_hint =(.1, .1)
                 ))
 
         
-def switch_demo(argument):
+def switch_demo(argument, theme):
     path = "images/icons/"
     switcher = {
         "Clear": "01.png",
-        2: "February",
-        3: "March",
-        4: "April",
-        5: "May",
-        6: "June",
-        7: "July",
-        8: "August",
-        9: "September",
-        10: "October",
-        11: "November",
-        12: "December"
+        "Clouds": "02.png",
+        "Drizzle": "03.png",
+        "Rain": "04.png",
+        "Mist": "08.png",
+        "Smoke": "08.png",
+        "Haze": "08.png",
+        "Dust": "08.png",
+        "Fog": "08.png",
+        "Sand": "08.png",
+        "Dust": "08.png",
+        "Ash": "08.png",
+        "Squall": "08.png",
+        "Tornado": "08.png",
+        "Snow": "06.png",
+        "Thunderstorm": "05.png"
     }
-    return path+switcher[argument]
+    themes = {
+        1: "weather_min/",
+        2: "weather_medmin/",
+        3: "weather_supper/"
+    }
+    return path+themes[theme]+switcher[argument]
         
 def getWeatherReducedByCityId(city_id='6361046', units="metric"):
     """
@@ -73,6 +74,3 @@ def getWeatherReducedByCityId(city_id='6361046', units="metric"):
         res['temp'] = result['main']['temp']
 
     return res
-
-test = getWeatherReducedByCityId()
-print(test)

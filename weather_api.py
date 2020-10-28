@@ -4,7 +4,7 @@ import json
 
 id_endpoint = "http://api.openweathermap.org/data/2.5/weather?id=%s&appid=%s&units=%s"
 
-def getWeatherReducedByCityId(city_id='6361046', units="metric"):
+def getWeatherReducedByCityId(city_id='3031871', units="metric"):
     """
     Returns a dictionary with entries for weather following one of the next values:  and current temperature
 
