@@ -13,11 +13,11 @@ def test_get_result ():
     assert isinstance(weather, str)
 
 def test_get_different_results ():
-    id1 = ''
-    id2 = ''
+    id1 = '819838'
+    id2 = '3523670'
 
-    result1 = getWeatherReducedByCityId(id = id1)
-    result2 = getWeatherReducedByCityId(id = id2)
+    result1 = getWeatherReducedByCityId(city_id = id1)
+    result2 = getWeatherReducedByCityId(city_id = id2)
 
     temperature1 = result1['temp']
     weather1 = result1['weather']
@@ -25,4 +25,4 @@ def test_get_different_results ():
     temperature2 = result2['temp']
     weather2 = result2['weather']
 
-    assert temperature1 != temperature2 and weather1 != weather2
+    assert temperature1 != temperature2 or weather1 != weather2
