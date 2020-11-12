@@ -20,3 +20,6 @@ libjpeg-dev
 
 PyAutoGUI
 gpiozero
+
+pytest
+coverage
