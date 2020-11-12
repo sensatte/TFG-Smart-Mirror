@@ -1,13 +1,10 @@
 language: python
-sudo: required
-before_install:
-  - sudo apt-get update -q
-  - sudo apt-get install python-pip build-essential git python-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev
+os: windows
 python:
   - "3.7"
 # command to install dependencies
 install:
-  - pip install -r requirements.txt
+  - pip install -r requirements_W.txt
 # command to run tests
 script:
   - pytest
