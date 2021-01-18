@@ -1,3 +1,4 @@
+from menu.MenuLayout import MenuLayout
 import kivy
 kivy.require('1.11.1') # replace with your current kivy version !
 
@@ -44,9 +45,9 @@ class SmartMirrorApp(App):
                         pos_hint ={"x":0.1, "y":0.1}
                         )
         widgets.append(sad_cat)
-        
-        patata = Label(text="Patata")
-        widgets.append(patata)
+
+        test = MenuLayout()
+        widgets.append(test)
         
         root_layout = RootLayout()
         
