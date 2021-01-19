@@ -36,7 +36,6 @@ def switch_demo(argument, theme):
         "Dust": "08.png",
         "Fog": "08.png",
         "Sand": "08.png",
-        "Dust": "08.png",
         "Ash": "08.png",
         "Squall": "08.png",
         "Tornado": "08.png",

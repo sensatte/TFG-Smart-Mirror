@@ -6,6 +6,9 @@ from kivy.app import App
 from kivy.uix.image import Image
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
+from kivy.core.window import Window
+
+Window.size = (550,822)
 
 from customWidgets.NewsWidget import NewsWidget
 from customWidgets.ClockWidget import ClockWidget
