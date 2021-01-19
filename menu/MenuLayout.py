@@ -6,8 +6,34 @@ from kivy.animation import Animation
 from kivy.graphics import Color, Rectangle, BorderImage
 from kivy.uix.button import Button
 
+#image button
+from kivy.config import Config
+from kivy.app import App
+
+#import kv
 from kivy.lang import Builder
 
+"""
+class ButtonApp(App):  
+         
+    def build(self):  
+   
+        # create an image a button  
+        # Adding images normal.png image as button 
+        # decided its position and size  
+        btn = Button(text ="Push Me !", 
+                     color =(1, 0, .65, 1), 
+                     background_normal = 'images\icons\weather_min\01.png', 
+                     background_down ='images\icons\weather_min\02.png', 
+                     size_hint = (.3, .3), 
+                     pos_hint = {"x":0.35, "y":0.3} 
+                   )  
+      
+        return btn 
+
+root = ButtonApp()
+root.run()
+"""
 
 class MenuLayout(FloatLayout):
     #import from external .kv
@@ -18,21 +44,6 @@ class MenuLayout(FloatLayout):
         #Keyboard Handling for menuing
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
-
-
-        #Menu Background
-        #with self.canvas.before:
-
-            #Color(1, 1, 1, 0.5)        
-            #Color(1, 0, 0, 1) # (R, G, B, A) ; colors range from 0-1 instead of 0-255
-            #self.rect = Rectangle(size=self.size, pos=self.pos)
-
-        #def update_rect(instance, value):
-            #instance.rect.pos = instance.pos
-            #instance.rect.size = instance.size
-
-        #self.bind(pos=update_rect, size=update_rect)
-
 
         #Menu properties
         self.pos_hint={'center_y': 0, 'center_x': 0.5}
@@ -110,9 +121,22 @@ class MenuLayout(FloatLayout):
         self._keyboard = None
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
-        if keycode[1] == 'w':
+        if keycode[1] == 'c':
             if (self.opacity == 1):
                 self.fadeOut()
             else:
                 self.fadeIn()
+
+        if keycode[1] == 'd':
+            if (self.opacity == 1):
+                self.fadeOut()
+            else:
+                self.fadeIn()
+
+        if keycode[1] == 'a':
+            if (self.opacity == 1):
+                self.fadeOut()
+            else:
+                self.fadeIn()
+
         return True

@@ -1,9 +1,17 @@
 #:kivy 1.0
-<MenuLayout>
+<MenuLayout>:
+
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1
         Line:
             width: 2.
             rectangle: self.x, self.y, self.width, self.height
-        
+
+<FocusButton>:
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.x-2, self.y-2
+            size: (self.size[0]+4, self.size[1]+4) if self.focus else (0,0)
