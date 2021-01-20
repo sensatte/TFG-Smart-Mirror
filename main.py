@@ -1,3 +1,4 @@
+from customWidgets.SpotifyWidget import SpotifyWidget
 from menu.MenuLayout import MenuLayout
 import kivy
 kivy.require('1.11.1') # replace with your current kivy version !
@@ -49,8 +50,11 @@ class SmartMirrorApp(App):
                         )
         widgets.append(sad_cat)
 
-        test = MenuLayout()
-        widgets.append(test)
+        #test = MenuLayout()
+        #widgets.append(test)
+
+        spotifyWidget = SpotifyWidget()
+        widgets.append(spotifyWidget)
         
         root_layout = RootLayout()
         
