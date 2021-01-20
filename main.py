@@ -1,4 +1,4 @@
-from menu.menu import MenuLayout
+from menu.MenuLayout import MenuLayout
 import kivy
 kivy.require('1.11.1') # replace with your current kivy version !
 

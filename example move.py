@@ -1,17 +1,12 @@
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.uix.recycleview import RecycleView
-from kivy.uix.recycleview.views import RecycleDataViewBehavior
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.properties import BooleanProperty
-from kivy.uix.recycleboxlayout import RecycleBoxLayout
-from kivy.uix.behaviors import FocusBehavior
-from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.core.window import Window
 
 Builder.load_string('''
 <RV>:
-    viewclass: 'SelectableLabel'
     RecycleBoxLayout:
         default_size: None, dp(56)
         default_size_hint: 1, None
@@ -30,7 +25,7 @@ Builder.load_string('''
             size: self.size
 ''')
 
-class SelectableLabel(RecycleDataViewBehavior, Label):
+class SelectableLabel(Label):
     ''' Add selection support to the Label '''
     index = None
     selected = BooleanProperty(False)
@@ -51,7 +46,7 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
         else:
             print("selection removed for {0}".format(rv.data[index]))
 
-class RV(RecycleView):
+class RV(BoxLayout):
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
