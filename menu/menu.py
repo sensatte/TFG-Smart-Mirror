@@ -13,15 +13,16 @@ class MenuLayout(GridLayout):
 
         self.cols=3
 
-        for x in ('schedule', "news", "settings", "at", "clock", "schedule", "settings", "settings", "settings"):
-            self.add_widget(Button(background_normal = 'images\\menu\\'+x+'.png', 
-                     background_down = 'images\\menu\\settings_pressed.png', ))
+        for [x,y] in (['schedule',"1"], ["news","2"], ["settings","3"], ["at","4"], ["clock","5"],[ "schedule","6"], ["settings","7"], ["settings","8"], ["settings","9"]):
+            self.add_widget(Button(id=y,background_normal = 'images\\menu\\'+x+'.png', 
+                     background_down = 'images\\menu\\settings_pressed.png'))
 
-
+        self.selectedItem = 1
 
         #Keyboard Handling for menuing
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
+        #self._keyboard.bind(on_key_up=self._on_keyboard_up)
 
         #Menu properties
         self.pos_hint={'center_y': 0, 'center_x': 0.5}
@@ -43,7 +44,7 @@ class MenuLayout(GridLayout):
         anim.start(self)
 
     
-    #
+    #keyboard buttons
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
@@ -56,16 +57,43 @@ class MenuLayout(GridLayout):
             else:
                 self.fadeIn()
 
-        if keycode[1] == 'd':
-            if (self.opacity == 1):
-                self.fadeOut()
-            else:
-                self.fadeIn()
+        if keycode[1] == 'down':
+            self.nextItem()
+            print('down')
 
-        if keycode[1] == 'a':
-            if (self.opacity == 1):
-                self.fadeOut()
-            else:
-                self.fadeIn()
+        if keycode[1] == 'up':
+            self.prevItem()
+            print("up")
 
         return True
+    
+    def _on_keyboard_up(self, keyboard, keycode, text, modifiers):
+        pass
+
+
+    #move down
+    def nextItem(self):
+        if self.selectedItem < len(self.get_max_widgets) - 1:
+            self.selectedItem += 1
+        else:
+            self.selectedItem = 0
+        self.view_adapter.views[self.selectedItem].selected = 1
+        print(self.selectedItem)
+
+    #move down
+    def prevItem(self):     
+        if self.selectedItem > 0:
+            self.selectedItem -= 1
+        else:
+            self.selectedItem = len(self.get_max_widgets) - 1
+            print(self.get_max_widgets)
+        self.view_adapter.views[self.selectedItem].selected = 1
+        print(self.selectedItem)
+
+
+
+    #ids widget
+    def get_id(self,  instance):
+        for id, widget in instance.parent.ids.items():
+            if widget.__self__ == instance:
+                return id
