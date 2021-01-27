@@ -77,7 +77,7 @@ class MenuLayout(GridLayout):
             self.selectedItem += 1
         else:
             self.selectedItem = 0
-        self.view_adapter.views[self.selectedItem].selected = 1
+        #self.view_adapter.views[self.selectedItem].selected = 1
         print(self.selectedItem)
 
     #move down
@@ -87,7 +87,7 @@ class MenuLayout(GridLayout):
         else:
             self.selectedItem = len(self.get_max_widgets()) - 1
             print(self.get_max_widgets())
-        self.view_adapter.views[self.selectedItem].selected = 1
+        #self.view_adapter.views[self.selectedItem].selected = 1
         print(self.selectedItem)
 
 

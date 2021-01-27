@@ -16,6 +16,7 @@ from customWidgets.RootLayout import RootLayout
 from customWidgets.DateWidget import DateWidget
 from customWidgets.WeatherWidget import WeatherWidget
 from customWidgets.TempWidget import TempWidget
+from customWidgets.QuotesWidget import QuotesWidget
 
 import threading
 from gpio_translator import gpio_translate
@@ -41,13 +42,16 @@ class SmartMirrorApp(App):
 
         temp = TempWidget()  
         widgets.append(temp)
+
+        quotes = QuotesWidget()  
+        widgets.append(quotes)
         
-        sad_cat = Image(source="images/imageFile.jpeg",
-                        allow_stretch=True, keep_ratio=False,
-                        size_hint =(.1, .1),
-                        pos_hint ={"x":0.1, "y":0.1}
-                        )
-        widgets.append(sad_cat)
+        # sad_cat = Image(source="images/imageFile.jpeg",
+        #                 allow_stretch=True, keep_ratio=False,
+        #                 size_hint =(.1, .1),
+        #                 pos_hint ={"x":0, "y":0}
+        #                 )
+        #widgets.append(sad_cat)
 
         test = MenuLayout()
         widgets.append(test)

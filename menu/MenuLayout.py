@@ -12,7 +12,7 @@ from kivy.app import App
 
 #import kv
 from kivy.lang import Builder
-Builder.load_file('menu\menu.kv')
+Builder.load_file('kv\\menu.kv')
 
 class MenuLayout(FloatLayout):
     #import from external .kv
