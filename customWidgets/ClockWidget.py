@@ -13,7 +13,7 @@ class ClockWidget(AnchorLayout):
         self.size_hint =(.2, .2)
         self.pos_hint ={"x":0.1, "y":0.8}
         
-        self.time_label = Label (text=datetime.now().strftime('%H:%M:%S'),
+        self.time_label = Label (text=datetime.now().strftime('%H:%M'),
                             font_size=40 #Default 15
                             )
         
@@ -23,6 +23,6 @@ class ClockWidget(AnchorLayout):
         
         
     def update_time(self, *args):
-        self.time_label.text = datetime.now().strftime('%H:%M:%S')
+        self.time_label.text = datetime.now().strftime('%H:%M')
         
         

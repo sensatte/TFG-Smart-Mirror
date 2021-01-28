@@ -14,12 +14,12 @@ class WeatherWidget (AnchorLayout):
         self.anchor_x = 'center'
         self.anchor_y = 'center'
         self.size_hint =(.2, .2)
-        self.pos_hint ={"x":0.045, "y":0.75}
+        self.pos_hint ={"x":0.075, "y":0.75}
 
         #Weather
         self.add_widget(Image(source=switch_demo(getWeatherReducedByCityId()['weather'],2), 
                 allow_stretch=True, keep_ratio=False,
-                size_hint =(.1, .1)
+                size_hint =(.2, .2)
                 ))
 
         
