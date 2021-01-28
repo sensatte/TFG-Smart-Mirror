@@ -33,7 +33,7 @@ class QuotesWidget(AnchorLayout):
         changeQuote(self, quoteList)
 
 fonts=['Baby Darling', 'Berkah Ramadhan', 'MelanieRoselyn', 'Pumpkin Story', 'Good Mood',
-            'Revans-Medium', 'Secret Winter', 'Silent Landfield', 'Winter Creative', 'Hallington']
+            'Revans-Medium', 'Silent Landfield', 'Winter Creative', 'Hallington']
 
 def changeFont(self, font):
     # print(fonts[font])
@@ -56,7 +56,7 @@ def getQuotes(self):
 
 def changeQuote(self, quoteList):     
     quote={"quote","author"}
-    ran = random.randint(0, 1643-1)
+    ran = random.randint(0, len(quoteList))
 
     if ((quoteList[ran]["text"] != None) and (quoteList[ran]["author"] != None)):
         quote = quoteList[ran]
