@@ -16,6 +16,8 @@ class SpotifyWrapper():
     def __init__ (self):
         self.scope = 'user-read-private user-read-playback-state user-modify-playback-state'
         self.spotifyObject = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=self.scope))
+        self.spotifyObject.requests_timeout=20
+
 
     def getSpotifyInstance(self):
         if (not self.spotifyObject):
@@ -60,16 +62,17 @@ class SpotifyWrapper():
     def getCurrentPlaylist(self):
         return self.getSpotifyInstance().current_playback()
 
+    def getCurrentSong(self):
+        return self.getSpotifyInstance().current_user_playing_track()["item"]
+
     def play(self, uri, deviceId):
-        #trackSelectionList = []
-        #trackSelectionList.append(uri)
         self.getSpotifyInstance().start_playback(context_uri=uri, device_id=deviceId)
 
     def pause(self, deviceId):
         self.getSpotifyInstance().pause_playback(device_id=deviceId)
 
     def resume(self, deviceId):
-        self.getSpotifyInstance().start_playback(deviceId=deviceId)
+        self.getSpotifyInstance().start_playback(device_id=deviceId)
     
     def next(self, deviceId):
         self.getSpotifyInstance().next_track(device_id=deviceId)
@@ -77,21 +80,20 @@ class SpotifyWrapper():
     def previous(self, deviceId):
         self.getSpotifyInstance().previous_track(device_id=deviceId)
 
-    def getCurrentSong(self):
-        self.getSpotifyInstance().current_user_playing_track()
+
+#spotifyWrapper = SpotifyWrapper()
 
 
-spotifyWrapper = SpotifyWrapper()
+#playlistId = spotifyWrapper.getMyPlaylists()[0]["id"]
+#playlistUri = spotifyWrapper.getMyPlaylists()[0]["uri"]
 
 
-playlistId = spotifyWrapper.getMyPlaylists()[0]["id"]
-playlistUri = spotifyWrapper.getMyPlaylists()[0]["uri"]
+#songs = spotifyWrapper.getSongsFromPlaylist(playlistId=playlistId, userId=spotifyWrapper.getUserId())
 
-
-songs = spotifyWrapper.getSongsFromPlaylist(playlistId=playlistId, userId=spotifyWrapper.getUserId())
+#spotifyWrapper.play(playlistUri, spotifyWrapper.getDeviceId())
 
 
 #spotifyWrapper.play(uri=playlistUri, deviceId=spotifyWrapper.getDeviceId())
 
-print (spotifyWrapper.getCurrentSong())
+#print (spotifyWrapper.getCurrentSong())
 

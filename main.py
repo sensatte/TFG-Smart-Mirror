@@ -1,4 +1,4 @@
-from customWidgets.SpotifyWidget import SpotifyWidget
+from pyautogui import size
 from menu.MenuLayout import MenuLayout
 import kivy
 kivy.require('1.11.1') # replace with your current kivy version !
@@ -17,6 +17,7 @@ from customWidgets.RootLayout import RootLayout
 from customWidgets.DateWidget import DateWidget
 from customWidgets.WeatherWidget import WeatherWidget
 from customWidgets.TempWidget import TempWidget
+from customWidgets.SpotifyWidget import SpotifyWidget
 
 import threading
 from gpio_translator import gpio_translate
@@ -66,9 +67,9 @@ class SmartMirrorApp(App):
   
 if __name__ == '__main__':
 
-    #GPIO to Keyboard Translate
-    gpio_translate_thread = threading.Thread(target=gpio_translate, name='GPIO Translation')
-    gpio_translate_thread.daemon = True
-    gpio_translate_thread.start()
+    # #GPIO to Keyboard Translate
+    # gpio_translate_thread = threading.Thread(target=gpio_translate, name='GPIO Translation')
+    # gpio_translate_thread.daemon = True
+    # gpio_translate_thread.start()
     
     SmartMirrorApp().run()
