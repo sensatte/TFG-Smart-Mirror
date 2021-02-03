@@ -1,0 +1,37 @@
+#:kivy 1.0
+<InfoDay>:
+    size_hint: .3, .1
+    canvas.before:
+        Color:
+            rgba: 0.5,0.2,0.4,1
+        Rectangle:
+            pos: 0,0
+            size: self.size 
+
+<ClockWidget>:
+    halign:"center"
+    valign:'top'
+    # size_hint: .6, .2
+    font_size: root.height/2
+    text_size: root.width, root.height
+    size: self.texture_size
+
+<DateWidget>:
+    halign:"left"
+    valign:'middle'
+    # size_hint: .6, .2
+    font_size: root.height/4
+    text_size: root.width, root.height
+    size: self.texture_size
+
+<TempWidget>:
+    halign:"right"
+    valign:'middle'
+    # size_hint: .6, .2
+    font_size: root.height/4
+    text_size: root.width, root.height
+    size: self.texture_size
+
+# <WeatherWidget>:
+#     anchor_x: 'left'
+#     anchor_y: 'bottom'

@@ -7,17 +7,17 @@ import json
 
 id_endpoint = "http://api.openweathermap.org/data/2.5/weather?id=%s&appid=%s&units=%s"
 
-class TempWidget (AnchorLayout):
+class TempWidget(Label):
     
     def __init__(self, **kwargs):
         super(TempWidget, self).__init__(**kwargs)
-        self.anchor_x = 'center'
-        self.anchor_y = 'center'
-        self.size_hint =(.2, .2)
-        self.pos_hint ={"x":0.02, "y":0.75}
+        # self.anchor_x = 'left'
+        # self.anchor_y = 'center'
+        # self.size_hint =(.2, .2)
+        # self.pos_hint ={"x":0.02, "y":0.75}
 
         #Temperature
-        self.add_widget(Label(text=str(int(getWeatherReducedByCityId()['temp']))+"º"))
+        self.text=str(int(getWeatherReducedByCityId()['temp']))+"º"
         
 def getWeatherReducedByCityId(city_id='6361046', units="metric"):
     """
