@@ -11,18 +11,27 @@ os.environ['SPOTIPY_CLIENT_ID'] = 'ca41eba604004e0c8d51cbcacfb4642b'
 os.environ['SPOTIPY_CLIENT_SECRET'] = '71d4b96b520d41a5ab7d1fd5a1e2fcd5'
 os.environ['SPOTIPY_REDIRECT_URI'] = 'https://works'
 
+
 class SpotifyWrapper():
 
-    def __init__ (self):
+    def __init__(self):
         self.scope = 'user-read-private user-read-playback-state user-modify-playback-state'
-        self.spotifyObject = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=self.scope))
-        self.spotifyObject.requests_timeout=20
-
+        self.spotifyObject = spotipy.Spotify(
+            auth_manager=SpotifyOAuth(scope=self.scope))
+        self.spotifyObject.requests_timeout = 20
 
     def getSpotifyInstance(self):
         if (not self.spotifyObject):
-            self.spotifyObject = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=self.scope))
+            self.spotifyObject = spotipy.Spotify(
+                auth_manager=SpotifyOAuth(scope=self.scope))
         return self.spotifyObject
+
+    def getAllDevices(self):
+        try:
+            return self.getSpotifyInstance().devices()
+        except IndexError as e:
+            print("No devices found")
+            return None
 
     def getDeviceId(self):
         try:
@@ -30,7 +39,6 @@ class SpotifyWrapper():
         except IndexError as e:
             print("No devices found")
             return None
-        
 
     def getUser(self):
         return self.getSpotifyInstance().me()
@@ -43,17 +51,18 @@ class SpotifyWrapper():
 
     def getSongsFromPlaylist(self, playlistId, userId):
         trackList = []
-        playlist_tracks = self.getSpotifyInstance().user_playlist_tracks(user=userId, playlist_id=playlistId, fields='items')
+        playlist_tracks = self.getSpotifyInstance().user_playlist_tracks(
+            user=userId, playlist_id=playlistId, fields='items')
         for data in playlist_tracks["items"]:
             track = data["track"]
-            simplifiedTrack={
-                "artists":track["artists"],
-                "duration_ms":track["duration_ms"],
-                "id":track["id"],
-                "name":track["name"],
-                "uri":track["uri"]}
+            simplifiedTrack = {
+                "artists": track["artists"],
+                "duration_ms": track["duration_ms"],
+                "id": track["id"],
+                "name": track["name"],
+                "uri": track["uri"]}
             trackList.append(simplifiedTrack)
-        
+
         return trackList
 
     def getMyPlaylists(self, offset=0):
@@ -73,7 +82,7 @@ class SpotifyWrapper():
 
     def resume(self, deviceId):
         self.getSpotifyInstance().start_playback(device_id=deviceId)
-    
+
     def next(self, deviceId):
         self.getSpotifyInstance().next_track(device_id=deviceId)
 
@@ -81,7 +90,7 @@ class SpotifyWrapper():
         self.getSpotifyInstance().previous_track(device_id=deviceId)
 
 
-#spotifyWrapper = SpotifyWrapper()
+spotifyWrapper = SpotifyWrapper()
 
 
 #playlistId = spotifyWrapper.getMyPlaylists()[0]["id"]
@@ -96,4 +105,3 @@ class SpotifyWrapper():
 #spotifyWrapper.play(uri=playlistUri, deviceId=spotifyWrapper.getDeviceId())
 
 #print (spotifyWrapper.getCurrentSong())
-

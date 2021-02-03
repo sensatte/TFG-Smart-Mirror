@@ -1,6 +1,7 @@
 from kivy.core.window import Window
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 from pyautogui import sleep
@@ -12,35 +13,34 @@ from kivy.lang import Builder
 
 import threading
 
+
 kv_file = """
 <SpotifyWidget>:
-    canvas.before:
+
+    canvas:
         Color:
-            rgba: (1, 1, 1, .2)
+            rgba: 0.2,0.5,0.4,1
         Rectangle:
-            pos: self.pos
+            pos: 0,0
             size: self.size
+
     Label:
         text: "Loading Song"
         id: songName
+
     Image:
         source: "images/menu/spotify.png"
+        pos_hint: {"center_x":.3, "center_y":.7}
         size_hint: (.3, .3)
 """
 
 Builder.load_string(kv_file)
 
 
-class SpotifyWidget(AnchorLayout):
-
-    #TODO Ver alternatias al hilo del updateLabel
+class SpotifyWidget(RelativeLayout):
 
     def __init__(self, **kwargs):
         super(SpotifyWidget, self).__init__(**kwargs)
-
-        self.size_hint = (0.3, 0.2)
-        self.anchor_x = "left"
-        self.anchor_y = "top"
 
         # Keyboard Handling for menuing
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
@@ -49,27 +49,11 @@ class SpotifyWidget(AnchorLayout):
 
         self.spotifyWrapper = SpotifyWrapper()
 
-        # self.spotifyIcon = Image(source="")
-        # self.spotifyIcon.size_hint = (.3, .3)
-        # self.spotifyIcon.pos_hint={"x":.1, "y":.9}
-        # self.add_widget(self.spotifyIcon)
-
         test1 = self.ids["songName"]
-
-        # self.test1 = Label(shorten=True,
-        #                    shorten_from='right',
-        #                    text_size=(200, 20))
-        
-        test1.canvas.add(Color(1., 1., 1, .2))
-        test1.canvas.add(Rectangle(size=test1.size, post=test1.pos))
-
-        #self.add_widget(test1)
 
         t = threading.Thread(target=self.updateLabel)
         t.setDaemon(True)
         t.start()
-
-        #self.spotifyWrapper.play(self.spotifyWrapper.getMyPlaylists()[0]["uri"], self.spotifyWrapper.getDeviceId())
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
