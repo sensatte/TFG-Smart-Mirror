@@ -27,7 +27,8 @@ class SmartMirrorApp(App):
         
         widgets = []
         
-        infoDay = InfoDay() 
+        infoDay = InfoDay(size_hint=(.3, .2), pos_hint={
+                          "x": 0, "top": 1})
         widgets.append(infoDay)
 
         # quotes = QuotesWidget()  

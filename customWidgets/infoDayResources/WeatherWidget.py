@@ -1,6 +1,7 @@
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
 from kivy.uix.image import Image
+import kivy.properties as Properties
 
 import requests
 import json
@@ -8,16 +9,12 @@ import json
 id_endpoint = "http://api.openweathermap.org/data/2.5/weather?id=%s&appid=%s&units=%s"
 
 class WeatherWidget(Image):
-    
+
     def __init__(self, **kwargs):
         super(WeatherWidget, self).__init__(**kwargs)
 
         #Weather
         self.source=switch_demo(getWeatherReducedByCityId()['weather'],2)
-        self.allow_stretch=True
-        self.keep_ratio=False
-        self.size_hint =(.2, .2)               
-
         
 def switch_demo(argument, theme):
     path = "images/icons/"
