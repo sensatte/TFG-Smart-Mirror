@@ -1,4 +1,5 @@
 # Import libraries
+import socket
 import os
 import sys
 import json
@@ -14,16 +15,20 @@ os.environ['SPOTIPY_REDIRECT_URI'] = 'https://works'
 
 class SpotifyWrapper():
 
-    def __init__(self):
+    def __init__(self, deviceName):
+        self.deviceName = deviceName
         self.scope = 'user-read-private user-read-playback-state user-modify-playback-state'
         self.spotifyObject = spotipy.Spotify(
             auth_manager=SpotifyOAuth(scope=self.scope))
         self.spotifyObject.requests_timeout = 20
+        self.volume = 50
+        self.paused = True
 
     def getSpotifyInstance(self):
         if (not self.spotifyObject):
             self.spotifyObject = spotipy.Spotify(
                 auth_manager=SpotifyOAuth(scope=self.scope))
+            self.spotifyObject.volume(self.volume, self.deviceId)
         return self.spotifyObject
 
     def getAllDevices(self):
@@ -35,9 +40,16 @@ class SpotifyWrapper():
 
     def getDeviceId(self):
         try:
-            return self.getSpotifyInstance().devices()['devices'][0]['id']
+            devicesList = self.getSpotifyInstance().devices()['devices']
+            print(devicesList)
+
+            for device in devicesList:
+                if (device["name"] == self.deviceName):
+                    return device["id"]
+            print("Current device not found. Are you running Spotify?")
+            return None
         except IndexError as e:
-            print("No devices found")
+            print("Current device not found. Are you running Spotify?")
             return None
 
     def getUser(self):
@@ -72,16 +84,23 @@ class SpotifyWrapper():
         return self.getSpotifyInstance().current_playback()
 
     def getCurrentSong(self):
-        return self.getSpotifyInstance().current_user_playing_track()["item"]
+        current_playing_track = self.getSpotifyInstance().current_user_playing_track()
+        if (current_playing_track != None):
+            return current_playing_track["item"]["name"]
+        else:
+            return "No current song"
 
     def play(self, uri, deviceId):
-        self.getSpotifyInstance().start_playback(context_uri=uri, device_id=deviceId)
+        self.getSpotifyInstance().start_playback(
+            context_uri=uri, device_id=deviceId)
 
     def pause(self, deviceId):
         self.getSpotifyInstance().pause_playback(device_id=deviceId)
+        self.paused = True
 
     def resume(self, deviceId):
         self.getSpotifyInstance().start_playback(device_id=deviceId)
+        self.paused = False
 
     def next(self, deviceId):
         self.getSpotifyInstance().next_track(device_id=deviceId)
@@ -89,9 +108,23 @@ class SpotifyWrapper():
     def previous(self, deviceId):
         self.getSpotifyInstance().previous_track(device_id=deviceId)
 
+    def volUp(self, deviceId):
+        self.volume += 5
+        if (self.volume > 100):
+            self.volume = 100
+        print(self.volume)
+        self.getSpotifyInstance().volume(self.volume, device_id=deviceId)
 
-spotifyWrapper = SpotifyWrapper()
+    def volDown(self, deviceId):
+        self.volume -= 5
+        if (self.volume < 0):
+            self.volume = 0
+        print(self.volume)
+        self.getSpotifyInstance().volume(self.volume, device_id=deviceId)
 
+
+spotifyWrapper = SpotifyWrapper("DESKTOP-U5CE64C")
+print(spotifyWrapper.getDeviceId())
 
 #playlistId = spotifyWrapper.getMyPlaylists()[0]["id"]
 #playlistUri = spotifyWrapper.getMyPlaylists()[0]["uri"]

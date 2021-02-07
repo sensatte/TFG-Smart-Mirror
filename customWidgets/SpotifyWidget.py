@@ -6,12 +6,20 @@ from kivy.uix.image import Image
 from kivy.uix.label import Label
 from pyautogui import sleep
 from utils.SpotifyWrapper import SpotifyWrapper
+from kivy.clock import Clock
 
 from kivy.graphics import Color, Rectangle
 
 from kivy.lang import Builder
 
 import threading
+
+import socket
+# TODO QUE NO PETE SI NO HAY SPOTIFY RUNEANDO
+
+# TODO BONITO
+
+# TODO QUE SE VEA EL VOLUMEN, MAYBE UNA IMAGEN POR TRES NIVELES
 
 
 kv_file = """
@@ -25,7 +33,7 @@ kv_file = """
             size: self.size
 
     Label:
-        text: "Loading Song"
+        text: "No song found"
         id: songName
 
     Image:
@@ -47,13 +55,17 @@ class SpotifyWidget(RelativeLayout):
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
         self._keyboard.enabled = True
 
-        self.spotifyWrapper = SpotifyWrapper()
+        self.spotifyWrapper = SpotifyWrapper(deviceName=socket.gethostname())
 
-        test1 = self.ids["songName"]
+        self.deviceId = self.spotifyWrapper.getDeviceId
 
-        t = threading.Thread(target=self.updateLabel)
-        t.setDaemon(True)
-        t.start()
+        songName = self.ids["songName"]
+
+        Clock.schedule_interval(self.update_label, .5)
+
+        # t = threading.Thread(target=self.updateLabel)
+        # t.setDaemon(True)
+        # t.start()
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
@@ -64,32 +76,36 @@ class SpotifyWidget(RelativeLayout):
         if (self._keyboard.enabled):
 
             if keycode[1] == 'enter':
-                if (self.spotifyWrapper.getCurrentPlaylist()["is_playing"] == False):
-                    # print("Resume")
-                    self.spotifyWrapper.resume(
-                        deviceId=self.spotifyWrapper.getDeviceId())
+                if (self.spotifyWrapper.getCurrentPlaylist() == None or self.spotifyWrapper.getCurrentPlaylist()["is_playing"] == False):
+                    print("Resume")
+                    self.spotifyWrapper.resume()
                 else:
-                    # print("Pause")
-                    self.spotifyWrapper.pause(
-                        deviceId=self.spotifyWrapper.getDeviceId())
+                    print("Pause")
+                    self.spotifyWrapper.pause()
             elif keycode[1] == "d":
-                # print("Next")
-                self.spotifyWrapper.next(
-                    deviceId=self.spotifyWrapper.getDeviceId())
+                print("Next")
+                self.spotifyWrapper.next()
                 pass
             elif keycode[1] == "a":
-                # print("Previous")
-                self.spotifyWrapper.previous(
-                    deviceId=self.spotifyWrapper.getDeviceId())
+                print("Previous")
+                self.spotifyWrapper.previous()
                 pass
-            # print("Current song")
-            # print(self.spotifyWrapper.getCurrentSong()["name"])
-
-            keyboardInterrupter = threading.Thread(target=self.disableKeyboard)
-            keyboardInterrupter.setDaemon(True)
-            keyboardInterrupter.start()
+            elif keycode[1] == "w":
+                print("VolUp")
+                self.spotifyWrapper.volUp()
+                pass
+            elif keycode[1] == "s":
+                print("VolDown")
+                self.spotifyWrapper.volDown()
+                pass
 
         return True
+
+    def disableKeyboardIndefinitely(self):
+        self._keyboard.enabled = False
+
+    def enableKeyboard(self):
+        self._keyboard.enabled = True
 
     def disableKeyboard(self):
         #print("Disabled keyboard")
@@ -99,12 +115,14 @@ class SpotifyWidget(RelativeLayout):
         #print("Enabled keyboard")
         exit()
 
-    def updateLabel(self):
-        previousSongName = None
-        test1 = self.ids["songName"]
-        while(True):
-            # print("loop")
-            if (previousSongName == None or self.spotifyWrapper.getCurrentSong()["name"] != previousSongName):
-                test1.text = self.spotifyWrapper.getCurrentSong()["name"]
-                previousSongName = test1.text
-            sleep(0.5)
+    def update_label(self, *args):
+        songName = self.spotifyWrapper.getCurrentSong()
+        # print(songName)
+        self.ids.songName.text = songName
+
+    # def updateLabel(self):
+    #     previousSongName = None
+    #     test1 = self.ids["songName"]
+    #     if(previousSongName == None or self.spotifyWrapper.getCurrentSong()["name"] != previousSongName):
+    #         test1.text = self.spotifyWrapper.getCurrentSong()["name"]
+    #         previousSongName = test1.text
