@@ -125,16 +125,20 @@ class SpotifyWidget(RelativeLayout):
 
     def update_label(self, *args):
         song = self.spotifyWrapper.getCurrentSong()
-        songName = ""
-        songImage = "images/menu/Spotify_bonico.png"
 
         if (song != None):
             songName = song["name"]
             songImage = song["album"]["images"][len(
                 song["album"]["images"])-1]["url"]
-        self.ids.songName.text = songName
-        self.ids.songImage.texture = self.editSongImage(songImage)
-        self.ids.songImage.texture.ask_update(None)
+
+            self.ids.songName.text = songName
+            self.ids.songImage.texture = self.editSongImage(songImage)
+            self.ids.songImage.texture.ask_update(None)
+        else:
+            songName = ""
+            songImage = "images/menu/Spotify_bonico.png"
+            self.ids.songName.text = songName
+            self.ids.songName.source = songImage
 
     def editSongImage(self, songImage):
 
