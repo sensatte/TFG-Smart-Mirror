@@ -1,4 +1,4 @@
-from menu.MenuLayout import MenuLayout
+from menu.Screens import Screens
 import kivy
 kivy.require('1.11.1') # replace with your current kivy version !
 
@@ -8,7 +8,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.core.window import Window
 
-Window.size = (550,822)
+Window.size = (540,960)
 
 from customWidgets.NewsWidget import NewsWidget
 from customWidgets.RootLayout import RootLayout
@@ -27,7 +27,7 @@ class SmartMirrorApp(App):
         
         widgets = []
         
-        infoDay = InfoDay(size_hint=(.3, .2), pos_hint={
+        infoDay = InfoDay(size_hint=(.3, .15), pos_hint={
                           "x": 0, "top": 1})
         widgets.append(infoDay)
 
@@ -37,8 +37,8 @@ class SmartMirrorApp(App):
         # notes = NotesWidget()  
         # widgets.append(notes)
 
-        # test = MenuLayout()
-        # widgets.append(test)
+        test = Screens()
+        widgets.append(test)
         
         root_layout = RootLayout()
         
