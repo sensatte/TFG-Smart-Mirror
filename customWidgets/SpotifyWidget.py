@@ -1,14 +1,14 @@
+from PIL import Image, ImageDraw
+import numpy as np
+import io
+from kivy.core.image import Image as CoreImage
 from kivy.core.window import Window
-from kivy.uix.anchorlayout import AnchorLayout
-from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.image import Image
-from kivy.uix.label import Label
 from pyautogui import sleep
 from utils.SpotifyWrapper import SpotifyWrapper
 from kivy.clock import Clock
-
-from kivy.graphics import Color, Rectangle
+import requests
+from kivy.graphics import Color, Rectangle, Ellipse
 
 from kivy.lang import Builder
 
@@ -17,7 +17,11 @@ import threading
 import socket
 # TODO QUE NO PETE SI NO HAY SPOTIFY RUNEANDO
 
+# TODO SACAR IMAGEN
+
 # TODO BONITO
+
+# TODO QUE EL TITULO WRAPPEE ALREDEDOR O ALGO PORQUE SEA DEMASIADO CHONKY
 
 # TODO QUE SE VEA EL VOLUMEN, MAYBE UNA IMAGEN POR TRES NIVELES
 
@@ -33,14 +37,18 @@ kv_file = """
             size: self.size
 
     Label:
-        text: "No song found"
+        text: ""
         id: songName
 
     Image:
-        source: "images/menu/spotify.png"
         pos_hint: {"center_x":.3, "center_y":.7}
         size_hint: (.3, .3)
+        id: songImage
+        source: "images/menu/Spotify_bonico.png"
+                
+
 """
+
 
 Builder.load_string(kv_file)
 
@@ -57,11 +65,11 @@ class SpotifyWidget(RelativeLayout):
 
         self.spotifyWrapper = SpotifyWrapper(deviceName=socket.gethostname())
 
-        self.deviceId = self.spotifyWrapper.getDeviceId
+        self.deviceId = self.spotifyWrapper.getDeviceId()
 
         songName = self.ids["songName"]
 
-        Clock.schedule_interval(self.update_label, .5)
+        Clock.schedule_interval(self.update_label, 1)
 
         # t = threading.Thread(target=self.updateLabel)
         # t.setDaemon(True)
@@ -78,25 +86,25 @@ class SpotifyWidget(RelativeLayout):
             if keycode[1] == 'enter':
                 if (self.spotifyWrapper.getCurrentPlaylist() == None or self.spotifyWrapper.getCurrentPlaylist()["is_playing"] == False):
                     print("Resume")
-                    self.spotifyWrapper.resume()
+                    self.spotifyWrapper.resume(deviceId=self.deviceId)
                 else:
                     print("Pause")
-                    self.spotifyWrapper.pause()
+                    self.spotifyWrapper.pause(deviceId=self.deviceId)
             elif keycode[1] == "d":
                 print("Next")
-                self.spotifyWrapper.next()
+                self.spotifyWrapper.next(deviceId=self.deviceId)
                 pass
             elif keycode[1] == "a":
                 print("Previous")
-                self.spotifyWrapper.previous()
+                self.spotifyWrapper.previous(deviceId=self.deviceId)
                 pass
             elif keycode[1] == "w":
                 print("VolUp")
-                self.spotifyWrapper.volUp()
+                self.spotifyWrapper.volUp(deviceId=self.deviceId)
                 pass
             elif keycode[1] == "s":
                 print("VolDown")
-                self.spotifyWrapper.volDown()
+                self.spotifyWrapper.volDown(deviceId=self.deviceId)
                 pass
 
         return True
@@ -116,13 +124,45 @@ class SpotifyWidget(RelativeLayout):
         exit()
 
     def update_label(self, *args):
-        songName = self.spotifyWrapper.getCurrentSong()
-        # print(songName)
-        self.ids.songName.text = songName
+        song = self.spotifyWrapper.getCurrentSong()
+        songName = ""
+        songImage = "images/menu/Spotify_bonico.png"
 
-    # def updateLabel(self):
-    #     previousSongName = None
-    #     test1 = self.ids["songName"]
-    #     if(previousSongName == None or self.spotifyWrapper.getCurrentSong()["name"] != previousSongName):
-    #         test1.text = self.spotifyWrapper.getCurrentSong()["name"]
-    #         previousSongName = test1.text
+        if (song != None):
+            songName = song["name"]
+            songImage = song["album"]["images"][len(
+                song["album"]["images"])-1]["url"]
+        self.ids.songName.text = songName
+        self.ids.songImage.texture = self.editSongImage(songImage)
+        self.ids.songImage.texture.ask_update(None)
+
+    def editSongImage(self, songImage):
+
+        response = requests.get(songImage)
+
+        # Open the input image as numpy array, convert to RGB
+        img = Image.open(io.BytesIO(response.content)).convert("RGB")
+        npImage = np.array(img)
+        h, w = img.size
+
+        # Create same size alpha layer with circle
+        alpha = Image.new('L', img.size, 0)
+        draw = ImageDraw.Draw(alpha)
+        draw.pieslice([0, 0, h, w], 0, 360, fill=255)
+
+        # Convert alpha Image to numpy array
+        npAlpha = np.array(alpha)
+
+        # Add alpha layer to RGB
+        npImage = np.dstack((npImage, npAlpha))
+
+        imgIO = io.BytesIO()
+
+        # Save with alpha
+        Image.fromarray(npImage).save(imgIO, "png")
+
+        imgIO.seek(0)
+        imgData = io.BytesIO(imgIO.read())
+        finalTexture = CoreImage(imgData, ext='png').texture
+
+        return finalTexture

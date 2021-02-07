@@ -86,9 +86,9 @@ class SpotifyWrapper():
     def getCurrentSong(self):
         current_playing_track = self.getSpotifyInstance().current_user_playing_track()
         if (current_playing_track != None):
-            return current_playing_track["item"]["name"]
+            return current_playing_track["item"]
         else:
-            return "No current song"
+            return None
 
     def play(self, uri, deviceId):
         self.getSpotifyInstance().start_playback(
@@ -125,6 +125,8 @@ class SpotifyWrapper():
 
 spotifyWrapper = SpotifyWrapper("DESKTOP-U5CE64C")
 print(spotifyWrapper.getDeviceId())
+
+print(spotifyWrapper.getCurrentSong())
 
 #playlistId = spotifyWrapper.getMyPlaylists()[0]["id"]
 #playlistUri = spotifyWrapper.getMyPlaylists()[0]["uri"]
