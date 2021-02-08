@@ -52,7 +52,7 @@ class SmartMirrorApp(App):
         #test = MenuLayout()
         # widgets.append(test)
 
-        spotifyWidget = SpotifyWidget(size_hint=(.3, .3))
+        spotifyWidget = SpotifyWidget()
 
         widgets.append(spotifyWidget)
 

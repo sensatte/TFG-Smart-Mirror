@@ -41,7 +41,7 @@ class SpotifyWrapper():
     def getDeviceId(self):
         try:
             devicesList = self.getSpotifyInstance().devices()['devices']
-            print(devicesList)
+            # print(devicesList)
 
             for device in devicesList:
                 if (device["name"] == self.deviceName):
@@ -124,9 +124,9 @@ class SpotifyWrapper():
 
 
 spotifyWrapper = SpotifyWrapper("DESKTOP-U5CE64C")
-print(spotifyWrapper.getDeviceId())
+# print(spotifyWrapper.getDeviceId())
 
-print(spotifyWrapper.getCurrentSong())
+# print(spotifyWrapper.getCurrentSong())
 
 #playlistId = spotifyWrapper.getMyPlaylists()[0]["id"]
 #playlistUri = spotifyWrapper.getMyPlaylists()[0]["uri"]

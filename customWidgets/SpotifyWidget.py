@@ -4,9 +4,12 @@ import io
 from kivy.core.image import Image as CoreImage
 from kivy.core.window import Window
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.floatlayout import FloatLayout
 from pyautogui import sleep
 from utils.SpotifyWrapper import SpotifyWrapper
 from kivy.clock import Clock
+from kivy.animation import Animation
+import kivy.properties as properties
 import requests
 from kivy.graphics import Color, Rectangle, Ellipse
 
@@ -25,27 +28,37 @@ import socket
 
 # TODO QUE SE VEA EL VOLUMEN, MAYBE UNA IMAGEN POR TRES NIVELES
 
+#TODO que se pare la imagen, que vibre al play pause y eso
 
 kv_file = """
 <SpotifyWidget>:
+    size_hint:.5, .1
 
-    canvas:
-        Color:
-            rgba: 0.2,0.5,0.4,1
-        Rectangle:
-            pos: 0,0
-            size: self.size
+    GridLayout
+        cols: 2
+        rows:1
 
-    Label:
-        text: ""
-        id: songName
+        Image:
+            size_hint_x:None
+            width:root.width/3
+            id: songImage
+            source: "images/menu/Spotify_bonico.png"
+            canvas.before:
+                PushMatrix
+                Rotate:
+                    angle: root.angle
+                    axis: 0, 0, 1
+                    origin: self.center
+            canvas.after:
+                PopMatrix
 
-    Image:
-        pos_hint: {"center_x":.3, "center_y":.7}
-        size_hint: (.3, .3)
-        id: songImage
-        source: "images/menu/Spotify_bonico.png"
-                
+        Label:
+            text: "ffff"
+            id: songName
+            halign:'left'
+            font_size: root.width*0.05
+            text_size: self.width, None
+            size: self.texture_size
 
 """
 
@@ -54,7 +67,8 @@ Builder.load_string(kv_file)
 
 
 class SpotifyWidget(RelativeLayout):
-
+    angle=properties.NumericProperty()
+    repeat=False
     def __init__(self, **kwargs):
         super(SpotifyWidget, self).__init__(**kwargs)
 
@@ -66,7 +80,6 @@ class SpotifyWidget(RelativeLayout):
         self.spotifyWrapper = SpotifyWrapper(deviceName=socket.gethostname())
 
         self.deviceId = self.spotifyWrapper.getDeviceId()
-
         songName = self.ids["songName"]
 
         Clock.schedule_interval(self.update_label, 1)
@@ -87,9 +100,13 @@ class SpotifyWidget(RelativeLayout):
                 if (self.spotifyWrapper.getCurrentPlaylist() == None or self.spotifyWrapper.getCurrentPlaylist()["is_playing"] == False):
                     print("Resume")
                     self.spotifyWrapper.resume(deviceId=self.deviceId)
+                    self.repeat = True
+                    self.animSpin()
                 else:
                     print("Pause")
                     self.spotifyWrapper.pause(deviceId=self.deviceId)
+                    self.repeat = False
+                    # self.animSpinStop()
             elif keycode[1] == "d":
                 print("Next")
                 self.spotifyWrapper.next(deviceId=self.deviceId)
@@ -127,7 +144,7 @@ class SpotifyWidget(RelativeLayout):
         song = self.spotifyWrapper.getCurrentSong()
 
         if (song != None):
-            songName = song["name"]
+            songName = song["name"] + "\n" + song["album"]["artists"][0]["name"]
             songImage = song["album"]["images"][len(
                 song["album"]["images"])-1]["url"]
 
@@ -170,3 +187,18 @@ class SpotifyWidget(RelativeLayout):
         finalTexture = CoreImage(imgData, ext='png').texture
 
         return finalTexture
+
+    
+    def animSpin(self):
+        anim = Animation(angle = 360, duration=2) 
+        anim += Animation(angle = 360, duration=2)
+        anim.repeat = self.repeat
+        anim.start(self)
+
+    def animSpinStop(self):
+        anim = Animation(angle = 0, duration=0) 
+        anim.start(self)
+
+    def on_angle(self, item, angle):
+        if angle == 360:
+            item.angle = 0
