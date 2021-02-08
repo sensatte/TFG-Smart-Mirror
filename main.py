@@ -1,6 +1,7 @@
 from gpio_translator import gpio_translate
 import threading
 from customWidgets.SpotifyWidget import SpotifyWidget
+from utils.volume import VolumeWid
 from customWidgets.TempWidget import TempWidget
 from customWidgets.WeatherWidget import WeatherWidget
 from customWidgets.DateWidget import DateWidget
@@ -53,8 +54,10 @@ class SmartMirrorApp(App):
         # widgets.append(test)
 
         spotifyWidget = SpotifyWidget()
-
         widgets.append(spotifyWidget)
+
+        volumeWidget=VolumeWid()
+        widgets.append(volumeWidget)
 
         root_layout = RootLayout()
 

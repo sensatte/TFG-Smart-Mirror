@@ -122,6 +122,8 @@ class SpotifyWrapper():
         print(self.volume)
         self.getSpotifyInstance().volume(self.volume, device_id=deviceId)
 
+    def getVolume(self):
+        return self.volume
 
 spotifyWrapper = SpotifyWrapper("DESKTOP-U5CE64C")
 # print(spotifyWrapper.getDeviceId())

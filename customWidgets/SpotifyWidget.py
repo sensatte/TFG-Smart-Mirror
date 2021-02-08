@@ -7,6 +7,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.floatlayout import FloatLayout
 from pyautogui import sleep
 from utils.SpotifyWrapper import SpotifyWrapper
+from utils.volume import CircularProgressBar
 from kivy.clock import Clock
 from kivy.animation import Animation
 import kivy.properties as properties
@@ -20,19 +21,12 @@ import threading
 import socket
 # TODO QUE NO PETE SI NO HAY SPOTIFY RUNEANDO
 
-# TODO SACAR IMAGEN
+# TODO que se actualice el volumen
 
-# TODO BONITO
-
-# TODO QUE EL TITULO WRAPPEE ALREDEDOR O ALGO PORQUE SEA DEMASIADO CHONKY
-
-# TODO QUE SE VEA EL VOLUMEN, MAYBE UNA IMAGEN POR TRES NIVELES
-
-#TODO que se pare la imagen, que vibre al play pause y eso
 
 kv_file = """
 <SpotifyWidget>:
-    size_hint:.5, .1
+    size_hint:.5, .15
 
     GridLayout
         cols: 2
@@ -52,13 +46,26 @@ kv_file = """
             canvas.after:
                 PopMatrix
 
-        Label:
-            text: "ffff"
-            id: songName
-            halign:'left'
-            font_size: root.width*0.05
-            text_size: self.width, None
-            size: self.texture_size
+        BoxLayout
+            orientation:"vertical"
+            spacing:-self.height*.7
+            Label:
+                text: ""
+                id: songName
+                halign:'left'
+                shorten: True
+                font_size: root.width*0.05
+                text_size: self.width, None
+                size: self.texture_size
+
+            Label:
+                text: ""
+                id: songArtist
+                halign:'left'
+                shorten: True
+                font_size: root.width*0.05
+                text_size: self.width, None
+                size: self.texture_size
 
 """
 
@@ -68,7 +75,8 @@ Builder.load_string(kv_file)
 
 class SpotifyWidget(RelativeLayout):
     angle=properties.NumericProperty()
-    repeat=False
+    
+
     def __init__(self, **kwargs):
         super(SpotifyWidget, self).__init__(**kwargs)
 
@@ -76,17 +84,17 @@ class SpotifyWidget(RelativeLayout):
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
         self._keyboard.enabled = True
-
+    
         self.spotifyWrapper = SpotifyWrapper(deviceName=socket.gethostname())
 
         self.deviceId = self.spotifyWrapper.getDeviceId()
-        songName = self.ids["songName"]
 
         Clock.schedule_interval(self.update_label, 1)
 
         # t = threading.Thread(target=self.updateLabel)
         # t.setDaemon(True)
         # t.start()
+
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
@@ -100,13 +108,11 @@ class SpotifyWidget(RelativeLayout):
                 if (self.spotifyWrapper.getCurrentPlaylist() == None or self.spotifyWrapper.getCurrentPlaylist()["is_playing"] == False):
                     print("Resume")
                     self.spotifyWrapper.resume(deviceId=self.deviceId)
-                    self.repeat = True
                     self.animSpin()
                 else:
                     print("Pause")
                     self.spotifyWrapper.pause(deviceId=self.deviceId)
-                    self.repeat = False
-                    # self.animSpinStop()
+                    self.animSpinStop()
             elif keycode[1] == "d":
                 print("Next")
                 self.spotifyWrapper.next(deviceId=self.deviceId)
@@ -118,10 +124,12 @@ class SpotifyWidget(RelativeLayout):
             elif keycode[1] == "w":
                 print("VolUp")
                 self.spotifyWrapper.volUp(deviceId=self.deviceId)
+                self.volume=self.spotifyWrapper.getVolume()
                 pass
             elif keycode[1] == "s":
                 print("VolDown")
                 self.spotifyWrapper.volDown(deviceId=self.deviceId)
+                self.volume=self.spotifyWrapper.getVolume()
                 pass
 
         return True
@@ -144,11 +152,13 @@ class SpotifyWidget(RelativeLayout):
         song = self.spotifyWrapper.getCurrentSong()
 
         if (song != None):
-            songName = song["name"] + "\n" + song["album"]["artists"][0]["name"]
+            songName = song["name"]
+            songArtist = song["album"]["artists"][0]["name"]
             songImage = song["album"]["images"][len(
                 song["album"]["images"])-1]["url"]
 
             self.ids.songName.text = songName
+            self.ids.songArtist.text = songArtist
             self.ids.songImage.texture = self.editSongImage(songImage)
             self.ids.songImage.texture.ask_update(None)
         else:
@@ -190,13 +200,21 @@ class SpotifyWidget(RelativeLayout):
 
     
     def animSpin(self):
+        anim = Animation(opacity=1, duration=.1)
+        anim &= Animation(size_hint_y= 0.1, duration=.2)
+        anim += Animation(size_hint_y= 0.15, duration=.2)
+        anim.start(self)
         anim = Animation(angle = 360, duration=2) 
         anim += Animation(angle = 360, duration=2)
-        anim.repeat = self.repeat
+        anim.repeat = True
         anim.start(self)
 
     def animSpinStop(self):
-        anim = Animation(angle = 0, duration=0) 
+        Animation.cancel_all(self, "angle")        
+        anim = Animation(size_hint_y= 0.1, duration=.1)
+        anim += Animation(size_hint_y= 0.15, duration=.2)
+        anim += Animation(opacity=0, duration=.1)
+        
         anim.start(self)
 
     def on_angle(self, item, angle):
