@@ -5,6 +5,7 @@ from kivy.core.image import Image as CoreImage
 from kivy.core.window import Window
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.floatlayout import FloatLayout
+from numpy.core.numeric import False_
 from pyautogui import sleep
 from utils.SpotifyWrapper import SpotifyWrapper
 from utils.volume import CircularProgressBar
@@ -19,7 +20,9 @@ from kivy.lang import Builder
 import threading
 
 import socket
-# TODO QUE NO PETE SI NO HAY SPOTIFY RUNEANDO
+# TODO QUE NO PETE
+
+# TODO MEJOR FORMA DE IMAGEN REDONDA
 
 # TODO que se actualice el volumen
 
@@ -74,17 +77,19 @@ Builder.load_string(kv_file)
 
 
 class SpotifyWidget(RelativeLayout):
-    angle=properties.NumericProperty()
-    
+    angle = properties.NumericProperty()
 
     def __init__(self, **kwargs):
         super(SpotifyWidget, self).__init__(**kwargs)
+
+        self.currentSong = None
+        self.searchingNextSong = True
 
         # Keyboard Handling for menuing
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
         self._keyboard.enabled = True
-    
+
         self.spotifyWrapper = SpotifyWrapper(deviceName=socket.gethostname())
 
         self.deviceId = self.spotifyWrapper.getDeviceId()
@@ -94,7 +99,6 @@ class SpotifyWidget(RelativeLayout):
         # t = threading.Thread(target=self.updateLabel)
         # t.setDaemon(True)
         # t.start()
-
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
@@ -116,21 +120,28 @@ class SpotifyWidget(RelativeLayout):
             elif keycode[1] == "d":
                 print("Next")
                 self.spotifyWrapper.next(deviceId=self.deviceId)
+                self.animSpin()
+                self.searchingNextSong = True
                 pass
             elif keycode[1] == "a":
                 print("Previous")
                 self.spotifyWrapper.previous(deviceId=self.deviceId)
+                self.animSpin()
+                self.searchingNextSong = True
                 pass
             elif keycode[1] == "w":
                 print("VolUp")
                 self.spotifyWrapper.volUp(deviceId=self.deviceId)
-                self.volume=self.spotifyWrapper.getVolume()
+                self.volume = self.spotifyWrapper.getVolume()
                 pass
             elif keycode[1] == "s":
                 print("VolDown")
                 self.spotifyWrapper.volDown(deviceId=self.deviceId)
-                self.volume=self.spotifyWrapper.getVolume()
+                self.volume = self.spotifyWrapper.getVolume()
                 pass
+
+            t = threading.Thread(target=self.disableKeyboard)
+            t.start()
 
         return True
 
@@ -149,23 +160,25 @@ class SpotifyWidget(RelativeLayout):
         exit()
 
     def update_label(self, *args):
-        song = self.spotifyWrapper.getCurrentSong()
+        if (self.searchingNextSong):
+            song = self.spotifyWrapper.getCurrentSong()
+            if (song != None and song != self.currentSong):
+                print("detected song change")
+                self.currentSong = song
+                self.searchingNextSong = False
+                songName = song["name"]
+                songArtist = song["album"]["artists"][0]["name"]
+                songImage = song["album"]["images"][-1]["url"]
 
-        if (song != None):
-            songName = song["name"]
-            songArtist = song["album"]["artists"][0]["name"]
-            songImage = song["album"]["images"][len(
-                song["album"]["images"])-1]["url"]
-
-            self.ids.songName.text = songName
-            self.ids.songArtist.text = songArtist
-            self.ids.songImage.texture = self.editSongImage(songImage)
-            self.ids.songImage.texture.ask_update(None)
-        else:
-            songName = ""
-            songImage = "images/menu/Spotify_bonico.png"
-            self.ids.songName.text = songName
-            self.ids.songName.source = songImage
+                self.ids.songName.text = songName
+                self.ids.songArtist.text = songArtist
+                self.ids.songImage.texture = self.editSongImage(songImage)
+                self.ids.songImage.texture.ask_update(None)
+            else:
+                songName = ""
+                songImage = "images/menu/Spotify_bonico.png"
+                self.ids.songName.text = songName
+                self.ids.songName.source = songImage
 
     def editSongImage(self, songImage):
 
@@ -198,23 +211,23 @@ class SpotifyWidget(RelativeLayout):
 
         return finalTexture
 
-    
     def animSpin(self):
+        Animation.cancel_all(self, "angle")
         anim = Animation(opacity=1, duration=.1)
-        anim &= Animation(size_hint_y= 0.1, duration=.2)
-        anim += Animation(size_hint_y= 0.15, duration=.2)
+        anim &= Animation(size_hint_y=0.1, duration=.2)
+        anim += Animation(size_hint_y=0.15, duration=.2)
         anim.start(self)
-        anim = Animation(angle = 360, duration=2) 
-        anim += Animation(angle = 360, duration=2)
+        anim = Animation(angle=360, duration=2)
+        anim += Animation(angle=360, duration=2)
         anim.repeat = True
         anim.start(self)
 
     def animSpinStop(self):
-        Animation.cancel_all(self, "angle")        
-        anim = Animation(size_hint_y= 0.1, duration=.1)
-        anim += Animation(size_hint_y= 0.15, duration=.2)
+        Animation.cancel_all(self, "angle")
+        anim = Animation(size_hint_y=0.1, duration=.1)
+        anim += Animation(size_hint_y=0.15, duration=.2)
         anim += Animation(opacity=0, duration=.1)
-        
+
         anim.start(self)
 
     def on_angle(self, item, angle):
