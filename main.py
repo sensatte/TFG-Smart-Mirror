@@ -14,7 +14,7 @@ Window.size = (540,960)
 
 from customWidgets.NewsWidget import NewsWidget
 from customWidgets.RootLayout import RootLayout
-from customWidgets.InfoDay import InfoDay
+from customWidgets.InfoDayWidget import InfoDayWidget
 from customWidgets.QuotesWidget import QuotesWidget
 from customWidgets.NotesWidget import NotesWidget
 
