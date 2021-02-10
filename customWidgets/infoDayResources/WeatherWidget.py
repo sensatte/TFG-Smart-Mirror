@@ -1,27 +1,20 @@
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
 from kivy.uix.image import Image
+import kivy.properties as Properties
 
 import requests
 import json
 
 id_endpoint = "http://api.openweathermap.org/data/2.5/weather?id=%s&appid=%s&units=%s"
 
-class WeatherWidget (AnchorLayout):
-    
+class WeatherWidget(Image):
+
     def __init__(self, **kwargs):
         super(WeatherWidget, self).__init__(**kwargs)
-        self.anchor_x = 'center'
-        self.anchor_y = 'center'
-        self.size_hint =(.2, .2)
-        self.pos_hint ={"x":0.075, "y":0.75}
 
         #Weather
-        self.add_widget(Image(source=switch_demo(getWeatherReducedByCityId()['weather'],2), 
-                allow_stretch=True, keep_ratio=False,
-                size_hint =(.2, .2)
-                ))
-
+        self.source=switch_demo(getWeatherReducedByCityId()['weather'],2)
         
 def switch_demo(argument, theme):
     path = "images/icons/"
