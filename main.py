@@ -1,17 +1,20 @@
-
 from customWidgets.SpotifyWidget import SpotifyWidget
 from utils.volume import VolumeWid
 from menu.Screens import Screens
 import kivy
 kivy.require('1.11.1')  # replace with your current kivy version !
 
-
+from kivy.app import App
+from kivy.uix.image import Image
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.core.window import Window
 
 Window.size = (540,960)
 
 from customWidgets.NewsWidget import NewsWidget
 from customWidgets.RootLayout import RootLayout
-from customWidgets.infoDay import InfoDay
+from customWidgets.InfoDay import InfoDay
 from customWidgets.QuotesWidget import QuotesWidget
 from customWidgets.NotesWidget import NotesWidget
 
