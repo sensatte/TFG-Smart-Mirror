@@ -1,0 +1,39 @@
+#:kivy 1.0
+<NotesWidget>:
+    
+    size_hint:.3,.3
+
+    orientation:"rl-tb"
+    cols:3
+    rows:3    
+    spacing:[10,10]
+    padding:[20,20,20,20]
+    row_force_default:True
+    col_force_default:True
+    row_default_height:self.height/3
+    col_default_width:self.width/3
+    orientation:'rl-tb'
+
+    # canvas.before:
+    #     Color:
+    #         rgba: 0.2,0.5,0.4,1
+    #     Rectangle:
+    #         pos: self.pos
+    #         size: self.size 
+
+<ColoredLabel>:
+    font_size: root.height*0.1
+    text_size: self.width, None
+    size: self.texture_size
+    halign: 'center'
+    is_shortened: True
+
+    background_color:
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+        
