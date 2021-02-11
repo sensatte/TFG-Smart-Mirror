@@ -24,14 +24,13 @@ class SmartMirrorApp(App):
 
         widgets = []
 
-        spotifyWidget = SpotifyWidget()
-        widgets.append(spotifyWidget)
+        # spotifyWidget = SpotifyWidget()
+        # widgets.append(spotifyWidget)
 
-        volumeWidget=VolumeWid()
-        widgets.append(volumeWidget)
-
+        # volumeWidget=VolumeWid()
+        # widgets.append(volumeWidget)
         
-        infoDay = InfoDay(size_hint=(.3, .15), pos_hint={
+        infoDay = InfoDayWidget(size_hint=(.3, .15), pos_hint={
                           "x": 0, "top": 1})
         widgets.append(infoDay)
 
