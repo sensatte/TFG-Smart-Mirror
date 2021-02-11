@@ -1,3 +1,4 @@
 Kivy==2.0.0
 PyAutoGUI==0.9.52
 gpiozero==1.5.1
+spotipy==2.16.1

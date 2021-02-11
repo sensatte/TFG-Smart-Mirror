@@ -9,9 +9,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 Builder.load_file('kv\\InfoDay.kv')
 
-class InfoDay(RelativeLayout):
+class InfoDayWidget(RelativeLayout):
     def __init__(self, **kwargs):
-        super(InfoDay, self).__init__(**kwargs)
+        super(InfoDayWidget, self).__init__(**kwargs)
 
         clock = ClockWidget()
         date = DateWidget()

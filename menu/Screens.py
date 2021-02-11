@@ -23,6 +23,8 @@ class Screens(ScreenManager):
 
         self.add_widget(scMenu)
         self.add_widget(Screen(name="aceituna"))
+
+        self.current="aceituna"
         # self.add_widget(Screen(name='settings'))
 
 
