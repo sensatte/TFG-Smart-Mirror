@@ -1,17 +1,20 @@
-
 from customWidgets.SpotifyWidget import SpotifyWidget
 from utils.volume import VolumeWid
 from menu.Screens import Screens
 import kivy
 kivy.require('1.11.1')  # replace with your current kivy version !
 
-
+from kivy.app import App
+from kivy.uix.image import Image
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.core.window import Window
 
 Window.size = (540,960)
 
 from customWidgets.NewsWidget import NewsWidget
 from customWidgets.RootLayout import RootLayout
-from customWidgets.infoDay import InfoDay
+from customWidgets.InfoDayWidget import InfoDayWidget
 from customWidgets.QuotesWidget import QuotesWidget
 from customWidgets.NotesWidget import NotesWidget
 
@@ -21,14 +24,13 @@ class SmartMirrorApp(App):
 
         widgets = []
 
-        spotifyWidget = SpotifyWidget()
-        widgets.append(spotifyWidget)
+        # spotifyWidget = SpotifyWidget()
+        # widgets.append(spotifyWidget)
 
-        volumeWidget=VolumeWid()
-        widgets.append(volumeWidget)
-
+        # volumeWidget=VolumeWid()
+        # widgets.append(volumeWidget)
         
-        infoDay = InfoDay(size_hint=(.3, .15), pos_hint={
+        infoDay = InfoDayWidget(size_hint=(.3, .15), pos_hint={
                           "x": 0, "top": 1})
         widgets.append(infoDay)
 
