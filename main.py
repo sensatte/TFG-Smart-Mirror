@@ -1,54 +1,43 @@
-from customWidgets.SpotifyWidget import SpotifyWidget
-from utils.volume import VolumeWid
-from menu.Screens import Screens
 import kivy
 kivy.require('1.11.1')  # replace with your current kivy version !
 
 from kivy.app import App
-from kivy.uix.image import Image
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
 from kivy.core.window import Window
+from kivy.uix.screenmanager import ScreenManager, Screen
+
+from screens.Home import Home
+from screens.MenuLayout import MenuLayout
+from screens.InfoDayConfig import InfoDayConfig
 
 Window.size = (540,960)
 
-from customWidgets.NewsWidget import NewsWidget
-from customWidgets.RootLayout import RootLayout
-from customWidgets.InfoDayWidget import InfoDayWidget
-from customWidgets.QuotesWidget import QuotesWidget
-from customWidgets.NotesWidget import NotesWidget
+#import kv
+from kivy.lang import Builder
+Builder.load_file('kv\\main.kv')
 
 class SmartMirrorApp(App):
 
     def build(self):
 
-        widgets = []
-
-        # spotifyWidget = SpotifyWidget()
-        # widgets.append(spotifyWidget)
-
-        # volumeWidget=VolumeWid()
-        # widgets.append(volumeWidget)
+        #TODO forma bonita de meter las pantallas
+        # Create the screen manager
+        scMenu=ScreenManager()
         
-        infoDay = InfoDayWidget(size_hint=(.3, .15), pos_hint={
-                          "x": 0, "top": 1})
-        widgets.append(infoDay)
+        home = Screen(name="home")
+        home.add_widget(Home())
+        scMenu.add_widget(home)
 
-        # quotes = QuotesWidget()  
-        # widgets.append(quotes)
+        menu=Screen(name="menu")
+        menu.add_widget(MenuLayout())
+        scMenu.add_widget(menu)
 
-        # notes = NotesWidget()  
-        # widgets.append(notes)
+        infoDay=Screen(name="clock")
+        infoDay.add_widget(InfoDayConfig())
+        scMenu.add_widget(infoDay)
 
-        test = Screens()
-        widgets.append(test)
+        scMenu.current = "home"
         
-        root_layout = RootLayout()
-
-        for widget in widgets:
-            root_layout.add_widget(widget)
-
-        return root_layout
+        return scMenu
 
 
 if __name__ == '__main__':
