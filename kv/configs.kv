@@ -1,15 +1,259 @@
 #:kivy 1.0
+# <InfoDayConfig>:
+#     orientation: "vertical"
+#     size_hint:.4,.3
+#     canvas.before:
+#         Color:
+#             rgba: 1, 1, 1, 1
+#         Line:
+#             width: 2.
+#             rectangle: self.x, self.y, self.width, self.height
+
 <InfoDayConfig>:
-    orientation: "vertical"
     size_hint:.4,.3
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1
         Line:
             width: 2.
-            rectangle: self.x, self.y, self.width, self.height
+            rectangle: 0, 0, self.width, self.height 
+    TabbedPanel:
+        background_color: 0,0,0,0
+        do_default_tab: False
+        padding: [0,5,0,0]
+        tab_width: self.parent.width / 3
+        TabbedPanelItem:
+            background_color: 1,0,0,0
+            width: 10
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images\\menu\\clock.png"
+                    size: 40,40
+                    pos: self.center_x-20, self.center_y-20
+            Scrolling:
+                GridLayout:
+                    cols: 1
+                    padding: 15
+                    spacing: 10
+                    size_hint_y: None
+                    height: self.minimum_height
 
-    Label:
-        halign: 'left'
+                    #Hora
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 50
+                        Image:
+                            source: "images\\menu\\clock.png"
 
+                        Label:
+                            text: "Hora"
+                            font_size:"22"
+                        
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 50
+                        Label:
+                            text: "Formato:"
+                        ToggleButton:
+                            group: "horaFormato"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "12h"
+                            
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.formatClock(self)
+                        ToggleButton:
+                            group: "horaFormato"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "24h"     
+                            state: "down"                      
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.formatClock(self)
+                   
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 50
+                        ToggleButton:
+                            group: "horaColor"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "Blanco"
+                            state: "down"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.colorClock(self)
+                        ToggleButton:
+                            group: "horaColor"
+                            color: [149/255, 125/255, 173/255, 1] if self.state == "down" else [149/255, 125/255, 173/255, .6]
+                            text: "Morado"                           
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.colorClock(self)
+                        ToggleButton:
+                            group: "horaColor"
+                            color: [140/255, 183/255, 141/255, 1] if self.state == "down" else [140/255, 183/255, 141/255, .6]
+                            text: "Verde"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.colorClock(self)
         
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 50
+                        Label:
+                            text: "Segundos:"
+                        ToggleButton:
+                            group: "horaSegundos"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "Sí"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.secondsClock(self)
+                        ToggleButton:
+                            group: "horaSegundos"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "No"                           
+                            background_color:[0, 0, 0, 0]
+                            state: "down"
+                            allow_no_selection: False
+                            on_press: root.secondsClock(self)
+        
+        TabbedPanelItem:
+            background_color: 0,0,0,0
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images\\menu\\schedule.png"
+                    size: 40,40
+                    pos: self.center_x-20, self.center_y-20
+            Scrolling:
+                GridLayout:
+                    cols: 1
+                    padding: 15
+                    spacing: 10
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    #Fecha
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 50
+                        Image:
+                            source: "images\\menu\\schedule.png"
+
+                        Label:
+                            text: "Fecha"
+                            font_size:"22"
+
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 50
+                        Label:
+                            text: "Formato:"
+                        CheckBox:
+                            active: False
+                        CheckBox:
+                            active: True
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 50
+                        Label:
+                            text: "Color:"
+                        CheckBox:
+                            active: False
+                        CheckBox:
+                            active: True
+                        CheckBox:
+                            active: True
+
+        TabbedPanelItem:
+            background_color: 0,0,0,0
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images\\menu\\weather.png"
+                    size: 40,40
+                    pos: self.center_x-20, self.center_y-20
+            Scrolling:
+                GridLayout:
+                    cols: 1
+                    padding: 15
+                    spacing: 10
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    #Fecha
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 50
+                        Image:
+                            source: "images\\menu\\schedule.png"
+
+                        Label:
+                            text: "Fecha"
+                            font_size:"22"
+
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 50
+                        Label:
+                            text: "Formato:"
+                        CheckBox:
+                            active: False
+                        CheckBox:
+                            active: True
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 50
+                        Label:
+                            text: "Color:"
+                        CheckBox:
+                            active: False
+                        CheckBox:
+                            active: True
+                        CheckBox:
+                            active: True
+
+
+
+
+<Scrolling>:
+    do_scroll_x: False
+    bar_margin: 0
+    bar_width: 0
+    bar_color: [.7,.7,.7,.9]
+    bar_inactive_color: [.7,.7,.7,.9]
+    scroll_type: ['bars','content']
+
+
+
+        # #############################################
+        #             Widget:
+        #                 id: separator
+        #                 size_hint_y: None
+        #                 height: 6
+        #                 canvas:
+        #                     Color:
+        #                         rgba: 1., 1., 1., .6
+        #                     Rectangle:
+        #                         pos: root.width/20, separator.center_y
+        #                         size: root.width-root.width/10, 2
+        # #############################################

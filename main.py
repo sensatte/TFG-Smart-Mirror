@@ -1,5 +1,5 @@
 import kivy
-kivy.require('1.11.1')  # replace with your current kivy version !
+kivy.require('2.0.0')  # replace with your current kivy version !
 
 from kivy.app import App
 from kivy.core.window import Window
@@ -35,7 +35,7 @@ class SmartMirrorApp(App):
         infoDay.add_widget(InfoDayConfig())
         scMenu.add_widget(infoDay)
 
-        scMenu.current = "home"
+        scMenu.current = "clock"
         
         return scMenu
 

@@ -27,8 +27,8 @@ class Home(FloatLayout):
         # quotes = QuotesWidget()  
         # widgets.append(quotes)
 
-        # notes = NotesWidget()  
-        # widgets.append(notes)
+        notes = NotesWidget()  
+        widgets.append(notes)
 
         for i in widgets:
             self.add_widget(i)

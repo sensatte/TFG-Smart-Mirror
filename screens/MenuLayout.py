@@ -20,7 +20,7 @@ class MenuLayout(FloatLayout):
 
         self.activated=False
 
-        self.selectedItem = (0,2)      
+        self.selectedItem = (1,1)      
         #TODO oscurecer fondo al abrir menu
         #TODO que no escuche al teclado si no está menu
         #TODO poner teclado en .py distinto
@@ -79,6 +79,9 @@ class MenuLayout(FloatLayout):
     def pressedOption(self, widget):
         anim = Animation(size_hint=(0.2,0.2), duration=.1)
         anim += Animation(opacity=0,size_hint=(0.3,0.3), duration=.2)
+        
+        anim.bind(on_complete=self.openSelected)
+        anim += Animation(opacity=1, duration=.2)
         anim.start(widget)
 
 
@@ -92,13 +95,13 @@ class MenuLayout(FloatLayout):
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'c':
             if (self.activated==True):
-                self.activated==False
+                self.activated=False
                 self.fadeOut()
                 App.get_running_app().root.transition = CardTransition(duration=1)
                 App.get_running_app().root.current = "home"
                 
-            else:
-                self.activated==True
+            elif (self.activated==False):
+                self.activated=True
                 self.fadeIn()
                 App.get_running_app().root.transition = FadeTransition(duration=.3)
                 App.get_running_app().root.current = "menu"
@@ -112,7 +115,8 @@ class MenuLayout(FloatLayout):
         if keycode[1] == 's':
             self.moveDown()
         if keycode[1] == 'enter':
-            self.openSelected()
+            self.pressedOption(self.itemsMatrix[(self.selectedItem[0],self.selectedItem[1])])
+
 
         return True
 
@@ -149,10 +153,10 @@ class MenuLayout(FloatLayout):
         self.updateButtons()
         
 
-    def openSelected(self):
+    def openSelected(self, *args):
         #TODO abrir menu del widget                    
         # #llama al método de la animación con el widget de selected item
-        self.pressedOption(self.itemsMatrix[(self.selectedItem[0],self.selectedItem[1])])
+        
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = self.itemsMatrix.get(self.selectedItem).name
 
