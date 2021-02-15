@@ -10,6 +10,7 @@ from screens.MenuLayout import MenuLayout
 from screens.InfoDayConfig import InfoDayConfig
 
 Window.size = (540,960)
+Window.minimum_width, Window.minimum_height = Window.size
 
 #import kv
 from kivy.lang import Builder

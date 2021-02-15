@@ -154,7 +154,6 @@ class MenuLayout(FloatLayout):
         
 
     def openSelected(self, *args):
-        #TODO abrir menu del widget                    
         # #llama al método de la animación con el widget de selected item
         
         App.get_running_app().root.transition = FadeTransition(duration=.3)
