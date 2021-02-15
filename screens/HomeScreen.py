@@ -27,18 +27,14 @@ class HomeScreen(Screen):
         # volumeWidget=VolumeWid()
         # widgets.append(volumeWidget)
 
-        infoDay = InfoDayWidget(size_hint=(.3, .15), pos_hint={
-            "x": 0, "top": 1})
-        widgets.append(infoDay)
+        # infoDay = InfoDayWidget()
+        # widgets.append(infoDay)
 
         # quotes = QuotesWidget()
         # widgets.append(quotes)
 
         # notes = NotesWidget()
         # widgets.append(notes)
-
-        menuButton = self.ids.menuButton
-        menuButton.on_press = self.goToConfigScreen
 
         for i in widgets:
             self.add_widget(i)

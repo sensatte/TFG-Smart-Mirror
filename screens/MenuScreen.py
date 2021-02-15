@@ -12,28 +12,7 @@ class MenuScreen(Screen):
 
     def __init__(self, **kwargs):
         super(MenuScreen, self).__init__(**kwargs)
-
-        widgets = []
-
-        homeButton = self.ids.homeButton
-        homeButton.on_press = self.goToHomeScreen
-
-        optionsGrid = GridLayout(
-            cols=3,
-            rows=3,
-            pos_hint={"center_x": .5, "center_y": .5},
-            size_hint=(.7, .7)
-        )
-
-        optionsGrid.add_widget(Button(text='Hello 1'))
-        optionsGrid.add_widget(Button(text='World 1'))
-        optionsGrid.add_widget(Button(text='Hello 2'))
-        optionsGrid.add_widget(Button(text='World 2'))
-
-        widgets.append(optionsGrid)
-
-        for i in widgets:
-            self.add_widget(i)
+        pass
 
     def goToHomeScreen(self,):
         print("caramelizada")
