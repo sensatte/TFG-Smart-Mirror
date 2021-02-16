@@ -1,3 +1,4 @@
+from screens.Home import Home
 from screens.MenuScreen import MenuScreen
 from kivy.lang import Builder
 from screens.InfoDayConfig import InfoDayConfig
@@ -11,6 +12,7 @@ kivy.require('2.0.0')  # replace with your current kivy version !
 
 
 Window.size = (540, 960)
+Window.minimum_width, Window.minimum_height = Window.size
 
 #import kv
 Builder.load_file('kv\\main.kv')
