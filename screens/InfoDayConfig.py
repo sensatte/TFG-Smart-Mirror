@@ -1,14 +1,15 @@
 # pylint: disable=no-member
 
-from kivy.uix.checkbox import CheckBox
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.scrollview import ScrollView
-from kivy.uix.tabbedpanel import TabbedPanel
 from kivy.uix.label import Label
 import kivy.properties as Properties
 from kivy.uix.behaviors import ButtonBehavior  
 from kivy.uix.image import Image 
-from kivy.uix.screenmanager import FallOutTransition, Screen
+from kivy.app import App
+from kivy.animation import Animation
+from functools import partial
+from kivy.uix.screenmanager import FadeTransition
 
 from customWidgets.infoDayResources.DateWidget import DateWidget
 from customWidgets.infoDayResources.WeatherWidget import WeatherWidget
@@ -24,6 +25,7 @@ class InfoDayConfig(Screen):
     #TODO color picker
     #TODO la fecha tarda mucho en actualizarse
     #TODO poder poner la id de ciudad para temp y weather
+    #TODO que las anim las coja de otro archivo
     
     def __init__(self, **kwargs):
         super(InfoDayConfig, self).__init__(**kwargs)
@@ -73,10 +75,15 @@ class InfoDayConfig(Screen):
         WeatherWidget.theme = checkboxInstance
         print("Cambiado a tema: ", checkboxInstance)
 
+    def pressedBack(self, widget):
+        anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)
+        anim += Animation(pos_hint={"center_x": .5, "y": 0}, duration=.1)
+        anim.bind(on_complete=partial(self.goToMenuScreen))
+        anim.start(widget)
 
-    def goToMenuScreen(self):
-        self.parent.transition = FallOutTransition(duration=.75)
-        self.parent.current = 'menu'
+    def goToMenuScreen(self, widget, selected):
+        App.get_running_app().root.transition = FadeTransition(duration=.3)
+        App.get_running_app().root.current = "menu"
 
 class ImageButton(ButtonBehavior, Image):  
     pass

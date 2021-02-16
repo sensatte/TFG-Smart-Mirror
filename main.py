@@ -1,7 +1,6 @@
 from screens.MenuScreen import MenuScreen
 from kivy.lang import Builder
 from screens.InfoDayConfig import InfoDayConfig
-from screens.MenuLayout import MenuLayout
 from screens.HomeScreen import HomeScreen
 from kivy.uix.screenmanager import FadeTransition, RiseInTransition, ScreenManager, Screen
 from kivy.core.window import Window
@@ -12,10 +11,6 @@ kivy.require('2.0.0')  # replace with your current kivy version !
 
 Window.size = (540, 960)
 Window.minimum_width, Window.minimum_height = Window.size
-
-#import kv
-Builder.load_file('kv\\main.kv')
-
 
 class SmartMirrorApp(App):
 
@@ -35,7 +30,7 @@ class SmartMirrorApp(App):
         infoDay.add_widget(InfoDayConfig())
         scMenu.add_widget(infoDay)
 
-        scMenu.current = "menu"
+        scMenu.current = "clock"
 
         return scMenu
 

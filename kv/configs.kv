@@ -1,20 +1,23 @@
 #:kivy 1.0
 
 <InfoDayConfig>:
-    size_hint:.4,.3
+    size_hint:.4,.4
     id: main
-    canvas.before:
-        Color:
-            rgba: 1, 1, 1, 1
-        Line:
-            width: 2.
-            rectangle: 0, 0, self.width, self.height 
     TabbedPanel:
+        size_hint: 1,.75
         background_color: 0,0,0,0
         do_default_tab: False
         padding: [0,5,0,0]
         tab_width: self.parent.width / 3
         tab_height: 30
+        pos_hint: {"center_x": .5, "center_y": .5}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2.
+                rectangle: self.x, self.y, self.width, self.height 
+
     #Hora
         TabbedPanelItem:
             background_color: 1,0,0,0
@@ -584,6 +587,13 @@
                                 
                 
 
+    ImageButton:
+        id: homeButton
+        size_hint_y: None
+        source: "images/menu/previous.png"
+        pos_hint: {"center_x": .5, "y": 0}
+        size_hint: (.17, .11)
+        on_press: root.pressedBack(self)
 
 <Scrolling>:
     do_scroll_x: False
@@ -593,10 +603,3 @@
     bar_inactive_color: [1,1,1,.2]
     scroll_type: ['content']
 
-# <ImageButton>:
-#     id: homeButton
-#     size_hint_y: None
-#     source: "images/menu/Spotify_bonico.png"
-#     pos_hint: {"center_x": .5, "y": 0}
-#     size_hint: (.17, .11)
-#     # on_press: root.goToMenuScreen()

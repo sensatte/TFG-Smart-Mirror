@@ -5,7 +5,7 @@ from customWidgets.InfoDayWidget import InfoDayWidget
 from customWidgets.QuotesWidget import QuotesWidget
 from customWidgets.NotesWidget import NotesWidget
 from customWidgets.SpotifyWidget import SpotifyWidget
-from customWidgets.ImageButton import ImageButton
+from customWidgets.utils import ImageButton
 from utils.volume import VolumeWid
 from kivy.uix.screenmanager import FadeTransition, RiseInTransition, Screen
 
@@ -40,6 +40,5 @@ class HomeScreen(Screen):
             self.add_widget(i)
 
     def goToConfigScreen(self,):
-        print("aceituna")
         self.parent.transition = RiseInTransition(duration=.75)
         self.parent.current = 'menu'
