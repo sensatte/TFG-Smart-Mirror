@@ -1,0 +1,22 @@
+#:kivy 1.0
+<HomeScreen>:
+    ImageButton:
+        id: menuButton
+        keep_ratio: False
+        allow_stretch: True
+        source: "images/menu/settings.png"
+        pos_hint: {"center_x": .5, "y": 0}
+        size_hint: (.17, .1)
+        on_press: root.goToConfigScreen()
+        canvas.before:
+            Color:
+                rgba: 0.2,0.5,0.4,1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+    InfoDayWidget:
+        size_hint:(.3, .15)
+        pos_hint:{"x": 0, "top": 1}
+
+    
