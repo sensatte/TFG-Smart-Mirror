@@ -1,61 +1,49 @@
-from customWidgets.SpotifyWidget import SpotifyWidget
-from utils.volume import VolumeWid
-from menu.Screens import Screens
-import kivy
-kivy.require('1.11.1')  # replace with your current kivy version !
-
-from kivy.app import App
-from kivy.uix.image import Image
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
+from screens.MenuScreen import MenuScreen
+from kivy.lang import Builder
+from screens.InfoDayConfig import InfoDayConfig
+from screens.MenuLayout import MenuLayout
+from screens.HomeScreen import HomeScreen
+from kivy.uix.screenmanager import FadeTransition, RiseInTransition, ScreenManager, Screen
 from kivy.core.window import Window
+from kivy.app import App
+import kivy
+kivy.require('2.0.0')  # replace with your current kivy version !
 
-Window.size = (540,960)
 
-from customWidgets.NewsWidget import NewsWidget
-from customWidgets.RootLayout import RootLayout
-from customWidgets.InfoDayWidget import InfoDayWidget
-from customWidgets.QuotesWidget import QuotesWidget
-from customWidgets.NotesWidget import NotesWidget
+Window.size = (540, 960)
+
+#import kv
+Builder.load_file('kv\\main.kv')
+
 
 class SmartMirrorApp(App):
 
     def build(self):
 
-        widgets = []
+        # TODO forma bonita de meter las pantallas
+        # Create the screen manager
+        scMenu = ScreenManager()
 
-        # spotifyWidget = SpotifyWidget()
-        # widgets.append(spotifyWidget)
+        home = HomeScreen(name="home")
+        scMenu.add_widget(home)
 
-        # volumeWidget=VolumeWid()
-        # widgets.append(volumeWidget)
-        
-        infoDay = InfoDayWidget(size_hint=(.3, .15), pos_hint={
-                          "x": 0, "top": 1})
-        widgets.append(infoDay)
+        menu = MenuScreen(name="menu")
+        scMenu.add_widget(menu)
 
-        # quotes = QuotesWidget()  
-        # widgets.append(quotes)
+        # infoDay = Screen(name="clock")
+        # infoDay.add_widget(InfoDayConfig())
+        # scMenu.add_widget(infoDay)
 
-        # notes = NotesWidget()  
-        # widgets.append(notes)
+        scMenu.current = "home"
 
-        test = Screens()
-        widgets.append(test)
-        
-        root_layout = RootLayout()
-
-        for widget in widgets:
-            root_layout.add_widget(widget)
-
-        return root_layout
+        return scMenu
 
 
 if __name__ == '__main__':
 
-    #GPIO to Keyboard Translate
+    # GPIO to Keyboard Translate
     # gpio_translate_thread = threading.Thread(target=gpio_translate, name='GPIO Translation')
     # gpio_translate_thread.daemon = True
     # gpio_translate_thread.start()
-    
+
     SmartMirrorApp().run()
