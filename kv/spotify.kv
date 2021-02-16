@@ -1,5 +1,7 @@
 #:kivy 1.0
 #:set buttonsSize (.2, .25)
+#:set cloudImage "https://asxornvikq.cloudimg.io/v7/"
+#:set roundedCorners "?radius=32&force_format=png"
 
 #TODO AÑADIR RESTO DE WIDGETS
 
@@ -13,7 +15,7 @@
 
     Label:
         id: deviceId
-        text: root.deviceId[-4:]
+        text: root.deviceId[-4:] if root.deviceId != None else ""
         pos_hint: {"center_x": .5, "top": 1}
         #TODO WHY WONT POS_HINT WORK HERE
 
@@ -21,16 +23,33 @@
         id: songNameLabel
         text: root.songName
 
+    AsyncImage:
+        id: songImage
+        nocache: True
+        source: cloudImage+root.songImageUrl+roundedCorners if root.songImageUrl != "" else "images/imageFile.jpeg"
+        size_hint: None, None
+        pos_hint: {"center_x": .5, "center_y": .5}
+        canvas.before:
+            PushMatrix
+            Rotate:
+                angle: root.songImageAngle
+                axis: 0, 0, 1
+                origin: self.center
+        canvas.after:
+            PopMatrix
+
     ImageButton:
         id: startPauseButton
+        disabled: root.relaxing
+        color: [.3, .3, .3, 1] if self.disabled  else [1, 1, 1, 1]
         keep_ratio: False
         allow_stretch: True
         source: "images/menu/settings.png"
         pos_hint: {"center_x": .5, "y": 0}
         size_hint: buttonsSize
-        # on_press: print(root.wrapper.test1, "   ", root.wrapper.test())
-        # on_press: root.wrapper.test()
-        on_press: root.songName = "pause/start"
+        on_press: root.relaxWithThePresses()
+        on_press: root.wrapper.pauseResume(root.deviceId)
+        on_press: root.paused = not root.paused
         canvas.before:
             Color:
                 rgba: 0.2,0.5,0.4,1
@@ -40,12 +59,17 @@
 
     ImageButton:
         id: nextButton
+        disabled: root.relaxing
+        color: [.3, .3, .3, 1] if self.disabled  else [1, 1, 1, 1]
         keep_ratio: False
         allow_stretch: True
         source: "images/menu/settings.png"
         pos_hint: {"center_x": .75, "y": 0}
         size_hint: buttonsSize
-        on_press: root.songName = "next"
+        on_press: root.relaxWithThePresses()
+        on_press: root.wrapper.next(root.deviceId)
+        on_press: root.getNewSong()
+        on_press: root.paused = False
         canvas.before:
             Color:
                 rgba: 0.2,0.5,0.4,1
@@ -55,12 +79,17 @@
 
     ImageButton:
         id: previousButton
+        disabled: root.relaxing
+        color: [.3, .3, .3, 1] if self.disabled  else [1, 1, 1, 1]
         keep_ratio: False
         allow_stretch: True
         source: "images/menu/settings.png"
         pos_hint: {"center_x": .25, "y": 0}
         size_hint: buttonsSize
-        on_press: root.songName = "previous"
+        on_press: root.relaxWithThePresses()
+        on_press: root.wrapper.previous(root.deviceId)
+        on_press: root.getNewSong()
+        on_press: root.paused = False
         canvas.before:
             Color:
                 rgba: 0.2,0.5,0.4,1

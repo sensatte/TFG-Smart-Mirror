@@ -18,6 +18,8 @@ class SpotifyWrapper2():
             auth_manager=SpotifyOAuth(scope=self.scope))
         self.spotifyObject.requests_timeout = 20
 
+        self.relaxing = False
+
     def getSpotipyInstance(self):
         if (not self.spotifyObject):
             self.spotifyObject = spotipy.Spotify(
@@ -32,6 +34,35 @@ class SpotifyWrapper2():
             print("No devices found")
             return None
 
-    def loadNextSong(self, deviceId):
-        # TODO
-        pass
+    def getCurrentPlaylist(self):
+        return self.getSpotipyInstance().current_playback()
+
+    def getCurrentSong(self):
+        return self.getSpotipyInstance().current_user_playing_track()["item"]
+
+    def pause(self, deviceId):
+        self.getSpotipyInstance().pause_playback(device_id=deviceId)
+
+    def resume(self, deviceId):
+        self.getSpotipyInstance().start_playback(device_id=deviceId)
+
+    def pauseResume(self, deviceId):
+        if deviceId != None:
+            currentPlaylist = self.getCurrentPlaylist()
+            if (currentPlaylist == None or currentPlaylist["is_playing"] == False):
+                print("Resume")
+                self.resume(deviceId=deviceId)
+            else:
+                print("Pause")
+                self.pause(deviceId=deviceId)
+
+    def next(self, deviceId):
+        self.getSpotipyInstance().next_track(device_id=deviceId)
+
+    def previous(self, deviceId):
+        self.getSpotipyInstance().previous_track(device_id=deviceId)
+
+
+# wrapper = SpotifyWrapper2()
+
+# print(wrapper.getCurrentSong())
