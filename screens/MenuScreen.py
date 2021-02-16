@@ -1,10 +1,10 @@
+from kivy.lang import Builder
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import FallOutTransition, Screen
 from customWidgets.ImageButton import ImageButton
 from kivy.uix.gridlayout import GridLayout
 
 #import kv
-from kivy.lang import Builder
 Builder.load_file("kv/menuScreen.kv")
 
 
