@@ -8,6 +8,7 @@ from kivy.uix.label import Label
 import kivy.properties as Properties
 from kivy.uix.behaviors import ButtonBehavior  
 from kivy.uix.image import Image 
+from kivy.uix.screenmanager import FallOutTransition, Screen
 
 from customWidgets.infoDayResources.DateWidget import DateWidget
 from customWidgets.infoDayResources.WeatherWidget import WeatherWidget
@@ -72,10 +73,13 @@ class InfoDayConfig(Screen):
         WeatherWidget.theme = checkboxInstance
         print("Cambiado a tema: ", checkboxInstance)
 
+
+    def goToMenuScreen(self):
+        self.parent.transition = FallOutTransition(duration=.75)
+        self.parent.current = 'menu'
+
 class ImageButton(ButtonBehavior, Image):  
     pass
-
-
 
 
 class Scrolling(ScrollView):

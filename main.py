@@ -1,4 +1,3 @@
-from screens.Home import Home
 from screens.MenuScreen import MenuScreen
 from kivy.lang import Builder
 from screens.InfoDayConfig import InfoDayConfig
@@ -32,11 +31,11 @@ class SmartMirrorApp(App):
         menu = MenuScreen(name="menu")
         scMenu.add_widget(menu)
 
-        # infoDay = Screen(name="clock")
-        # infoDay.add_widget(InfoDayConfig())
-        # scMenu.add_widget(infoDay)
+        infoDay = Screen(name="clock")
+        infoDay.add_widget(InfoDayConfig())
+        scMenu.add_widget(infoDay)
 
-        scMenu.current = "home"
+        scMenu.current = "menu"
 
         return scMenu
 
