@@ -62,6 +62,8 @@ class SpotifyWrapper2():
     def previous(self, deviceId):
         self.getSpotipyInstance().previous_track(device_id=deviceId)
 
+    def setVolume(self, deviceId, volume):
+        self.getSpotipyInstance().volume(volume_percent=volume, device_id=deviceId)
 
 # wrapper = SpotifyWrapper2()
 

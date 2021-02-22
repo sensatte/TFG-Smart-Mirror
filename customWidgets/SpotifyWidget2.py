@@ -24,6 +24,8 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
     relaxing = BooleanProperty(True)
     songImageAngle = NumericProperty(0)
     paused = BooleanProperty(True)
+    volume = NumericProperty(0)
+    collapsed = BooleanProperty(True)
 
     def __init__(self, **kwargs):
         super(SpotifyWidget2, self).__init__(**kwargs)
@@ -31,21 +33,32 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
         t = Thread(target=getDeviceIdThread, args=(self,), daemon=True)
         t.start()
 
+    def on_volume(self, instance, value):
+        if (self.deviceId != None):
+            self.wrapper.setVolume(deviceId=self.deviceId, volume=value)
+
     def on_deviceId(self, instance, value):
         print("Got the deviceId ", value)
         self.relaxing = False
-        self.getNewSong()
+
+        oldSongName = self.songName
+        self.volume = 50  # TODO GUARDAR EN MEMORIA EN VEZ DE HARDCODEAR
+        t = Thread(target=getNewSongThread, args=(
+            self, oldSongName,), daemon=True)
+        t.start()
         # TODO AVISAR A TODO DE QUE TENEMOS ID Y POR LO TANTO TODO DEBERIA WORKEAR
 
     def relaxWithThePresses(self):
         t = Thread(target=relaxWithThePressesThread, args=(self,), daemon=True)
         t.start()
 
-    def getNewSong(self):
-        oldSongName = self.songName
-        t = Thread(target=getNewSongThread, args=(
-            self, oldSongName,), daemon=True)
-        t.start()
+    def volUp(self):
+        if (self.volume <= 95):
+            self.volume += 5
+
+    def volDown(self):
+        if (self.volume >= 5):
+            self.volume -= 5
 
     def on_paused(self, instance, value):
         if value:
@@ -57,7 +70,7 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
 def animSpin(self):
     stopAnim(self)
 
-    anim = Animation(songImageAngle=360, duration=2)
+    anim = Animation(songImageAngle=-360, duration=2)
     anim += Animation(songImageAngle=0, duration=0)
     anim.repeat = True
     anim.start(self)
@@ -74,13 +87,17 @@ def getNewSongThread(widget, oldSongName):
         logging.info('Spotipy: Looking for new song')
         song = widget.wrapper.getCurrentSong()
 
-        if (song["name"] != oldSongName):
-            logging.info('Spotipy: Found new song: '+song["name"])
-            widget.songName = song["name"]
-            widget.songImageUrl = song["album"]["images"][-1]["url"].replace(
-                "https://", "")
-            # TODO IMAGEN DE LA CANCION
-            return
+        try:
+            if (song["name"] != oldSongName):
+                logging.info('Spotipy: Found new song: '+song["name"])
+                widget.songName = song["name"]
+                widget.songImageUrl = song["album"]["images"][-1]["url"].replace(
+                    "https://", "")
+                # TODO IMAGEN DE LA CANCION
+                # return
+        except:
+            print("error")
+            pass
         time.sleep(1)
 
 
