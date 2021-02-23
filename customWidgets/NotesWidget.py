@@ -1,4 +1,3 @@
-
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
 from kivy.uix.label import Label
@@ -6,6 +5,7 @@ from kivy.uix.image import Image
 from kivy.storage.jsonstore import JsonStore
 from kivy.graphics import Color, Rectangle, BorderImage
 import kivy.properties as Properties
+from customWidgets.utils.BehaviorUtil import ColoredLabel
 
 import json
 
@@ -45,7 +45,4 @@ def showNotes(self, noteList):
             self.add_widget(ColoredLabel(text=note["title"] + "\n" + note["text"], #size_hint_x=None, width=100,
                                             background_color=(float(note["r"])/255, float(note["g"])/255, float(note["b"])/255, 1)))
 
-
-class ColoredLabel(Label):
-    background_color = Properties.ListProperty((0,0,0,1))
 

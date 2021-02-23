@@ -1,10 +1,9 @@
 from kivy.uix.button import Button
-from kivy.uix.screenmanager import FallOutTransition, Screen
-from customWidgets.utils import ImageButton
+from kivy.uix.screenmanager import FadeTransition, Screen
+from customWidgets.utils.BehaviorUtil import ImageButton
+from customWidgets.utils.Animations import fadeIn, fadeOut
 from kivy.uix.gridlayout import GridLayout
 from kivy.animation import Animation
-from kivy.uix.screenmanager import FadeTransition
-from kivy.uix.screenmanager import CardTransition
 from kivy.app import App
 from functools import partial
 
@@ -18,14 +17,12 @@ Builder.load_file("kv/menuScreen.kv")
 class MenuScreen(Screen):
     
     #TODO que las animacines se cojan de un archivo distinto
-    #TODO poner animacion de abajo a arriba y que entre pantalla sea solo un difuminao
     #TODO poner botones que lleven a la otra pagina?)
-    #TOdO poner bolitasw que indiquen en que pagina estas 
+    #TODO poner bolitasw que indiquen en que pagina estas 
     
     def __init__(self, **kwargs):
         super(MenuScreen, self).__init__(**kwargs)
-        widgetList=['schedule', "news", "settings", "at", "clock", "schedule", "settings", "settings", "settings"]
-        
+        widgetList=['schedule', "notes", "clock", "at", "news", "notes", "settings", "settings", "settings"]
         self.maxCols = 3
         self.maxRows = 3
         self.itemMatrix={}
@@ -52,7 +49,7 @@ class MenuScreen(Screen):
                 pass
 
     def goToHomeScreen(self, widget, selected):
-        self.parent.transition = FallOutTransition(duration=.75)
+        self.parent.transition = FadeTransition(duration=.25)
         self.parent.current = 'home'
 
 
@@ -72,5 +69,18 @@ class MenuScreen(Screen):
     def pressedBack(self, widget):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)
         anim += Animation(pos_hint={"center_x": .5, "y": 0}, duration=.1)
-        anim.bind(on_complete=partial(self.goToHomeScreen))
+        anim.bind(on_complete=partial(self.fadeOut))
+        # anim.bind(on_complete=partial(self.goToHomeScreen))
         anim.start(widget)
+
+    def fadeIn(self):
+        anim = Animation(pos_hint={'center_x': 0.5, 'center_y': 0.5}, duration=.5)
+        anim &= Animation(size_hint=(.5,.4), duration=.5)
+        anim.start(self.ids.caja)
+
+    def fadeOut(self, widget, selected):
+        anim = Animation(pos_hint={'center_x': 0.5, 'center_y': -.5}, duration=.5)
+        anim &= Animation(size_hint=(.4,.3), duration=.5)
+        anim.bind(on_complete=partial(self.goToHomeScreen))
+        anim.start(self.ids.caja)
+        

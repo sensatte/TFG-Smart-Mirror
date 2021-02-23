@@ -1,15 +1,13 @@
 # pylint: disable=no-member
 
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.scrollview import ScrollView
-from kivy.uix.label import Label
 import kivy.properties as Properties
-from kivy.uix.behaviors import ButtonBehavior  
 from kivy.uix.image import Image 
 from kivy.app import App
 from kivy.animation import Animation
 from functools import partial
 from kivy.uix.screenmanager import FadeTransition
+from customWidgets.utils.BehaviorUtil import ImageButton, Scrolling
 
 from customWidgets.infoDayResources.DateWidget import DateWidget
 from customWidgets.infoDayResources.WeatherWidget import WeatherWidget
@@ -26,6 +24,7 @@ class InfoDayConfig(Screen):
     #TODO la fecha tarda mucho en actualizarse
     #TODO poder poner la id de ciudad para temp y weather
     #TODO que las anim las coja de otro archivo
+    #TODO alarmas
     
     def __init__(self, **kwargs):
         super(InfoDayConfig, self).__init__(**kwargs)
@@ -84,10 +83,3 @@ class InfoDayConfig(Screen):
     def goToMenuScreen(self, widget, selected):
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "menu"
-
-class ImageButton(ButtonBehavior, Image):  
-    pass
-
-
-class Scrolling(ScrollView):
-    pass

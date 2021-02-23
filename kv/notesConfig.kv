@@ -1,0 +1,197 @@
+#:kivy 1.0
+
+<NotesConfig>:
+    size_hint:.4,.4
+    id: main
+    TabbedPanel:
+        size_hint: 1,.75
+        background_color: 0,0,0,0
+        do_default_tab: False
+        padding: [0,5,0,5]
+        tab_width: self.parent.width / 2
+        tab_height: 30
+        pos_hint: {"center_x": .5, "center_y": .5}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2.
+                rectangle: self.x, self.y, self.width, self.height 
+
+    #Elegir notas
+        TabbedPanelItem:
+            background_color: 1,0,0,0
+            width: 10
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images\\menu\\notes.png"
+                    size: 30,30
+                    pos: self.center_x-15, self.center_y-15
+            Scrolling:
+                GridLayout:
+                    id: showNotes
+                    cols: 2
+                    padding: 15
+                    spacing: 10
+                    size_hint_y: None
+                    row_force_default:True
+                    row_default_height:self.height
+
+
+                   
+        # #############################################
+        #             Widget:
+        #                 size_hint_y: None
+        #                 height: 6
+        #                 canvas:
+        #                     Color:
+        #                         rgba: 1., 1., 1., .6
+        #                     Rectangle:
+        #                         pos: root.width/20, self.center_y
+        #                         size: root.width-root.width/10, 2
+        # #############################################
+
+
+
+
+
+
+    
+    #config notas
+        TabbedPanelItem:
+            background_color: 1,0,0,0
+            width: 10
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images\\menu\\notes.png"
+                    size: 30,30
+                    pos: self.center_x-15, self.center_y-15
+            Scrolling:
+                GridLayout:
+                    cols: 1
+                    padding: 15
+                    spacing: 10
+                    size_hint_y: None
+                    height: self.minimum_height
+                    
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 40
+                        Image:
+                            source: "images\\menu\\clock.png"
+
+                        Label:
+                            text: "Hora"
+                            font_size:"22"
+
+        #############################################
+
+                    Label:
+                        height: 20
+                        size_hint_y: None
+                        text: "Color:"
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 40
+                        ToggleButton:
+                            group: "horaColor"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "Blanco"
+                            state: "down"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.colorClock(self)
+                            canvas.before:
+                                Color:
+                                    rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+                        ToggleButton:
+                            group: "horaColor"
+                            color: [149/255, 125/255, 173/255, 1] if self.state == "down" else [149/255, 125/255, 173/255, .6]
+                            text: "Morado"                           
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.colorClock(self)
+                            canvas.before:
+                                Color:
+                                    rgba: [149/255, 125/255, 173/255,.2] if self.state == "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+                        ToggleButton:
+                            group: "horaColor"
+                            color: [140/255, 183/255, 141/255, 1] if self.state == "down" else [140/255, 183/255, 141/255, .6]
+                            text: "Verde"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.colorClock(self)
+                            canvas.before:
+                                Color:
+                                    rgba: [140/255, 183/255, 141/255,.2] if self.state == "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+                   
+        #############################################
+                    Widget:
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+        #############################################
+
+    ImageButton:
+        id: homeButton
+        size_hint_y: None
+        source: "images/menu/previous.png"
+        pos_hint: {"center_x": .5, "y": 0}
+        size_hint: (.17, .11)
+        on_press: root.pressedBack(self)
+
+<ColoredLabelConfig>:
+    font_size: root.height*0.1
+    text_size: self.width, None
+    size: self.texture_size
+    halign: 'center'
+    is_shortened: True
+    # on_press: root.pinNote(self.pinned, self.id)
+    on_press: print("a")
+
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    canvas.after:
+        Color:
+            rgba: (1, 1, 1, 1) if self.pinned==True else (1,1,1,0)
+
+        Line:
+            width: 1.
+            rectangle: self.x, self.y, self.width, self.height 
+
+    # canvas:
+    #     Color:
+    #         rgba: (1, 1, 1, 1) if self.disabled==True else (1,1,1,0)
+    #     Line:
+    #         width: 1.
+    #         rectangle: self.x, self.y, self.width, self.height 
+
+

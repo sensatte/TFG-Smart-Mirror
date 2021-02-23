@@ -1,16 +1,18 @@
 #:kivy 1.0
 <MenuScreen>:
     #:set gridLayoutSpacing 15
-    #:set gridLayoutSize (.4,.3)
-
+    #:set gridLayoutSize (.8,.75)
+    on_pre_enter: root.fadeIn()
     FloatLayout:
         id: caja
+        size_hint: .4,.3
+        pos_hint: {'center_x':0.5, 'center_y':-.5}
+        
         Carousel:
             id:car
             direction: 'right'
             anim_type: 'out_quart'
-            # size_hint:.4,.3
-            # pos_hint: {'center_x':.5, 'center_y':.5}
+            pos_hint: {'center_x':.5, 'center_y':.5}
             FloatLayout:
                 canvas.before:
                     Color:
@@ -67,5 +69,5 @@
             size_hint_y: None
             source: "images/menu/home.png"
             pos_hint: {"center_x": .5, "y": 0}
-            size_hint: (.17, .11)
+            size_hint: (.15, .11)
             on_press: root.pressedBack(self)
