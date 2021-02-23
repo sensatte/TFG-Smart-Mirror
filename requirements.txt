@@ -2,3 +2,6 @@ Kivy==2.0.0
 PyAutoGUI==0.9.52
 gpiozero==1.5.1
 spotipy==2.16.1
+pymongo==3.11.3
+mongoengine==0.10.7
+dnspython==2.1.0
