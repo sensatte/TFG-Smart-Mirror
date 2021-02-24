@@ -170,8 +170,7 @@
     size: self.texture_size
     halign: 'center'
     is_shortened: True
-    # on_press: root.pinNote(self.pinned, self.id)
-    on_press: print("a")
+    on_press: root.pinNote(self.noteid, self.pinned)
 
     canvas.before:
         Color:
@@ -181,17 +180,10 @@
             size: self.size
     canvas.after:
         Color:
-            rgba: (1, 1, 1, 1) if self.pinned==True else (1,1,1,0)
+            rgba: (1,1,1,1) if self.pinned==True else (1,1,1,0)
 
         Line:
             width: 1.
             rectangle: self.x, self.y, self.width, self.height 
-
-    # canvas:
-    #     Color:
-    #         rgba: (1, 1, 1, 1) if self.disabled==True else (1,1,1,0)
-    #     Line:
-    #         width: 1.
-    #         rectangle: self.x, self.y, self.width, self.height 
 
 

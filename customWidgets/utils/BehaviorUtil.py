@@ -4,6 +4,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.label import Label
 from kivy.app import App
 import kivy.properties as Properties
+import db.dbWrapper as dbWrapper
 
 
 class ImageButton(ButtonBehavior, Image):
@@ -14,16 +15,18 @@ class Scrolling(ScrollView):
 
 class ColoredLabel(Label):
     background_color = Properties.ListProperty((0,0,0,1))
+    visible = Properties.BooleanProperty()
 
 class ColoredLabelConfig(ButtonBehavior, Label):
+    noteid = Properties.NumericProperty()
     pinned = Properties.BooleanProperty()
     background_color = Properties.ListProperty((0,0,0,1))
 
-    # def pinNote(self, state): 
-    #     print(App.get_running_app.noteList)
-        # data["location"] = "NewPath"
-
-        # with open("db/notes.json", "w") as jsonFile:
-        #     json.dump(data, jsonFile)
-
+    def pinNote(self, noteId, pinned,): 
+        ColoredLabel.visible = pinned!=True
+        self.pinned = pinned!=True
+        note = dbWrapper.findNoteById(noteId)
+        note.pinned = pinned!=True
+        
+        note.save()
 

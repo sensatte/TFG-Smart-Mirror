@@ -23,7 +23,6 @@ class NotesConfig(Screen):
         super(NotesConfig, self).__init__(**kwargs)
         self.pos_hint={'center_y': 0.5, 'center_x': 0.5}
         noteList=dbWrapper.getAllNotes()
-        print(noteList)
         self.showNotes(noteList)
 
     def pressedBack(self, widget):
@@ -38,7 +37,7 @@ class NotesConfig(Screen):
 
     def showNotes(self, noteList):
         for note in noteList:
-            self.ids.showNotes.add_widget(ColoredLabelConfig(text=note.title + "\n" + note.text, pinned=note.pinned,
+            self.ids.showNotes.add_widget(ColoredLabelConfig(noteid=note._id, text=note.title + "\n" + note.text, pinned=note.pinned,
                                             background_color=(float(note.r)/255, float(note.g)/255, float(note.b)/255, 1)))
 
         
