@@ -7,6 +7,7 @@ import time
 from threading import Thread
 import logging
 from kivy.loader import Loader
+from customWidgets.AsyncImageButton import AsyncImageButton
 
 import socket
 
@@ -25,9 +26,7 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
     songImageAngle = NumericProperty(0)
     paused = BooleanProperty(True)
     volume = NumericProperty(0)
-    collapsed = BooleanProperty(False)
-    playlistUri = StringProperty(
-        "spotify:playlist:0lAKHIw0i0HZZMNqyIi29a")  # TODO GET FROM OPTIONS AND USAR
+    collapsed = BooleanProperty(True)
 
     def __init__(self, **kwargs):
         super(SpotifyWidget2, self).__init__(**kwargs)
@@ -67,6 +66,60 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
         else:
             animSpin(self)
 
+    def on_collapsed(self, instance, value):
+        pauseButton = self.ids.startPauseButton
+        nextButton = self.ids.nextButton
+        previousButton = self.ids.previousButton
+        songImage = self.ids.songImage
+        volUp = self.ids.volUp
+        volDown = self.ids.volDown
+
+        all = [pauseButton, nextButton,
+               previousButton, volUp, volDown]
+
+        inTransition = "in_back"
+        outTransition = "out_bounce"
+
+        if (value):
+            # COLLAPSED
+            volUp.pos = (100, 100)
+
+            imageAnim = songImageAnim = Animation(
+                size_hint=(.7, .7), transition=inTransition)
+
+            anim = Animation(
+                pos_hint={'center_x': 0.5, "center_y": .5}, duration=1, transition=inTransition) & Animation(opacity=0, duration=1)
+
+            for widget in all:
+                anim.start(widget)
+
+            imageAnim.start(songImage)
+
+        else:
+            # UNCOLLAPSED
+            songImageAnim = Animation(
+                size_hint=(.5, .5), transition=outTransition)
+
+            pauseAnim = Animation(
+                pos_hint={"center_x": .5, "center_y": .1}, duration=1, transition=outTransition) & Animation(opacity=1, duration=1)
+
+            nextAnim = Animation(
+                pos_hint={"center_x": .75, "center_y": .2}, duration=1, transition=outTransition) & Animation(opacity=1, duration=1)
+            previousAnim = Animation(
+                pos_hint={"center_x": .25, "center_y": .2}, duration=1, transition=outTransition) & Animation(opacity=1, duration=1)
+            volUpAnim = Animation(
+                pos_hint={"center_x": .66, "center_y": .85}, duration=1, transition=outTransition) & Animation(opacity=1, duration=1)
+            volDownAnim = Animation(
+                pos_hint={"center_x": .33, "center_y": .85}, duration=1, transition=outTransition) & Animation(opacity=1, duration=1)
+
+            songImageAnim.start(songImage)
+
+            pauseAnim.start(pauseButton)
+            nextAnim.start(nextButton)
+            previousAnim.start(previousButton)
+            volUpAnim.start(volUp)
+            volDownAnim.start(volDown)
+
 
 def animSpin(self):
     stopAnim(self)
@@ -89,19 +142,20 @@ def getNewSongThread(widget):
         song = widget.wrapper.getCurrentSong()
         if (song != None):
             try:
-                if (song["name"] != widget.songName):
-                    logging.info('Spotipy: Found new song: '+song["name"])
-                    widget.songName = song["name"]
-                    widget.songImageUrl = song["album"]["images"][-1]["url"].replace(
+                if (song["item"]["name"] != widget.songName):
+                    logging.info('Spotipy: Found new song: ' +
+                                 song["item"]["name"])
+                    widget.songName = song["item"]["name"]
+                    widget.songImageUrl = song["item"]["album"]["images"][-1]["url"].replace(
                         "https://", "")
                     # TODO IMAGEN DE LA CANCION
                     # return
             except:
                 print("error")
+                print(song)
                 pass
         else:
-            widget.wrapper.setPlaylist(
-                deviceId=widget.deviceId, playlistUri=widget.playlistUri)
+            pass
         time.sleep(1)
 
 

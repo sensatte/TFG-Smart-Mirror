@@ -41,7 +41,7 @@ class SpotifyWrapper2():
         return self.getSpotipyInstance().current_user_playlists()["items"]
 
     def getCurrentSong(self):
-        return self.getSpotipyInstance().current_user_playing_track()["item"]
+        return self.getSpotipyInstance().current_user_playing_track()
 
     def setPlaylist(self, deviceId, playlistUri):
         self.getSpotipyInstance().start_playback(
