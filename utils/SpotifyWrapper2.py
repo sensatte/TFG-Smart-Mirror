@@ -37,8 +37,15 @@ class SpotifyWrapper2():
     def getCurrentPlaylist(self):
         return self.getSpotipyInstance().current_playback()
 
+    def getPlaylists(self):
+        return self.getSpotipyInstance().current_user_playlists()["items"]
+
     def getCurrentSong(self):
         return self.getSpotipyInstance().current_user_playing_track()["item"]
+
+    def setPlaylist(self, deviceId, playlistUri):
+        self.getSpotipyInstance().start_playback(
+            device_id=deviceId, context_uri=playlistUri)
 
     def pause(self, deviceId):
         self.getSpotipyInstance().pause_playback(device_id=deviceId)
@@ -64,7 +71,3 @@ class SpotifyWrapper2():
 
     def setVolume(self, deviceId, volume):
         self.getSpotipyInstance().volume(volume_percent=volume, device_id=deviceId)
-
-# wrapper = SpotifyWrapper2()
-
-# print(wrapper.getCurrentSong())

@@ -25,7 +25,9 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
     songImageAngle = NumericProperty(0)
     paused = BooleanProperty(True)
     volume = NumericProperty(0)
-    collapsed = BooleanProperty(True)
+    collapsed = BooleanProperty(False)
+    playlistUri = StringProperty(
+        "spotify:playlist:0lAKHIw0i0HZZMNqyIi29a")  # TODO GET FROM OPTIONS AND USAR
 
     def __init__(self, **kwargs):
         super(SpotifyWidget2, self).__init__(**kwargs)
@@ -41,10 +43,9 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
         print("Got the deviceId ", value)
         self.relaxing = False
 
-        oldSongName = self.songName
         self.volume = 50  # TODO GUARDAR EN MEMORIA EN VEZ DE HARDCODEAR
         t = Thread(target=getNewSongThread, args=(
-            self, oldSongName,), daemon=True)
+            self,), daemon=True)
         t.start()
         # TODO AVISAR A TODO DE QUE TENEMOS ID Y POR LO TANTO TODO DEBERIA WORKEAR
 
@@ -82,22 +83,25 @@ def stopAnim(self):
     anim.start(self)
 
 
-def getNewSongThread(widget, oldSongName):
+def getNewSongThread(widget):
     while (True):
         logging.info('Spotipy: Looking for new song')
         song = widget.wrapper.getCurrentSong()
-
-        try:
-            if (song["name"] != oldSongName):
-                logging.info('Spotipy: Found new song: '+song["name"])
-                widget.songName = song["name"]
-                widget.songImageUrl = song["album"]["images"][-1]["url"].replace(
-                    "https://", "")
-                # TODO IMAGEN DE LA CANCION
-                # return
-        except:
-            print("error")
-            pass
+        if (song != None):
+            try:
+                if (song["name"] != widget.songName):
+                    logging.info('Spotipy: Found new song: '+song["name"])
+                    widget.songName = song["name"]
+                    widget.songImageUrl = song["album"]["images"][-1]["url"].replace(
+                        "https://", "")
+                    # TODO IMAGEN DE LA CANCION
+                    # return
+            except:
+                print("error")
+                pass
+        else:
+            widget.wrapper.setPlaylist(
+                deviceId=widget.deviceId, playlistUri=widget.playlistUri)
         time.sleep(1)
 
 
@@ -111,8 +115,8 @@ def getDeviceIdThread(widget):
         if (devicesList != None and len(devicesList) > 0):
             for device in devicesList:
                 if (device["name"] == deviceName):
+                    logging.info('Spotipy: Found device ID: '+device["id"])
                     widget.deviceId = device["id"]
-                    logging.info('Spotipy: Found device ID: '+widget.deviceId)
                     return
 
         time.sleep(10)
