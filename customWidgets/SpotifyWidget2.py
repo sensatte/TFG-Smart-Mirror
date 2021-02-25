@@ -124,7 +124,7 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
 def animSpin(self):
     stopAnim(self)
 
-    anim = Animation(songImageAngle=-360, duration=2)
+    anim = Animation(songImageAngle=-360, duration=3.5)
     anim += Animation(songImageAngle=0, duration=0)
     anim.repeat = True
     anim.start(self)

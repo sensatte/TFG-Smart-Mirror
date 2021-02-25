@@ -6,12 +6,12 @@
 #TODO AÑADIR RESTO DE WIDGETS
 
 <SpotifyWidget2>:
-    canvas.before:
-        Color:
-            rgba: 0.2,0.5,0.4,1
-        Rectangle:
-            pos: 0, 0
-            size: self.size
+    # canvas.before:
+    #     Color:
+    #         rgba: 0.2,0.5,0.4,1
+    #     Rectangle:
+    #         pos: 0, 0
+    #         size: self.size
 
     # Label:
     #     id: deviceId
@@ -25,18 +25,18 @@
         color: [.3, .3, .3, 1] if self.disabled  else [1, 1, 1, 1]
         keep_ratio: False
         allow_stretch: True
-        source: "images/menu/settings.png"
+        source: "images/icons/spotify/boton-de-pausa.png" if not root.paused else "images/icons/spotify/boton-de-play.png"
         pos_hint: {"center_x": .5, "center_y": .5}
         size_hint: buttonsSize
         on_press: root.relaxWithThePresses()
         on_press: root.wrapper.pauseResume(root.deviceId)
         on_press: root.paused = not root.paused
-        canvas.before:
-            Color:
-                rgba: 0.2,0.5,0.4,1
-            Rectangle:
-                pos: self.pos
-                size: self.size
+        # canvas.before:
+        #     Color:
+        #         rgba: 0.2,0.5,0.4,1
+        #     Rectangle:
+        #         pos: self.pos
+        #         size: self.size
 
     ImageButton:
         id: nextButton
@@ -44,19 +44,19 @@
         color: [.3, .3, .3, 1] if self.disabled  else [1, 1, 1, 1]
         keep_ratio: False
         allow_stretch: True
-        source: "images/menu/settings.png"
+        source: "images/icons/spotify/siguiente.png"
         pos_hint: {"center_x": .5, "center_y": .5}
         size_hint: buttonsSize
         on_press: root.relaxWithThePresses()
         on_press: root.wrapper.next(root.deviceId)
         #on_press: root.getNewSong()
         on_press: root.paused = False
-        canvas.before:
-            Color:
-                rgba: 0.2,0.5,0.4,1
-            Rectangle:
-                pos: self.pos
-                size: self.size
+        # canvas.before:
+        #     Color:
+        #         rgba: 0.2,0.5,0.4,1
+        #     Rectangle:
+        #         pos: self.pos
+        #         size: self.size
 
     ImageButton:
         id: previousButton
@@ -64,19 +64,19 @@
         color: [.3, .3, .3, 1] if self.disabled  else [1, 1, 1, 1]
         keep_ratio: False
         allow_stretch: True
-        source: "images/menu/settings.png"
+        source: "images/icons/spotify/anterior.png"
         pos_hint: {"center_x": .5, "center_y": .5}
         size_hint: buttonsSize
         on_press: root.relaxWithThePresses()
         on_press: root.wrapper.previous(root.deviceId)
         #on_press: root.getNewSong()
         on_press: root.paused = False
-        canvas.before:
-            Color:
-                rgba: 0.2,0.5,0.4,1
-            Rectangle:
-                pos: self.pos
-                size: self.size
+        # canvas.before:
+        #     Color:
+        #         rgba: 0.2,0.5,0.4,1
+        #     Rectangle:
+        #         pos: self.pos
+        #         size: self.size
 
     ImageButton:
         id: volDown
@@ -84,18 +84,18 @@
         color: [.3, .3, .3, 1] if self.disabled  else [1, 1, 1, 1]
         keep_ratio: False
         allow_stretch: True
-        source: "images/menu/settings.png"
+        source: "images/icons/spotify/control-del-volumen-menos.png"
         pos_hint: {"center_x": .5, "center_y": .5}
         size_hint: buttonsSize
         on_press: root.relaxWithThePresses()
         on_press: print("volDown")
         on_press: root.volDown()
-        canvas.before:
-            Color:
-                rgba: 0.2,0.5,0.4,1
-            Rectangle:
-                pos: self.pos
-                size: self.size
+        # canvas.before:
+        #     Color:
+        #         rgba: 0.2,0.5,0.4,1
+        #     Rectangle:
+        #         pos: self.pos
+        #         size: self.size
 
     ImageButton:
         id: volUp
@@ -103,23 +103,23 @@
         color: [.3, .3, .3, 1] if self.disabled  else [1, 1, 1, 1]
         keep_ratio: False
         allow_stretch: True
-        source: "images/menu/settings.png"
+        source: "images/icons/spotify/control-del-volumen-mas.png"
         pos_hint: {"center_x": .5, "center_y": .5}
         size_hint: buttonsSize
         on_press: root.relaxWithThePresses()
         on_press: print("volUp")
         on_press: root.volUp()
-        canvas.before:
-            Color:
-                rgba: 0.2,0.5,0.4,1
-            Rectangle:
-                pos: self.pos
-                size: self.size
+        # canvas.before:
+        #     Color:
+        #         rgba: 0.2,0.5,0.4,1
+        #     Rectangle:
+        #         pos: self.pos
+        #         size: self.size
 
     AsyncImageButton:
         id: songImage
         nocache: True
-        source: cloudImage+root.songImageUrl+roundedCorners if root.songImageUrl != "" else "images/imageFile.jpeg"
+        source: cloudImage+root.songImageUrl+roundedCorners if root.songImageUrl != "" else "images/menu/Spotify_bonico.png"
         size_hint: .7, .7
         pos_hint: {"center_x": .5, "center_y": .5}
         allow_stretch: True
