@@ -1,5 +1,6 @@
 #:kivy 1.0
-
+#:set buttonNormal [1,1,1,.7]
+#:set buttonPressed [1,1,1,1]
 <NotesConfig>:
     size_hint:.4,.4
     id: main
@@ -40,23 +41,6 @@
                     row_default_height:self.height
 
 
-                   
-        # #############################################
-        #             Widget:
-        #                 size_hint_y: None
-        #                 height: 6
-        #                 canvas:
-        #                     Color:
-        #                         rgba: 1., 1., 1., .6
-        #                     Rectangle:
-        #                         pos: root.width/20, self.center_y
-        #                         size: root.width-root.width/10, 2
-        # #############################################
-
-
-
-
-
 
     
     #config notas
@@ -67,7 +51,7 @@
                 Color:
                     rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
                 Rectangle:
-                    source: "images\\menu\\notes.png"
+                    source: "images\\menu\\writing.png"
                     size: 30,30
                     pos: self.center_x-15, self.center_y-15
             Scrolling:
@@ -78,71 +62,36 @@
                     size_hint_y: None
                     height: self.minimum_height
                     
-                    BoxLayout:
-                        size_hint_y: None
-                        orientation: "horizontal"
-                        height: 40
-                        Image:
-                            source: "images\\menu\\clock.png"
-
-                        Label:
-                            text: "Hora"
-                            font_size:"22"
+                    Label:
+                        text: "Crear Nota"
+                        font_size:"22"
+                        height: 20
 
         #############################################
 
-                    Label:
-                        height: 20
+                #titulo
+                    GridLayout:
                         size_hint_y: None
-                        text: "Color:"
-
-                    BoxLayout:
-                        size_hint_y: None
-                        orientation: 'horizontal'
+                        rows: 1
                         height: 40
-                        ToggleButton:
-                            group: "horaColor"
-                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
-                            text: "Blanco"
-                            state: "down"
-                            background_color:[0, 0, 0, 0]
-                            allow_no_selection: False
-                            on_press: root.colorClock(self)
+
+                        Label:
+                            # size_hint_y: None
+                            text: "Título:"
+                            width: 20
+                        TextInput:
+                            id: titletinput
+                            hint_text:'Enter text'
+                            pos_hint: {'center_x': 0.5, 'y': 0} 
+                            size_hint: 0.95, 0.5
+                            background_color: [1,1,1,0]
+                            valign: 'bottom'
                             canvas.before:
                                 Color:
-                                    rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
-                                RoundedRectangle:
-                                    size:self.size
-                                    pos:self.pos
-                                    radius: [15]
-                        ToggleButton:
-                            group: "horaColor"
-                            color: [149/255, 125/255, 173/255, 1] if self.state == "down" else [149/255, 125/255, 173/255, .6]
-                            text: "Morado"                           
-                            background_color:[0, 0, 0, 0]
-                            allow_no_selection: False
-                            on_press: root.colorClock(self)
-                            canvas.before:
-                                Color:
-                                    rgba: [149/255, 125/255, 173/255,.2] if self.state == "down" else [1,1,1,0]
-                                RoundedRectangle:
-                                    size:self.size
-                                    pos:self.pos
-                                    radius: [15]
-                        ToggleButton:
-                            group: "horaColor"
-                            color: [140/255, 183/255, 141/255, 1] if self.state == "down" else [140/255, 183/255, 141/255, .6]
-                            text: "Verde"
-                            background_color:[0, 0, 0, 0]
-                            allow_no_selection: False
-                            on_press: root.colorClock(self)
-                            canvas.before:
-                                Color:
-                                    rgba: [140/255, 183/255, 141/255,.2] if self.state == "down" else [1,1,1,0]
-                                RoundedRectangle:
-                                    size:self.size
-                                    pos:self.pos
-                                    radius: [15]
+                                    rgba: [1,1,1,.2]
+                                # RoundedRectangle:
+                                #     rounded_rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1], 18)
+                                #     width: 1.2
                    
         #############################################
                     Widget:
@@ -155,6 +104,120 @@
                                 pos: root.width/20, self.center_y
                                 size: root.width-root.width/10, 2
         #############################################
+                
+                #texto
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 40
+
+                        Label:
+                            height: 20
+                            size_hint_y: None
+                            text: "Texto:"
+
+                        TextInput:
+                            id: textinput
+                            hint_text:'Enter text'
+                            pos_hint: {'center_x': 0.5, 'y': 0} 
+                            size_hint: 0.95, 0.5
+                            # canvas.before:
+                            #     Color:
+                            #         rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                            #     RoundedRectangle:
+                            #         size:self.size
+                            #         pos:self.pos
+                            #         radius: [15]
+                   
+        #############################################
+                    Widget:
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+        #############################################
+                #color
+                    GridLayout:
+                        size_hint_y: None
+                        cols:2
+                        # height: 80
+                        spacing: 10
+                        padding: [20,0]
+                        ToggleButton:
+                            group: "colorNota"
+                            state: "down"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.backg=[224, 187, 228, 1]
+                            canvas.before:
+                                Color:
+                                    rgba: [224/255, 187/255, 228/255, 1] if self.state == "down" else [224/255, 187/255, 228/255, .5]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+                        ToggleButton:
+                            group: "colorNota"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.backg=[125, 150, 176, 1]
+                            canvas.before:
+                                Color:
+                                    rgba: [125/255, 150/255, 176/255, 1] if self.state == "down" else [125/255, 150/255, 176/255,.5]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+                        ToggleButton:
+                            group: "colorNota"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.backg=[140, 183, 141,1]
+                            canvas.before:
+                                Color:
+                                    rgba: [140/255, 183/255, 141/255,1] if self.state == "down" else [140/255, 183/255, 141/255, .5]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+
+                        ToggleButton:
+                            group: "colorNota"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.backg=[149, 125, 173, 1]
+                            canvas.before:
+                                Color:
+                                    rgba: [149/255, 125/255, 173/255, 1] if self.state == "down" else [149/255, 125/255, 173/255, .5]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+
+        #############################################
+                    Widget:
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+        #############################################
+
+
+                    SmoothButton:
+                        size_hint_y: None
+                        height: 20
+                        back_color: (1,1,1,.8)
+                        # background_color:[1,1,1,0]
+                        text:"save"
+                        # on_press: root.writeNote(titletinput.text, False, textinput.text, None, root.backg)
 
     ImageButton:
         id: homeButton
@@ -187,3 +250,22 @@
             rectangle: self.x, self.y, self.width, self.height 
 
 
+<SmoothButton@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (1,0,1,1)
+    border_radius: [18]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size:self.size
+            pos:self.pos
+            radius: self.border_radius
+
+                            # canvas.before:
+                            #     Color:
+                            #         rgba: [1,1,1,.2]
+                            #     RoundedRectangle:
+                            #         rounded_rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1], 18)
+                            #         width: 1.2
