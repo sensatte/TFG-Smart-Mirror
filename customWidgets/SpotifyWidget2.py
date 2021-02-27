@@ -120,6 +120,15 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
             volUpAnim.start(volUp)
             volDownAnim.start(volDown)
 
+    def pushedButtonAnim(self, widget):
+        inTransition = "in_back"
+        outTransition = "out_bounce"
+        anim = Animation(size_hint=(.15, .2), duration=.2,
+                         transition=inTransition)
+        anim += Animation(size_hint=(.2, .25), duration=.3,
+                          transition=outTransition)
+        anim.start(widget)
+
 
 def animSpin(self):
     stopAnim(self)
