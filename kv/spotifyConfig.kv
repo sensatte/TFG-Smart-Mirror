@@ -1,0 +1,145 @@
+#:kivy 1.0
+
+<SpotifyConfig>:
+    size_hint:.4,.4
+    id: main
+    RelativeLayout:
+        size_hint: 1,.75
+        background_color: 0,0,0,0
+        padding: [0,5,0,0]
+        pos_hint: {"center_x": .5, "center_y": .5}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2.
+                rectangle: 0, 0, self.width, self.height 
+
+        Scrolling:
+            GridLayout:
+                cols: 1
+                padding: 15
+                spacing: 10
+                size_hint_y: None
+                height: self.minimum_height
+                
+                BoxLayout:
+                    size_hint_y: None
+                    orientation: "horizontal"
+                    height: 40
+                    Image:
+                        source: "images/menu/spotify.png"
+
+                    Label:
+                        text: "Spotify"
+                        font_size:"22"
+
+    #############################################
+
+                Label:
+                    height: 20
+                    size_hint_y: None
+                    text: "Formato:"
+
+                BoxLayout:
+                    size_hint_y: None
+                    orientation: 'horizontal'
+                    height: 40
+                    ToggleButton:
+                        group: "horaFormato"
+                        color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                        text: "12h"
+                        
+                        background_color:[0, 0, 0, 0]
+                        allow_no_selection: False
+                        on_press: root.formatClock(self)
+                        canvas.before:
+                            Color:
+                                rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                            RoundedRectangle:
+                                size:self.size
+                                pos:self.pos
+                                radius: [15]
+                    ToggleButton:
+                        group: "horaFormato"
+                        color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                        text: "24h"     
+                        state: "down"                      
+                        background_color:[0, 0, 0, 0]
+                        allow_no_selection: False
+                        on_press: root.formatClock(self)
+                        canvas.before:
+                            Color:
+                                rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                            RoundedRectangle:
+                                size:self.size
+                                pos:self.pos
+                                radius: [15]
+                
+    #############################################
+                Widget:
+                    size_hint_y: None
+                    height: 6
+                    canvas:
+                        Color:
+                            rgba: 1., 1., 1., .6
+                        Rectangle:
+                            pos: root.width/20, self.center_y
+                            size: root.width-root.width/10, 2
+    #############################################
+
+                Label:
+                    height: 20
+                    size_hint_y: None
+                    text: "Segundos:"
+                BoxLayout:
+                    size_hint_y: None
+                    orientation: 'horizontal'
+                    height: 40
+                    ToggleButton:
+                        group: "horaSegundos"
+                        color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                        text: "Sí"
+                        background_color:[0, 0, 0, 0]
+                        allow_no_selection: False
+                        on_press: root.secondsClock(self)
+                        canvas.before:
+                            Color:
+                                rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                            RoundedRectangle:
+                                size:self.size
+                                pos:self.pos
+                                radius: [15]
+
+                    ToggleButton:
+                        group: "horaSegundos"
+                        color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                        text: "No"                           
+                        background_color:[0, 0, 0, 0]
+                        state: "down"
+                        allow_no_selection: False
+                        on_press: root.secondsClock(self)
+                        canvas.before:
+                            Color:
+                                rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                            RoundedRectangle:
+                                size:self.size
+                                pos:self.pos
+                                radius: [15]
+
+    ImageButton:
+        id: homeButton
+        size_hint_y: None
+        source: "images/menu/previous.png"
+        pos_hint: {"center_x": .5, "y": 0}
+        size_hint: (.17, .11)
+        on_press: root.pressedBack(self)
+
+<Scrolling>:
+    do_scroll_x: False
+    bar_margin: 5
+    bar_width: 3
+    bar_color: [1,1,1,.5]
+    bar_inactive_color: [1,1,1,.2]
+    scroll_type: ['content']
+
