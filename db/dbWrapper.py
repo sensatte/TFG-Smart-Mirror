@@ -6,10 +6,11 @@ import dns # required for connecting with SRV
 
 mongo.connect(db="smartMirrorDatabase", host="mongodb+srv://admin:tfgadmin@cluster0.cjbui.mongodb.net")
 
-def saveNote(title, pinned, text, date, r, g, b):
+def saveNote(title, pinned, text, date, rgb):
     
-    noteToSave = Notes(update_counter("notesid"), title, pinned, text, date, r, g, b)
+    noteToSave = Notes(_id=update_counter("notesid"), title=title, pinned=pinned, text=text, date=date, rgb=rgb)
     noteToSave.save()
+    print("La nota " + title + "se ha guardado")
 
 def getAllNotes():
     return Notes.objects

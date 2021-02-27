@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, BooleanField, DateTimeField, ObjectIdField, IntField
+from mongoengine import Document, StringField, BooleanField, DateTimeField, ObjectIdField, IntField, ListField
 import datetime
 
 class Notes(Document):
@@ -7,9 +7,7 @@ class Notes(Document):
     pinned = BooleanField(required= True)
     text = StringField(required=True)
     date = DateTimeField(default=datetime.datetime.now)
-    r = StringField(required=True, max_length=3)
-    g = StringField(required=True, max_length=3)
-    b = StringField(required=True, max_length=3)
+    rgb = ListField(required=True)
 
 class Counters(Document):
     _id = StringField(required=True, max_length=100)
