@@ -30,6 +30,7 @@
         size_hint: buttonsSize
         on_press: root.relaxWithThePresses()
         on_press: root.wrapper.pauseResume(root.deviceId)
+        on_press: root.pushedButtonAnim(self)
         on_press: root.paused = not root.paused
         # canvas.before:
         #     Color:
@@ -49,7 +50,7 @@
         size_hint: buttonsSize
         on_press: root.relaxWithThePresses()
         on_press: root.wrapper.next(root.deviceId)
-        #on_press: root.getNewSong()
+        on_press: root.pushedButtonAnim(self)
         on_press: root.paused = False
         # canvas.before:
         #     Color:
@@ -69,7 +70,7 @@
         size_hint: buttonsSize
         on_press: root.relaxWithThePresses()
         on_press: root.wrapper.previous(root.deviceId)
-        #on_press: root.getNewSong()
+        on_press: root.pushedButtonAnim(self)
         on_press: root.paused = False
         # canvas.before:
         #     Color:
@@ -89,6 +90,7 @@
         size_hint: buttonsSize
         on_press: root.relaxWithThePresses()
         on_press: print("volDown")
+        on_press: root.pushedButtonAnim(self)
         on_press: root.volDown()
         # canvas.before:
         #     Color:
@@ -108,6 +110,7 @@
         size_hint: buttonsSize
         on_press: root.relaxWithThePresses()
         on_press: print("volUp")
+        on_press: root.pushedButtonAnim(self)
         on_press: root.volUp()
         # canvas.before:
         #     Color:
