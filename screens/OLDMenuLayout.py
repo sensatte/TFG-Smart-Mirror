@@ -1,14 +1,9 @@
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
-from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.animation import Animation
-from kivy.graphics import Color, Rectangle, BorderImage
-from kivy.uix.button import Button
-from kivy.uix.screenmanager import ScreenManager, Screen
-
-#image button
-from kivy.config import Config
+from kivy.uix.screenmanager import FadeTransition
+from kivy.uix.screenmanager import CardTransition
 from kivy.app import App
 
 #import kv
@@ -16,7 +11,6 @@ from kivy.lang import Builder
 Builder.load_file('kv\\menu.kv')
 
 class MenuLayout(FloatLayout):
-    #import from external .kv
     
     def __init__(self, **kwargs):
         super(MenuLayout, self).__init__(**kwargs)
@@ -24,18 +18,22 @@ class MenuLayout(FloatLayout):
         self.maxCols = 3
         self.maxRows = 3
 
-        self.selectedItem = (0,2)      
+        self.activated=False
+
+        self.selectedItem = (1,1)      
         #TODO oscurecer fondo al abrir menu
         #TODO que no escuche al teclado si no está menu
         #TODO poner teclado en .py distinto
+        #TODO otra forma de llamar a las pantallas que no sea el switch este feo
                  
         widgetList=['schedule', "news", "settings", "at", "clock", "schedule", "settings", "settings", "settings"]
+
         ind=0
         self.itemsMatrix = {}
 
         for i in range(self.maxCols):
             for j in range(self.maxRows):
-                self.itemsMatrix[(i,j)]= MenuOption(imageUri="images\\menu\\" + widgetList[ind] + ".png", maxCols=self.maxCols, maxRows=self.maxRows, posTuple=(i,j))
+                self.itemsMatrix[(i,j)]= MenuOption(name= widgetList[ind], imageUri="images\\menu\\" + widgetList[ind] + ".png", maxCols=self.maxCols, maxRows=self.maxRows, posTuple=(i,j))
                 ind+=1
         
         for widget in self.itemsMatrix.values():
@@ -44,8 +42,6 @@ class MenuLayout(FloatLayout):
         self.updateButtons() #Para que empiece focuseado el widget
 
         #TODO populatedmenu
-
-
 
         #Keyboard Handling for menuing
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
@@ -83,6 +79,9 @@ class MenuLayout(FloatLayout):
     def pressedOption(self, widget):
         anim = Animation(size_hint=(0.2,0.2), duration=.1)
         anim += Animation(opacity=0,size_hint=(0.3,0.3), duration=.2)
+        
+        anim.bind(on_complete=self.openSelected)
+        anim += Animation(opacity=1, duration=.2)
         anim.start(widget)
 
 
@@ -95,10 +94,17 @@ class MenuLayout(FloatLayout):
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'c':
-            if (self.opacity == 1):
+            if (self.activated==True):
+                self.activated=False
                 self.fadeOut()
-            else:
+                App.get_running_app().root.transition = CardTransition(duration=1)
+                App.get_running_app().root.current = "home"
+                
+            elif (self.activated==False):
+                self.activated=True
                 self.fadeIn()
+                App.get_running_app().root.transition = FadeTransition(duration=.3)
+                App.get_running_app().root.current = "menu"
 
         if keycode[1] == 'd':
             self.moveRight()
@@ -109,7 +115,8 @@ class MenuLayout(FloatLayout):
         if keycode[1] == 's':
             self.moveDown()
         if keycode[1] == 'enter':
-            self.openSelected()
+            self.pressedOption(self.itemsMatrix[(self.selectedItem[0],self.selectedItem[1])])
+
 
         return True
 
@@ -146,12 +153,11 @@ class MenuLayout(FloatLayout):
         self.updateButtons()
         
 
-    def openSelected(self):
-        #TODO abrir menu del widget                    
+    def openSelected(self, *args):
         # #llama al método de la animación con el widget de selected item
-        self.pressedOption(self.itemsMatrix[(self.selectedItem[0],self.selectedItem[1])])         
-        print(self.selectedItem)
-        print(self.itemsMatrix[(self.selectedItem[0],self.selectedItem[1])])        
+        
+        App.get_running_app().root.transition = FadeTransition(duration=.3)
+        App.get_running_app().root.current = self.itemsMatrix.get(self.selectedItem).name
 
 
     def updateButtons(self):
@@ -166,12 +172,12 @@ class MenuLayout(FloatLayout):
 
 class MenuOption(Image):    
 
-    def __init__(self, posTuple, maxCols, maxRows, imageUri):
+    def __init__(self, name, posTuple, maxCols, maxRows, imageUri):
         super(MenuOption, self).__init__()
 
         #Posiciones widgets
         self.size_hint = 0.25,0.25
-
+        self.name = name
         self.focus=True
         c = 1/maxCols
         r = 1/maxRows

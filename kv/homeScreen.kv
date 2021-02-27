@@ -10,17 +10,11 @@
 
     ImageButton:
         id: menuButton
-        keep_ratio: False
+        keep_ratio: True
         allow_stretch: True
-        source: "images/menu/settings.png"
+        source: "images/menu/app-drawer.png"
         pos_hint: {"center_x": .5, "y": 0}
         size_hint: (.17, .1)
         on_press: root.goToConfigScreen()
-        canvas.before:
-            Color:
-                rgba: 0.2,0.5,0.4,1
-            Rectangle:
-                pos: self.pos
-                size: self.size
 
     

@@ -7,7 +7,6 @@ from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 
 from kivy.lang import Builder
-Builder.load_file('kv\\InfoDay.kv')
 
 class InfoDayWidget(RelativeLayout):
     def __init__(self, **kwargs):

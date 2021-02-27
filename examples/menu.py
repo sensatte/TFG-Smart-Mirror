@@ -6,40 +6,50 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 # you can control the ScreenManager from kv. Each screen has by default a
 # property manager that gives you the instance of the ScreenManager used.
 Builder.load_string("""
-<MenuScreen>:
-    BoxLayout:
+<LoginScreen>:
+    GridLayout:
+        cols: 1
+        padding: 15
+        spacing: 50
         Button:
-            text: 'Goto settings'
-            on_press: root.manager.current = 'settings'
-        Button:
-            text: 'Quit'
-
-<SettingsScreen>:
-    BoxLayout:
-        Button:
-            text: 'My settings button'
-        Button:
-            text: 'Back to menu'
-            on_press: root.manager.current = 'menu'
+            size_hint_y: None
+            height: '200sp'
+        BoxLayout:
+            size_hint_y: None
+            height: 200
+            orientation: 'horizontal'
+            CheckBox:
+                active: False
+            CheckBox:
+                active: True
+<Scrolling>:
+    do_scroll_x: False
+    bar_margin: 0
+    bar_width: 15
+    bar_color: [.7,.7,.7,.9]
+    bar_inactive_color: [.7,.7,.7,.9]
+    scroll_type: ['bars','content']
 """)
 
-# Declare both screens
-class MenuScreen(Screen):
+from kivy.app import App
+from kivy.uix.screenmanager import (ScreenManager, Screen)
+from kivy.uix.scrollview import ScrollView
+
+
+class MainManager(ScreenManager):
     pass
 
-class SettingsScreen(Screen):
+class Scrolling(ScrollView):
     pass
 
-class TestApp(App):
+class LoginScreen(Screen):
+    pass
 
+class QuestionApp(App):
     def build(self):
-        # Create the screen manager
-        sm = ScreenManager()
-
-        sm.add_widget(MenuScreen(name='menu'))
-        sm.add_widget(SettingsScreen(name='settings'))
-
-        return sm
+        AppSM = MainManager()
+        AppSM.add_widget(LoginScreen(name='login'))
+        return AppSM
 
 if __name__ == '__main__':
-    TestApp().run()
+    QuestionApp().run()
