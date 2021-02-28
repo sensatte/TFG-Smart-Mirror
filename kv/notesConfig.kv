@@ -2,9 +2,11 @@
 #:set buttonNormal [1,1,1,.7]
 #:set buttonPressed [1,1,1,1]
 <NotesConfig>:
+    showNotes: showNotes
     size_hint:.4,.4
     id: main
     TabbedPanel:
+        id:panel
         size_hint: 1,.75
         background_color: 0,0,0,0
         do_default_tab: False
@@ -23,6 +25,7 @@
         TabbedPanelItem:
             background_color: 1,0,0,0
             width: 10
+            id:elegir
             canvas:
                 Color:
                     rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
@@ -38,12 +41,13 @@
                     spacing: 10
                     size_hint_y: None
                     row_force_default:True
-                    row_default_height:self.height*1.2
+                    row_default_height:150
+                    # row_default_height:self.height*1.2
 
 
 
     
-    #config notas
+    #crear notas
         TabbedPanelItem:
             background_color: 1,0,0,0
             width: 10
@@ -55,6 +59,7 @@
                     size: 30,30
                     pos: self.center_x-15, self.center_y-15
             Scrolling:
+                id:scrollCreateNote
                 GridLayout:
                     cols: 1
                     padding: 15
@@ -88,9 +93,10 @@
                             valign: 'bottom'
                             font_size: 11
                             cursor_color: [1,1,1,.8]
+                            canvBack: [1,1,1,.4]
                             canvas.before:
                                 Color:
-                                    rgba: [1,1,1,.4]
+                                    rgba: self.canvBack
                                 Line:
                                     width: 1.
                                     rectangle: self.x, self.y, self.width, self.height                    
@@ -126,9 +132,10 @@
                             valign: 'bottom'
                             font_size: 11
                             cursor_color: [1,1,1,.8]
+                            canvBack:[1,1,1,.4]
                             canvas.before:
                                 Color:
-                                    rgba: [1,1,1,.4]
+                                    rgba: self.canvBack
                                 Line:
                                     width: 1.
                                     rectangle: self.x, self.y, self.width, self.height                    
@@ -219,13 +226,13 @@
                         size_hint_y: None
                         height: 30
                         background_color:[1,1,1,0]
+                        backgSave:[1,1,1,.2]
                         text:"Guardar"
-                        on_press: root.backgSave = (1,1,1,.4)
-                        on_release: root.backgSave = (1,1,1,.2)
-                        on_press: root.writeNote(titletinput.text, False, textinput.text, None, root.backg)
+                        on_press: root.writeNote(titletinput.text, False, textinput.text, None, root.backg) if (titletinput.text!="" and textinput.text!="") else print("falta texto")
+                        on_press: root.badAnim(self) if (titletinput.text=="" or textinput.text=="") else root.goodAnim(self)
                         canvas.before:
                             Color:
-                                rgba: root.backgSave
+                                rgba: self.backgSave
                             RoundedRectangle:
                                 size:self.size[0]-50, self.size[1]+10
                                 pos:self.pos[0]+25, self.pos[1]-5
