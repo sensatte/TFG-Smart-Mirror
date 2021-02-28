@@ -38,7 +38,7 @@
                     spacing: 10
                     size_hint_y: None
                     row_force_default:True
-                    row_default_height:self.height
+                    row_default_height:self.height*1.2
 
 
 
@@ -70,29 +70,30 @@
         #############################################
 
                 #titulo
-                    GridLayout:
+                    BoxLayout:
+                        orientation: 'horizontal'
                         size_hint_y: None
-                        rows: 1
                         height: 40
 
                         Label:
-                            # size_hint_y: None
                             text: "Título:"
-                            width: 20
+                            size_hint: 0.95, 0.7
                         TextInput:
                             id: titletinput
                             hint_text:'Enter text'
+                            hint_text_color: [1,1,1,1]
                             pos_hint: {'center_x': 0.5, 'y': 0} 
-                            size_hint: 0.95, 0.5
+                            size_hint: 0.95, 0.7
                             background_color: [1,1,1,0]
                             valign: 'bottom'
+                            font_size: 11
+                            cursor_color: [1,1,1,.8]
                             canvas.before:
                                 Color:
-                                    rgba: [1,1,1,.2]
-                                # RoundedRectangle:
-                                #     rounded_rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1], 18)
-                                #     width: 1.2
-                   
+                                    rgba: [1,1,1,.4]
+                                Line:
+                                    width: 1.
+                                    rectangle: self.x, self.y, self.width, self.height                    
         #############################################
                     Widget:
                         size_hint_y: None
@@ -109,25 +110,28 @@
                     BoxLayout:
                         size_hint_y: None
                         orientation: 'horizontal'
-                        height: 40
+                        height: 60
 
                         Label:
-                            height: 20
-                            size_hint_y: None
                             text: "Texto:"
-
+                            valign: 'top'
+                            size_hint: 0.95, 1
                         TextInput:
                             id: textinput
                             hint_text:'Enter text'
+                            hint_text_color: [1,1,1,1]
                             pos_hint: {'center_x': 0.5, 'y': 0} 
-                            size_hint: 0.95, 0.5
-                            # canvas.before:
-                            #     Color:
-                            #         rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
-                            #     RoundedRectangle:
-                            #         size:self.size
-                            #         pos:self.pos
-                            #         radius: [15]
+                            size_hint: 0.95, 1
+                            background_color: [1,1,1,0]
+                            valign: 'bottom'
+                            font_size: 11
+                            cursor_color: [1,1,1,.8]
+                            canvas.before:
+                                Color:
+                                    rgba: [1,1,1,.4]
+                                Line:
+                                    width: 1.
+                                    rectangle: self.x, self.y, self.width, self.height                    
                    
         #############################################
                     Widget:
@@ -211,14 +215,21 @@
         #############################################
 
 
-                    SmoothButton:
+                    Button:
                         size_hint_y: None
-                        height: 20
-                        back_color: (1,1,1,.8)
-                        # background_color:[1,1,1,0]
-                        text:"save"
-                        # on_press: root.writeNote(titletinput.text, False, textinput.text, None, root.backg)
-
+                        height: 30
+                        background_color:[1,1,1,0]
+                        text:"Guardar"
+                        on_press: root.backgSave = (1,1,1,.4)
+                        on_release: root.backgSave = (1,1,1,.2)
+                        on_press: root.writeNote(titletinput.text, False, textinput.text, None, root.backg)
+                        canvas.before:
+                            Color:
+                                rgba: root.backgSave
+                            RoundedRectangle:
+                                size:self.size[0]-50, self.size[1]+10
+                                pos:self.pos[0]+25, self.pos[1]-5
+                                radius: [18]
     ImageButton:
         id: homeButton
         size_hint_y: None
@@ -249,6 +260,13 @@
             width: 1.
             rectangle: self.x, self.y, self.width, self.height 
 
+    # ImageButton:
+    #     id: delete
+    #     size_hint_y: None
+    #     source: "images/menu/trash.png"
+    #     pos_hint: root.pos
+    #     size_hint: (.17, .11)
+        # on_press: root.pressedBack(self)
 
 <SmoothButton@Button>:
     background_color: (0,0,0,0)
@@ -259,13 +277,29 @@
         Color:
             rgba: self.back_color
         RoundedRectangle:
-            size:self.size
-            pos:self.pos
+            size:self.size[0]-50, self.size[1]+10
+            pos:self.pos[0]+25, self.pos[1]-5
             radius: self.border_radius
 
-                            # canvas.before:
-                            #     Color:
-                            #         rgba: [1,1,1,.2]
-                            #     RoundedRectangle:
-                            #         rounded_rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1], 18)
-                            #         width: 1.2
+# <StrokeButton@Button>:
+#     background_color: (0,0,0,0)
+#     # background_normal: ''
+#     back_color: (1,0,1,1)
+#     border_radius: 18
+#     color: self.back_color
+#     # bold: True
+
+#     canvas.before:
+#         Color:
+#             rgba: [1,1,1,.2]
+#         Line:
+#             rounded_rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1], 18)
+#             width: 1.2
+
+                    # SmoothButton:
+                    #     size_hint_y: None
+                    #     height: 30
+                    #     back_color: (1,1,1,.2)
+                    #     # background_color:[1,1,1,0]
+                    #     text:"Guardar"
+                    #     on_press: back_color: (1,1,1,.6)
