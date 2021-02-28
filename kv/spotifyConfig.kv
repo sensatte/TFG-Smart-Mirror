@@ -8,17 +8,17 @@
         background_color: 0,0,0,0
         padding: [0,5,0,0]
         pos_hint: {"center_x": .5, "center_y": .5}
-        canvas.before:
+        canvas.after:
             Color:
                 rgba: 1, 1, 1, 1
             Line:
                 width: 2.
-                rectangle: 0, 0, self.width, self.height 
+                rectangle: self.x, self.y, self.width, self.height 
 
         Scrolling:
             GridLayout:
                 cols: 1
-                padding: 15
+                padding: 20
                 spacing: 10
                 size_hint_y: None
                 height: self.minimum_height
@@ -39,20 +39,20 @@
                 Label:
                     height: 20
                     size_hint_y: None
-                    text: "Formato:"
+                    text: "Shuffle:"
 
                 BoxLayout:
                     size_hint_y: None
                     orientation: 'horizontal'
                     height: 40
                     ToggleButton:
-                        group: "horaFormato"
+                        id: shuffleOn
+                        group: "shuffle"
                         color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
-                        text: "12h"
-                        
+                        text: "Si"
                         background_color:[0, 0, 0, 0]
                         allow_no_selection: False
-                        on_press: root.formatClock(self)
+                        on_press: root.chosenShuffle("true")
                         canvas.before:
                             Color:
                                 rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -61,13 +61,13 @@
                                 pos:self.pos
                                 radius: [15]
                     ToggleButton:
-                        group: "horaFormato"
+                        id: shuffleOff
+                        group: "shuffle"
                         color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
-                        text: "24h"     
-                        state: "down"                      
+                        text: "No"     
                         background_color:[0, 0, 0, 0]
                         allow_no_selection: False
-                        on_press: root.formatClock(self)
+                        on_press: root.chosenShuffle("false")
                         canvas.before:
                             Color:
                                 rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -91,41 +91,25 @@
                 Label:
                     height: 20
                     size_hint_y: None
-                    text: "Segundos:"
-                BoxLayout:
+                    text: "Playlist:"
+                GridLayout:
+                    id: playlistsLayout
                     size_hint_y: None
-                    orientation: 'horizontal'
-                    height: 40
-                    ToggleButton:
-                        group: "horaSegundos"
-                        color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
-                        text: "Sí"
-                        background_color:[0, 0, 0, 0]
-                        allow_no_selection: False
-                        on_press: root.secondsClock(self)
-                        canvas.before:
-                            Color:
-                                rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
-                            RoundedRectangle:
-                                size:self.size
-                                pos:self.pos
-                                radius: [15]
-
-                    ToggleButton:
-                        group: "horaSegundos"
-                        color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
-                        text: "No"                           
-                        background_color:[0, 0, 0, 0]
-                        state: "down"
-                        allow_no_selection: False
-                        on_press: root.secondsClock(self)
-                        canvas.before:
-                            Color:
-                                rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
-                            RoundedRectangle:
-                                size:self.size
-                                pos:self.pos
-                                radius: [15]
+                    cols: 2
+                    # orientation: 'vertical'
+                    height: root.height
+                    spacing: 10
+                    padding: 20
+                  
+                Widget:
+                    size_hint_y: None
+                    height: 6
+                    canvas:
+                        Color:
+                            rgba: 1., 1., 1., .6
+                        Rectangle:
+                            pos: root.width/20, self.center_y
+                            size: root.width-root.width/10, 2    
 
     ImageButton:
         id: homeButton
@@ -143,3 +127,17 @@
     bar_inactive_color: [1,1,1,.2]
     scroll_type: ['content']
 
+<PlayListToggle>:
+    group: "spotifyPlaylist"
+    color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.4]
+    background_color:[0, 0, 0, 0]
+    allow_no_selection: False
+    canvas.after:
+        Color:
+            rgba: (1,1,1,1) if self.state == "down" else (1,1,1,0)
+
+        Line:
+            width: 1.
+            rectangle: self.x, self.y, self.width, self.height 
+
+    

@@ -44,7 +44,7 @@ class SmartMirrorApp(App):
         spotify.add_widget(SpotifyConfig())
         scMenu.add_widget(spotify)
 
-        scMenu.current = "spotify"
+        scMenu.current = "home"
 
         return scMenu
 
