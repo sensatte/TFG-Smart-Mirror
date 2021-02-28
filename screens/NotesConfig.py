@@ -25,6 +25,7 @@ class NotesConfig(Screen):
     #TODO quje no puedas enviar nota vacia
     backg=Properties.ListProperty([1,1,1,.2])
     backgSave=Properties.ListProperty([1,1,1,.2])
+    ind=0
     def __init__(self, **kwargs):
         super(NotesConfig, self).__init__(**kwargs)
         
@@ -43,22 +44,23 @@ class NotesConfig(Screen):
         App.get_running_app().root.current = "menu"
 
     def showNotes(self, noteList):
-        for note in noteList:
-            self.ids.showNotes.add_widget(self.showNote(note))
 
+        for note in noteList:
+            self.ids.showNotes.add_widget(self.showNote(note, self.ind))
+            self.ind+=1
             # self.ids.showNotes.add_widget(ColoredLabelConfig(noteid=note._id, text=note.title + "\n" + note.text, pinned=note.pinned,
             #                                 background_color=(note.rgb[0]/255,note.rgb[1]/255,note.rgb[2]/255,note.rgb[3])))
             # self.ids.showNotes.add_widget(ImageButton(note=note._id, source="images/menu/edit.png", size_hint_y= None, size_hint= (.17, .11)))
             # self.ids.showNotes.add_widget(self.createButton(note._id, "trash"))
-    
-    def showNote(self, note):
+
+    def showNote(self, note, idwidget):
         layout=GridLayout(cols=1, spacing=[0,7])
-        
+        layout.id=idwidget
         layout.add_widget(ColoredLabelConfig(noteid=note._id, text=note.title + "\n" + note.text, pinned=note.pinned,
                                             background_color=(note.rgb[0]/255,note.rgb[1]/255,note.rgb[2]/255,note.rgb[3]), size_hint=(1,5)))
         botones = BoxLayout(orientation='horizontal')
-        botones.add_widget(self.createButton(note._id, "edit"))
-        botones.add_widget(self.createButton(note._id, "trash"))
+        botones.add_widget(self.createButton(note._id, idwidget, "edit"))
+        botones.add_widget(self.createButton(note._id, idwidget, "trash"))
 
         layout.add_widget(botones)
         return layout
@@ -71,13 +73,19 @@ class NotesConfig(Screen):
         print(nota)
         self.showNotes([nota])
 
-    def createButton(self, noteid, image):
-        button=ImageButton(note=noteid, source="images/menu/"+image+".png", size_hint_y= None, size_hint= (.8, .8))
+    def createButton(self, noteid, idwidget, image):
+        button=ImageButton(note=noteid, idwidget=idwidget, source="images/menu/"+image+".png", size_hint_y= None, size_hint= (.8, .8))
         button.bind(on_press=self.deleteNote)
         return button
 
     def deleteNote(self, button):
         dbWrapper.deleteNoteById(button.note)
+        for child in self.ids.showNotes.children:
+            if child.id == button.idwidget:
+                borrar = child
+                break
+
+        self.ids.showNotes.remove_widget(borrar)
 
     def editNote(self, button):
         print(button.note)
