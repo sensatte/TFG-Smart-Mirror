@@ -22,6 +22,7 @@ class NotesConfig(Screen):
     #TODO color picker
     #TODO que las anim las coja de otro archivo
     #TODO solo poder coger 9
+    #TODO poder editar
 
     showNotes=Properties.ObjectProperty(None)
     backg=Properties.ListProperty([224, 187, 228, 1])
@@ -124,7 +125,6 @@ class NotesConfig(Screen):
         # if (self.ids.titletinput.text!="" and self.ids.textinput.text!=""):
         #     anim.bind(on_complete=self.switchElegir)
         #     anim.bind(on_complete=self.clearInputs)        
-
         anim.start(self.ids.scrollCreateNote)
 
 
