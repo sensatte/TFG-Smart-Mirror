@@ -8,7 +8,8 @@ import db.dbWrapper as dbWrapper
 
 
 class ImageButton(ButtonBehavior, Image):
-    pass
+    note = Properties.NumericProperty()
+    idwidget = Properties.NumericProperty()
 
 class Scrolling(ScrollView):
     pass
