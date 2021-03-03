@@ -1,3 +1,4 @@
+from kivy.lang import Builder
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import FadeTransition, Screen
 from customWidgets.utils.BehaviorUtil import ImageButton
@@ -10,7 +11,6 @@ from functools import partial
 from customWidgets.utils import Animations
 
 #import kv
-from kivy.lang import Builder
 Builder.load_file("kv/menuScreen.kv")
 
 

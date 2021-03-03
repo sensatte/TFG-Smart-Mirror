@@ -1,5 +1,9 @@
 #:kivy 1.0
+#:set gridLayoutSpacing 40
+#:set gridLayoutSize (.7, .5)
+
 <MenuScreen>:
+
     #:set gridLayoutSpacing 15
     #:set gridLayoutSize (.8,.75)
     on_pre_enter: root.fadeIn()
@@ -8,6 +12,7 @@
         size_hint: .4,.3
         pos_hint: {'center_x':0.5, 'center_y':-.5}
         
+
         Carousel:
             id:car
             direction: 'right'

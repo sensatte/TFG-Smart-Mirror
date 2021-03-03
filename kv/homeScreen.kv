@@ -1,5 +1,13 @@
 #:kivy 1.0
 <HomeScreen>:
+    InfoDayWidget:
+        size_hint:(.3, .15)
+        pos_hint:{"x": 0, "top": 1}
+
+    SpotifyWidget2:
+        size_hint:(.3, .15)
+        pos: 0,10
+
     ImageButton:
         id: menuButton
         keep_ratio: True
@@ -8,9 +16,5 @@
         pos_hint: {"center_x": .5, "y": 0}
         size_hint: (.17, .1)
         on_press: root.goToConfigScreen()
-
-    InfoDayWidget:
-        size_hint:(.3, .15)
-        pos_hint:{"x": 0, "top": 1}
 
     

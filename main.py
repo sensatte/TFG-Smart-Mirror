@@ -12,13 +12,16 @@ kivy.require('2.0.0')  # replace with your current kivy version !
 Window.size = (540, 700)
 # Window.size = (540, 960)
 Window.minimum_width, Window.minimum_height = Window.size
+
+
 class SmartMirrorApp(App):
 
     def build(self):
 
-        #TODO es probable que pasen las mierdas de las screens negras y 
+        # TODO es probable que pasen las mierdas de las screens negras y
         # no transparentes porque metemos las screens dentro de las screens
         #TODO forma bonita de meter las pantallas
+
         # Create the screen manager
         scMenu = ScreenManager()
 
@@ -31,12 +34,12 @@ class SmartMirrorApp(App):
         infoDay = Screen(name="clock")
         infoDay.add_widget(InfoDayConfig())
         scMenu.add_widget(infoDay)
-        
+
         notes = Screen(name="notes")
         notes.add_widget(NotesConfig())
         scMenu.add_widget(notes)
 
-        scMenu.current = "notes"
+        scMenu.current = "home"
 
         return scMenu
 
