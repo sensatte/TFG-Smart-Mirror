@@ -1,8 +1,9 @@
 import pymongo
 import mongoengine as mongo
-from db.Documents import Notes, Counters
+from db.Documents import Notes, Counters, Gifs
 import datetime
 import dns  # required for connecting with SRV
+import logging
 
 mongo.connect(db="smartMirrorDatabase",
               host="mongodb+srv://admin:tfgadmin@cluster0.cjbui.mongodb.net")
@@ -37,3 +38,20 @@ def update_counter(sequenceName):
 
 # print(getAllNotes())
 # print(findNoteById(2).text)
+
+def getAllGifs():
+    return Gifs.objects
+
+
+def updateGif(_id, source, pos, size_hint, rotation=0):
+    gifToSave = Gifs(
+        _id=_id,
+        source=source,
+        posX=pos[0],
+        posY=pos[1],
+        sizeX=size_hint[0],
+        sizeY=size_hint[1],
+        rotation=rotation)
+
+    gifToSave.save()
+    logging.info('DB: Updated gif with id: '+str(_id))
