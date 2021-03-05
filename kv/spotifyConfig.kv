@@ -1,0 +1,143 @@
+#:kivy 1.0
+
+<SpotifyConfig>:
+    size_hint:.4,.4
+    id: main
+    RelativeLayout:
+        size_hint: 1,.75
+        background_color: 0,0,0,0
+        padding: [0,5,0,0]
+        pos_hint: {"center_x": .5, "center_y": .5}
+        canvas.after:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2.
+                rectangle: self.x, self.y, self.width, self.height 
+
+        Scrolling:
+            GridLayout:
+                cols: 1
+                padding: 20
+                spacing: 10
+                size_hint_y: None
+                height: self.minimum_height
+                
+                BoxLayout:
+                    size_hint_y: None
+                    orientation: "horizontal"
+                    height: 40
+                    Image:
+                        source: "images/menu/spotify.png"
+
+                    Label:
+                        text: "Spotify"
+                        font_size:"22"
+
+    #############################################
+
+                Label:
+                    height: 20
+                    size_hint_y: None
+                    text: "Shuffle:"
+
+                BoxLayout:
+                    size_hint_y: None
+                    orientation: 'horizontal'
+                    height: 40
+                    ToggleButton:
+                        id: shuffleOn
+                        group: "shuffle"
+                        color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                        text: "Si"
+                        background_color:[0, 0, 0, 0]
+                        allow_no_selection: False
+                        on_press: root.chosenShuffle("true")
+                        canvas.before:
+                            Color:
+                                rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                            RoundedRectangle:
+                                size:self.size
+                                pos:self.pos
+                                radius: [15]
+                    ToggleButton:
+                        id: shuffleOff
+                        group: "shuffle"
+                        color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                        text: "No"     
+                        background_color:[0, 0, 0, 0]
+                        allow_no_selection: False
+                        on_press: root.chosenShuffle("false")
+                        canvas.before:
+                            Color:
+                                rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                            RoundedRectangle:
+                                size:self.size
+                                pos:self.pos
+                                radius: [15]
+                
+    #############################################
+                Widget:
+                    size_hint_y: None
+                    height: 6
+                    canvas:
+                        Color:
+                            rgba: 1., 1., 1., .6
+                        Rectangle:
+                            pos: root.width/20, self.center_y
+                            size: root.width-root.width/10, 2
+    #############################################
+
+                Label:
+                    height: 20
+                    size_hint_y: None
+                    text: "Playlist:"
+                GridLayout:
+                    id: playlistsLayout
+                    size_hint_y: None
+                    cols: 2
+                    # orientation: 'vertical'
+                    height: root.height
+                    spacing: 10
+                    padding: 20
+                  
+                Widget:
+                    size_hint_y: None
+                    height: 6
+                    canvas:
+                        Color:
+                            rgba: 1., 1., 1., .6
+                        Rectangle:
+                            pos: root.width/20, self.center_y
+                            size: root.width-root.width/10, 2    
+
+    ImageButton:
+        id: homeButton
+        size_hint_y: None
+        source: "images/menu/previous.png"
+        pos_hint: {"center_x": .5, "y": 0}
+        size_hint: (.17, .11)
+        on_press: root.pressedBack(self)
+
+<Scrolling>:
+    do_scroll_x: False
+    bar_margin: 5
+    bar_width: 3
+    bar_color: [1,1,1,.5]
+    bar_inactive_color: [1,1,1,.2]
+    scroll_type: ['content']
+
+<PlayListToggle>:
+    group: "spotifyPlaylist"
+    color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.4]
+    background_color:[0, 0, 0, 0]
+    allow_no_selection: False
+    canvas.after:
+        Color:
+            rgba: (1,1,1,1) if self.state == "down" else (1,1,1,0)
+
+        Line:
+            width: 1.
+            rectangle: self.x, self.y, self.width, self.height 
+
+    

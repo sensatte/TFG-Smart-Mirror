@@ -43,6 +43,10 @@ class SpotifyWrapper2():
     def getCurrentSong(self):
         return self.getSpotipyInstance().current_user_playing_track()
 
+    def shuffle(self, value, deviceId):
+        trueVal = value == "true"
+        return self.getSpotipyInstance().shuffle(state=trueVal, device_id=deviceId)
+
     def setPlaylist(self, deviceId, playlistUri):
         self.getSpotipyInstance().start_playback(
             device_id=deviceId, context_uri=playlistUri)
