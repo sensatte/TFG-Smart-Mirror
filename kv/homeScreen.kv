@@ -1,12 +1,10 @@
 #:kivy 1.0
 <HomeScreen>:
-    InfoDayWidget:
-        size_hint:(.3, .15)
-        pos_hint:{"x": 0, "top": 1}
+    on_pre_enter: root.refreshPage()
 
-    SpotifyWidget2:
-        size_hint:(.3, .15)
-        pos: 0,10
+    # SpotifyWidget2:
+    #     size_hint:(.3, .15)
+    #     pos: 0,10
 
     ImageButton:
         id: menuButton
@@ -17,4 +15,6 @@
         size_hint: (.17, .1)
         on_press: root.goToConfigScreen()
 
-    
+    # InfoDayWidget:
+    #     size_hint:(.3, .15)
+    #     pos_hint:{"x": 0, "top": 1}

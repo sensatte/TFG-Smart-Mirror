@@ -1,6 +1,6 @@
 #:kivy 1.0
 <NotesWidget>:
-    
+    id:notesWidget
     size_hint:.3,.3
 
     orientation:"rl-tb"
@@ -26,7 +26,6 @@
     size: self.texture_size
     halign: 'center'
     is_shortened: True
-    disabled: self.visible!=True
 
     background_color:
     canvas.before:
