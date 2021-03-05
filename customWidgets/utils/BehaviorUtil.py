@@ -14,7 +14,6 @@ from kivy.clock import Clock
 import logging
 
 
-
 class ImageButton(ButtonBehavior, Image):
     note = Properties.NumericProperty()
     idwidget = Properties.NumericProperty()
@@ -91,9 +90,11 @@ class GifConfig(ButtonBehavior, AsyncImage):
     delay = Properties.NumericProperty()
 
     def pinGif(self):
+
         self.pinned = not self.pinned
 
         gif = dbWrapper.findGifById(self.imagenId)
         gif.pinned = self.pinned
-        gif.pos = (10, 10)
+        gif.posX = 10
+        gif.posY = 10
         gif.save()
