@@ -26,10 +26,10 @@ def update_counter(sequenceName):
 def deleteNoteById(noteid):
     Notes.objects(_id=noteid).delete()
 
-# saveNote("Escuela", True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228])
-# saveNote("prueba", False, "vaya dia de meirda", datetime.date(2021, 1, 21), [125, 150, 176])
-# saveNote("eat the rich", True, "eat the rich", datetime.date(2021, 1, 21), [140, 183, 141])
-# saveNote("Agua", True, "cambiarle el agua al perro", datetime.date(2021, 1, 21), [149, 125, 173])
+# saveNote("Escuela", True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])
+# saveNote("prueba", False, "vaya dia de meirda", datetime.date(2021, 1, 21), [125, 150, 176,1])
+# saveNote("eat the rich", True, "eat the rich", datetime.date(2021, 1, 21), [140, 183, 141,1])
+# saveNote("Agua", True, "cambiarle el agua al perro", datetime.date(2021, 1, 21), [149, 125, 173,1])
 
 # print(getAllNotes())
 # print(findNoteById(2).text)

@@ -3,7 +3,7 @@ from kivy.uix.floatlayout import FloatLayout
 from customWidgets.NewsWidget import NewsWidget
 from customWidgets.InfoDayWidget import InfoDayWidget
 from customWidgets.QuotesWidget import QuotesWidget
-from customWidgets.NotesWidget import NotesWidget
+from customWidgets.NotesWidget import NotesWidget, deleteNotes
 from customWidgets.SpotifyWidget import SpotifyWidget
 from customWidgets.utils.BehaviorUtil import ImageButton
 from utils.volume import VolumeWid
@@ -27,11 +27,11 @@ class HomeScreen(Screen):
         # volumeWidget=VolumeWid()
         # widgets.append(volumeWidget)
 
-        # infoDay = InfoDayWidget()
-        # widgets.append(infoDay)
+        infoDay = InfoDayWidget()
+        widgets.append(infoDay)
 
-        # quotes = QuotesWidget()
-        # widgets.append(quotes)
+        quotes = QuotesWidget()
+        widgets.append(quotes)
 
         notes = NotesWidget()
         widgets.append(notes)
@@ -39,6 +39,16 @@ class HomeScreen(Screen):
         for i in widgets:
             self.add_widget(i)
 
-    def goToConfigScreen(self,):
+        
+    def refreshPage(self):
+        #TODO echar cuenta a esto porque como se vaya del inicio de la lista veras
+        self.remove_widget(self.children[__name__=="notas"])
+        notes = NotesWidget()
+        # self.remove_widget(self.children[__name__=="infoDay"])
+        # infoday = InfoDayWidget()
+
+        self.add_widget(notes)
+        # self.add_widget(infoday)
+    def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)
         self.parent.current = 'menu'

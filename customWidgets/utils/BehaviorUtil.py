@@ -3,8 +3,10 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.label import Label
 from kivy.app import App
+import customWidgets.NotesWidget as NotesWidget
 import kivy.properties as Properties
 import db.dbWrapper as dbWrapper
+
 
 
 class ImageButton(ButtonBehavior, Image):
@@ -22,6 +24,7 @@ class ColoredLabelConfig(ButtonBehavior, Label):
     noteid = Properties.NumericProperty()
     pinned = Properties.BooleanProperty()
     background_color = Properties.ListProperty((0,0,0,1))
+    
 
     def pinNote(self, noteId, pinned,): 
         ColoredLabel.visible = pinned!=True

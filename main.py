@@ -36,7 +36,7 @@ class SmartMirrorApp(App):
         notes.add_widget(NotesConfig())
         scMenu.add_widget(notes)
 
-        scMenu.current = "notes"
+        scMenu.current = "home"
 
         return scMenu
 

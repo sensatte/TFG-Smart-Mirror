@@ -52,6 +52,7 @@ class NotesConfig(Screen):
     def showNote(self, note, idwidget):
         layout=GridLayout(cols=1, spacing=[0,7])
         layout.id=idwidget
+
         layout.add_widget(ColoredLabelConfig(noteid=note._id, text=note.title + "\n\n" + note.text, pinned=note.pinned,
                                             background_color=(note.rgb[0]/255,note.rgb[1]/255,note.rgb[2]/255,note.rgb[3]), size_hint=(1,5)))
         botones = BoxLayout(orientation='horizontal')
