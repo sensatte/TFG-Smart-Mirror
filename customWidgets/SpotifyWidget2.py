@@ -24,9 +24,11 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
     deviceId = StringProperty(None)
     relaxing = BooleanProperty(True)
     songImageAngle = NumericProperty(0)
-    paused = BooleanProperty(True)
+    paused = BooleanProperty(False)
     volume = NumericProperty(0)
     collapsed = BooleanProperty(True)
+    playListURI = StringProperty("")
+    shuffle = StringProperty("")
 
     def __init__(self, **kwargs):
         super(SpotifyWidget2, self).__init__(**kwargs)
@@ -38,14 +40,24 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
         if (self.deviceId != None):
             self.wrapper.setVolume(deviceId=self.deviceId, volume=value)
 
+    def on_playListURI(self, instance, value):
+        self.wrapper.setPlaylist(
+            playlistUri=value, deviceId=self.deviceId)
+        animSpin(self)
+
+    def on_shuffle(self, instance, value):
+        self.wrapper.shuffle(deviceId=self.deviceId, value=value)
+
     def on_deviceId(self, instance, value):
         print("Got the deviceId ", value)
         self.relaxing = False
 
         self.volume = 50  # TODO GUARDAR EN MEMORIA EN VEZ DE HARDCODEAR
+
         t = Thread(target=getNewSongThread, args=(
             self,), daemon=True)
         t.start()
+
         # TODO AVISAR A TODO DE QUE TENEMOS ID Y POR LO TANTO TODO DEBERIA WORKEAR
 
     def relaxWithThePresses(self):
@@ -147,6 +159,14 @@ def stopAnim(self):
 
 def getNewSongThread(widget):
     while (True):
+        f = open("spotifyPlaylistURI.txt", "r")
+        currentPlaylistURI = f.read()
+        f.close()
+        widget.playListURI = currentPlaylistURI
+        f = open("spotifyShuffle.txt", "r")
+        shuffle = f.read()
+        widget.shuffle = shuffle
+        f.close()
         logging.info('Spotipy: Looking for new song')
         song = widget.wrapper.getCurrentSong()
         if (song != None):
