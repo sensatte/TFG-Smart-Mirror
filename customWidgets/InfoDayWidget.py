@@ -11,7 +11,9 @@ from kivy.lang import Builder
 class InfoDayWidget(RelativeLayout):
     def __init__(self, **kwargs):
         super(InfoDayWidget, self).__init__(**kwargs)
-
+        self.__name__="infoDay"
+        self.size_hint=(.3, .15)
+        self.pos_hint={"x": 0, "top": 1}
         clock = ClockWidget()
         date = DateWidget()
         temp = TempWidget()

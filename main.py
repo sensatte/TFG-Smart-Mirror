@@ -22,8 +22,8 @@ class SmartMirrorApp(App):
 
         # TODO es probable que pasen las mierdas de las screens negras y
         # no transparentes porque metemos las screens dentro de las screens
-        # TODO forma bonita de meter las pantallas
-        # TODO que se puedan borrar las notas
+        #TODO forma bonita de meter las pantallas
+
         # Create the screen manager
         scMenu = ScreenManager()
 

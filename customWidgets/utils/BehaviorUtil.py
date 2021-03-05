@@ -5,6 +5,7 @@ from kivy.uix.behaviors import ButtonBehavior, DragBehavior
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.label import Label
 from kivy.app import App
+import customWidgets.NotesWidget as NotesWidget
 import kivy.properties as Properties
 import db.dbWrapper as dbWrapper
 from kivy.uix.scatter import Scatter
@@ -13,8 +14,10 @@ from kivy.clock import Clock
 import logging
 
 
+
 class ImageButton(ButtonBehavior, Image):
-    pass
+    note = Properties.NumericProperty()
+    idwidget = Properties.NumericProperty()
 
 
 class PlayListToggle(ToggleButtonBehavior, AsyncImage):
