@@ -15,7 +15,7 @@ class GifsWidget(RelativeLayout):
 
     # TODO CREAR EL BUSCADOR DE GIFS
 
-    images = ListProperty(dbWrapper.getAllGifs())
+    images = ListProperty(dbWrapper.getPinnedGifs())
 
     def __init__(self, **kwargs):
         super(GifsWidget, self).__init__(**kwargs)
@@ -29,7 +29,7 @@ class GifsWidget(RelativeLayout):
                 pos=(image.posX, image.posY),
                 keep_ratio=False,
                 allow_stretch=True,
-                anim_delay=.05,
+                anim_delay=image.delay,
                 mipmap=True,
             )
 

@@ -1,3 +1,4 @@
+from db.Documents import Gifs
 from kivy.uix.behaviors.togglebutton import ToggleButtonBehavior
 from kivy.uix.image import AsyncImage, Image
 from kivy.uix.behaviors import ButtonBehavior, DragBehavior
@@ -63,13 +64,31 @@ class DragImage(DragBehavior, AsyncImage):
 
         self.saveOnDBEvent = Clock.schedule_once(self.saveOnDB, 5)
 
-    pass
-
     def saveOnDB(self, dt):
         # TODO SAVE SOURCE, POS AND SIZE ON DB
-        dbWrapper.updateGif(
+
+        gifToSave = Gifs(
             _id=self.imagenId,
             source=self.source,
-            pos=self.pos,
-            size_hint=self.size_hint,
-            rotation=0)
+            posX=self.pos[0],
+            posY=self.pos[1],
+            sizeX=self.size_hint[0],
+            sizeY=self.size_hint[1],
+            rotation=0,
+            delay=self.anim_delay)
+        gifToSave.save()
+
+        logging.info('DB: Updated gif with id: ' + str(self.imagenId))
+
+
+class GifConfig(ButtonBehavior, AsyncImage):
+    imagenId = Properties.NumericProperty()
+    pinned = Properties.BooleanProperty()
+    delay = Properties.NumericProperty()
+
+    def pinGif(self):
+        self.pinned = not self.pinned
+
+        gif = dbWrapper.findGifById(self.imagenId)
+        gif.pinned = self.pinned
+        gif.save()

@@ -43,15 +43,9 @@ def getAllGifs():
     return Gifs.objects
 
 
-def updateGif(_id, source, pos, size_hint, rotation=0):
-    gifToSave = Gifs(
-        _id=_id,
-        source=source,
-        posX=pos[0],
-        posY=pos[1],
-        sizeX=size_hint[0],
-        sizeY=size_hint[1],
-        rotation=rotation)
+def getPinnedGifs():
+    return Gifs.objects(pinned=True)
 
-    gifToSave.save()
-    logging.info('DB: Updated gif with id: '+str(_id))
+
+def findGifById(gifId):
+    return Gifs.objects.get(_id=gifId)
