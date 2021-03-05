@@ -52,6 +52,7 @@ Builder.load_file("kv/dragImage.kv")
 
 
 # TODO COULD BE DONE WITH SCATTER INSTEAD OF DRAG FOR SCALING AND ROTATION
+# class DragImage(Scatter, AsyncImage):
 class DragImage(DragBehavior, AsyncImage):
     saveOnDBEvent = Properties.ObjectProperty()
     imagenId = Properties.NumericProperty()
@@ -91,4 +92,5 @@ class GifConfig(ButtonBehavior, AsyncImage):
 
         gif = dbWrapper.findGifById(self.imagenId)
         gif.pinned = self.pinned
+        gif.pos = (10, 10)
         gif.save()
