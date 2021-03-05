@@ -33,38 +33,38 @@ def deleteNoteById(noteid):
 
 ####################################
 
-def getInfoDayHora():
-    return infoDayHora.objects
+def getHora():
+    return Hora.objects[0]
 
-def saveInfoDayHora(id, formato, color):    
-    noteToSave = infoDayHora(_id=id, formato=formato, color=color)
+def saveHora(id, formato, color):    
+    noteToSave = Hora(_id=id, formato=formato, color=color)
     noteToSave.save()
     print("La hora se ha actualizado")
 
 
-def getInfoDayFecha():
-    return infoDayFecha.objects[0]
+def getFecha():
+    return Fecha.objects[0]
 
-def saveInfoDayFecha(id, formato, color):    
-    noteToSave = infoDayFecha(_id=id, formato=formato, color=color)
+def saveFecha(id, formato, color):    
+    noteToSave = Fecha(_id=id, formato=formato, color=color)
     noteToSave.save()
     print("La fecha se ha actualizado")
 
 
-def getInfoDayTemp():
-    return infoDayTemp.objects[0]
+def getTemp():
+    return Temp.objects[0]
 
-def saveInfoDayTemp(id, formato, color):    
-    noteToSave = infoDayTemp(_id=id, formato=formato, color=color)
+def saveTemp(id, formato, color):    
+    noteToSave = Temp(_id=id, formato=formato, color=color)
     noteToSave.save()
     print("La temperatura se ha actualizado")
 
 
-def getInfoDayClima():
-    return infoDayClima.objects
+def getClima():
+    return Clima.objects[0]
 
-def saveInfoDayClima(id, formato):    
-    noteToSave = infoDayClima(_id=id, formato=formato)
+def saveClima(id, formato):    
+    noteToSave = Clima(_id=id, formato=formato)
     noteToSave.save()
     print("El clima se ha actualizado")
 
@@ -84,9 +84,10 @@ def findGifById(gifId):
 # saveNote("eat the rich", True, "eat the rich", datetime.date(2021, 1, 21), [140, 183, 141,1])
 # saveNote("Agua", True, "cambiarle el agua al perro", datetime.date(2021, 1, 21), [149, 125, 173,1])
 
-print(getAllNotes())
-# print(findNoteById(2).text)
-saveInfoDayClima("hora", "sdfsdfsf")
+# print(getHora().formato)
+# print(getFecha().formato)
+# print(getTemp().formato)
+# print(getClima().formato)
 
 # print(getAllNotes())
 # print(findNoteById(2).text)

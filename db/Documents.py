@@ -15,22 +15,22 @@ class Counters(Document):
     _id = StringField(required=True, max_length=100)
     cont = IntField(required=True, default=0)
 
-class infoDayHora(Document):
+class Hora(Document):
     _id = StringField(required=True, max_length=100)
     color = ListField(required=True)
     formato = ListField(required=True)
 
-class infoDayFecha(Document):
+class Fecha(Document):
     _id = StringField(required=True, max_length=100)
     color = ListField(required=True)
     formato = StringField(required=True)
 
-class infoDayTemp(Document):
+class Temp(Document):
     _id = StringField(required=True, max_length=100)
     color = ListField(required=True)
     formato = StringField(required=True)
 
-class infoDayClima(Document):
+class Clima(Document):
     _id = StringField(required=True, max_length=100)
     formato = StringField(required=True)
 
