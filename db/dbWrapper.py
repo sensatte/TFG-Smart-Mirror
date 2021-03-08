@@ -9,10 +9,10 @@ mongo.connect(db="smartMirrorDatabase",
               host="mongodb+srv://admin:tfgadmin@cluster0.cjbui.mongodb.net")
 
 
-def saveNote(title, pinned, text, date, rgb):    
-    noteToSave = Notes(_id=update_counter("notesid"), title=title, pinned=pinned, text=text, date=date, rgb=rgb)
+def saveNote(pinned, text, date, rgb):    
+    noteToSave = Notes(_id=update_counter("notesid"), pinned=pinned, text=text, date=date, rgb=rgb)
     noteToSave.save()
-    print("La nota " + title + " se ha guardado")
+    print("La nota " + text + " se ha guardado")
 
 
 def getAllNotes():
@@ -79,10 +79,10 @@ def getPinnedGifs():
 def findGifById(gifId):
     return Gifs.objects.get(_id=gifId)
 
-# saveNote("Escuela", True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])
-# saveNote("prueba", False, "vaya dia de meirda", datetime.date(2021, 1, 21), [125, 150, 176,1])
-# saveNote("eat the rich", True, "eat the rich", datetime.date(2021, 1, 21), [140, 183, 141,1])
-# saveNote("Agua", True, "cambiarle el agua al perro", datetime.date(2021, 1, 21), [149, 125, 173,1])
+# saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])
+# saveNote(False, "vaya dia de meirda", datetime.date(2021, 1, 21), [125, 150, 176,1])
+# saveNote(True, "eat the rich", datetime.date(2021, 1, 21), [140, 183, 141,1])
+# saveNote( True, "cambiarle el agua al perro", datetime.date(2021, 1, 21), [149, 125, 173,1])
 
 # print(getHora().formato)
 # print(getFecha().formato)

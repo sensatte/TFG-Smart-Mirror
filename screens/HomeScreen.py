@@ -46,11 +46,11 @@ class HomeScreen(Screen):
         #TODO echar cuenta a esto porque como se vaya del inicio de la lista veras
         self.remove_widget(self.children[__name__=="notas"])
         notes = NotesWidget()
-        self.remove_widget(self.children[__name__=="infoDay"])
-        infoday = InfoDayWidget()
+        # self.remove_widget(self.children[__name__=="infoDay"])
+        # infoday = InfoDayWidget()
 
         self.add_widget(notes)
-        self.add_widget(infoday)
+        # self.add_widget(infoday)
 
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)

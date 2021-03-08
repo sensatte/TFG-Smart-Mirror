@@ -4,7 +4,6 @@ import datetime
 
 class Notes(Document):
     _id = IntField(required=True)
-    title = StringField(required=True, max_length=50)
     pinned = BooleanField(required=True)
     text = StringField(required=True)
     date = DateTimeField(default=datetime.datetime.now)

@@ -26,7 +26,7 @@ def showNotes(self):
     for note in noteList:
         if(num<9 and note.pinned == True):            
             num+=1                
-            self.add_widget(BehaviorUtil.ColoredLabel(visible=note.pinned, text=note.title + "\n" + note.text, #size_hint_x=None, width=100,
+            self.add_widget(BehaviorUtil.ColoredLabel(visible=note.pinned, text=note.text, #size_hint_x=None, width=100,
                                             background_color=(note.rgb[0]/255,note.rgb[1]/255,note.rgb[2]/255,note.rgb[3])))
 
 
