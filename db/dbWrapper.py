@@ -79,6 +79,17 @@ def getPinnedGifs():
 def findGifById(gifId):
     return Gifs.objects.get(_id=gifId)
 
+
+####################################
+
+def getAllWeight():
+    return Gym.objects
+
+def getWeightByMonth(mes):
+    return [x for x in Gym.objects if x.month==mes]
+
+
+# print(getWeightByMonth(2))
 # saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])
 # saveNote(False, "vaya dia de meirda", datetime.date(2021, 1, 21), [125, 150, 176,1])
 # saveNote(True, "eat the rich", datetime.date(2021, 1, 21), [140, 183, 141,1])

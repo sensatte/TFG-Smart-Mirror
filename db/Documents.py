@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, BooleanField, DateTimeField, ObjectIdField, IntField, ListField, FloatField
+from mongoengine import Document, DecimalField, ObjectIdField, StringField, BooleanField, DateTimeField, ObjectIdField, IntField, ListField, FloatField
 import datetime
 
 
@@ -44,3 +44,11 @@ class Gifs(Document):
     sizeY = FloatField(required=True)
     rotation = IntField(required=False, default=0)
     delay = FloatField(required=False, default=0.1, precision=2)
+
+class Gym(Document):
+    _id = ObjectIdField(required=True, max_length=100)
+    year = IntField(required=True)
+    month = IntField(required=True)
+    day = IntField(required=True)
+    weight = DecimalField(required=True)
+
