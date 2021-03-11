@@ -15,10 +15,11 @@ class GifsWidget(RelativeLayout):
 
     # TODO CREAR EL BUSCADOR DE GIFS
 
-    images = ListProperty(dbWrapper.getPinnedGifs())
-
     def __init__(self, **kwargs):
         super(GifsWidget, self).__init__(**kwargs)
+        self.__name__ = "gifs"
+
+        self.images = dbWrapper.getPinnedGifs()
 
         for image in self.images:
 

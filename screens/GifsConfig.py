@@ -1,4 +1,6 @@
 # pylint: disable=no-member
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
 from customWidgets.utils.BehaviorUtil import GifConfig, ImageButton, Scrolling, ColoredLabelConfig
 from kivy.uix.screenmanager import ScreenManager, Screen
 
@@ -6,6 +8,7 @@ from kivy.app import App
 from kivy.animation import Animation
 from functools import partial
 from kivy.uix.screenmanager import FadeTransition
+import kivy.properties as Properties
 
 import db.dbWrapper as dbWrapper
 import datetime
@@ -16,14 +19,11 @@ Builder.load_file('kv\\gifsConfig.kv')
 
 
 class GifsConfig(Screen):
-    # TODO hacer el kv que se pueda usar pa mas gente
-    # TODO color picker
-    # TODO que las anim las coja de otro archivo
-    # TODO poner pestaña para crear nota
-    # TODO quje no puedas enviar nota vacia
+    ind = 0
 
     def __init__(self, **kwargs):
         super(GifsConfig, self).__init__(**kwargs)
+
         self.backg = [0, 0, 0, 0]
         self.pos_hint = {'center_y': 0.5, 'center_x': 0.5}
         gifsList = dbWrapper.getAllGifs()
@@ -40,9 +40,52 @@ class GifsConfig(Screen):
         App.get_running_app().root.current = "menu"
 
     def showGifs(self, gifsList):
-        for gif in gifsList:
-            self.ids.showGifs.add_widget(
-                GifConfig(imagenId=gif._id, source=gif.source, pinned=gif.pinned, anim_delay=gif.delay))
 
-    def writeGif(self, source, size):
-        dbWrapper.saveGif(source, size)
+        for gif in gifsList:
+            self.ids.showGifs.add_widget(self.showGif(gif, self.ind))
+            self.ind += 1
+
+        # for gif in gifsList:
+        #     self.ids.showGifs.add_widget(
+        #         GifConfig(
+        #             imagenId=gif._id,
+        #             source=gif.source,
+        #             pinned=gif.pinned,
+        #             anim_delay=gif.delay
+        #         ))
+
+    def showGif(self, gif, idwidget):
+        layout = GridLayout(cols=1, spacing=[0, 7])
+        layout.id = idwidget
+
+        layout.add_widget(
+            GifConfig(
+                imagenId=gif._id,
+                source=gif.source,
+                pinned=gif.pinned,
+                anim_delay=gif.delay
+            )
+        )
+        botones = BoxLayout(orientation='horizontal')
+        botones.add_widget(self.createButton(gif._id, idwidget, "trash"))
+
+        layout.add_widget(botones)
+        return layout
+
+    def createButton(self, gifid, idwidget, image):
+        button = ImageButton(gif=gifid, idwidget=idwidget, source="images/menu/" +
+                             image+".png", size_hint_y=None, size_hint=(.8, .8))
+        button.bind(on_press=self.deleteGif)
+        return button
+
+    def deleteGif(self, button):
+        dbWrapper.deleteGifById(button.gif)
+        for child in self.ids.showGifs.children:
+            if child.id == button.idwidget:
+                borrar = child
+                break
+
+        self.ids.showGifs.remove_widget(borrar)
+
+    def writeGif(self, source):
+        dbWrapper.saveGif(source)

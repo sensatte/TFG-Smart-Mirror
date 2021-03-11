@@ -17,9 +17,9 @@ from db.Documents import Notes
 import logging
 import datetime
 
-
 class ImageButton(ButtonBehavior, Image):
     note = Properties.NumericProperty()
+    gif = Properties.NumericProperty()
     idwidget = Properties.NumericProperty()
 
 
@@ -107,9 +107,11 @@ class GifConfig(ButtonBehavior, AsyncImage):
     
 
     def pinGif(self):
+
         self.pinned = not self.pinned
 
         gif = dbWrapper.findGifById(self.imagenId)
         gif.pinned = self.pinned
-        gif.pos = (10, 10)
+        gif.posX = 10
+        gif.posY = 10
         gif.save()

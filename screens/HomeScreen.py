@@ -23,11 +23,14 @@ class HomeScreen(Screen):
 
         widgets = []
 
-        # spotifyWidget = SpotifyWidget()
-        # widgets.append(spotifyWidget)
+        spotifyWidget = SpotifyWidget2()
+        widgets.append(spotifyWidget)
 
         # volumeWidget=VolumeWid()
         # widgets.append(volumeWidget)
+
+        # gifs = GifsWidget()
+        # widgets.append(gifs)
 
         infoDay = InfoDayWidget()
         widgets.append(infoDay)
@@ -41,16 +44,19 @@ class HomeScreen(Screen):
         for i in widgets:
             self.add_widget(i)
 
-        
     def refreshPage(self):
-        #TODO echar cuenta a esto porque como se vaya del inicio de la lista veras
-        self.remove_widget(self.children[__name__=="notas"])
+        # TODO echar cuenta a esto porque como se vaya del inicio de la lista veras
+        self.remove_widget(self.children[__name__ == "notas"])
         notes = NotesWidget()
         # self.remove_widget(self.children[__name__=="infoDay"])
         # infoday = InfoDayWidget()
 
         self.add_widget(notes)
         # self.add_widget(infoday)
+
+        self.remove_widget(self.children[__name__ == "gifs"])
+        gifs = GifsWidget()
+        self.add_widget(gifs)
 
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)
