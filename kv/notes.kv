@@ -1,7 +1,9 @@
 #:kivy 1.0
 <NotesWidget>:
     id:notesWidget
-    size_hint:.3,.3
+    # size_hint:.3,.3
+    pos: 0, 0
+    size: root.size
 
     orientation:"rl-tb"
     cols:3
@@ -35,4 +37,23 @@
             pos: self.pos
             size: self.size
 
+<DraggableColoredLabel>:
+    drag_rectangle: self.x, self.y, self.right, self.top
+    drag_timeout: 1000000000000000
+    drag_distance: 0
+
+    font_size: root.height*0.1
+    text_size: self.width, None
+    # size: self.texture_size
+    size_hint: .2, .2
+    halign: 'center'
+    is_shortened: True
+
+    background_color:
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
         

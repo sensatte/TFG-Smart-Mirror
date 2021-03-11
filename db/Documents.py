@@ -9,6 +9,11 @@ class Notes(Document):
     date = DateTimeField(default=datetime.datetime.now)
     rgb = ListField(required=True)
 
+    sizeX = FloatField(required=False, default=.15)
+    sizeY = FloatField(required=False, default=.15)
+    posX = FloatField(required=False, default=20)
+    posY = FloatField(required=False, default=20)
+
 
 class Counters(Document):
     _id = StringField(required=True, max_length=100)
