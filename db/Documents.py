@@ -18,7 +18,6 @@ class Counters(Document):
 
 class Gifs(Document):
     _id = IntField(required=True)
-    name = StringField(required=False, max_length=200)
     source = StringField(required=True, max_length=200)
     pinned = BooleanField(required=False, default=True)
     posX = FloatField(required=True)

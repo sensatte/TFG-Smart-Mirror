@@ -16,6 +16,7 @@ import logging
 
 class ImageButton(ButtonBehavior, Image):
     note = Properties.NumericProperty()
+    gif = Properties.NumericProperty()
     idwidget = Properties.NumericProperty()
 
 

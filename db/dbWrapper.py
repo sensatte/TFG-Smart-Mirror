@@ -30,6 +30,7 @@ def update_counter(sequenceName):
     Counters(_id=sequenceName, cont=contador.cont+1).save()
     return contador.cont+1
 
+
 def deleteNoteById(noteid):
     Notes.objects(_id=noteid).delete()
 
@@ -52,3 +53,24 @@ def getPinnedGifs():
 
 def findGifById(gifId):
     return Gifs.objects.get(_id=gifId)
+
+
+def saveGif(source):
+
+    gifToSave = Gifs(
+        _id=update_counter("gifsid"),
+        source=source,
+        pinned=True,
+        posX=50,
+        posY=50,
+        sizeX=.3,
+        sizeY=.2,
+        rotation=0,
+        delay=.1,
+    )
+    gifToSave.save()
+    print("El gif se ha guardado")
+
+
+def deleteGifById(gifid):
+    Gifs.objects(_id=gifid).delete()
