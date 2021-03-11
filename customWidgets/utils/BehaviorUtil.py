@@ -8,11 +8,14 @@ from kivy.app import App
 import customWidgets.NotesWidget as NotesWidget
 import kivy.properties as Properties
 import db.dbWrapper as dbWrapper
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scatter import Scatter
+from kivy.uix.textinput import TextInput
 from kivy.lang import Builder
 from kivy.clock import Clock
+from db.Documents import Notes
 import logging
-
+import datetime
 
 class ImageButton(ButtonBehavior, Image):
     note = Properties.NumericProperty()
@@ -33,19 +36,31 @@ class ColoredLabel(Label):
     visible = Properties.BooleanProperty()
 
 
-class ColoredLabelConfig(ButtonBehavior, Label):
+class ColoredLabelConfig(GridLayout):
+    editing = Properties.BooleanProperty(False)
     noteid = Properties.NumericProperty()
     pinned = Properties.BooleanProperty()
-    background_color = Properties.ListProperty((0, 0, 0, 1))
+    bcolor = Properties.ListProperty((0, 0, 0, 1))
+    texto = Properties.StringProperty()
 
-    def pinNote(self, noteId, pinned,):
+    def pinNote(self, noteId, pinned):
         ColoredLabel.visible = pinned != True
         self.pinned = pinned != True
         note = dbWrapper.findNoteById(noteId)
         note.pinned = pinned != True
-
         note.save()
 
+    def on_editing (self, instance, value):
+        if (value == False):
+            nuevoTexto = self.ids.textValue.text
+            noteToUpdate = Notes(_id=self.noteid, pinned=self.pinned, rgb=[self.bcolor[0]*255,self.bcolor[1]*255,self.bcolor[2]*255,1], text=nuevoTexto)
+            noteToUpdate.save()
+
+    def deleteNote(self):
+        dbWrapper.deleteNoteById(self.noteid)
+
+class ButtonTextInput(TextInput, ButtonBehavior):
+    pass
 
 class DragLabel(DragBehavior, Label):
     pass
@@ -89,6 +104,7 @@ class GifConfig(ButtonBehavior, AsyncImage):
     imagenId = Properties.NumericProperty()
     pinned = Properties.BooleanProperty()
     delay = Properties.NumericProperty()
+    
 
     def pinGif(self):
 

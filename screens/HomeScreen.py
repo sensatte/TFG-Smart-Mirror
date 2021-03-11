@@ -54,8 +54,6 @@ class HomeScreen(Screen):
         self.add_widget(notes)
         # self.add_widget(infoday)
 
-        print(self.children)
-
         self.remove_widget(self.children[__name__ == "gifs"])
         gifs = GifsWidget()
         self.add_widget(gifs)

@@ -4,13 +4,12 @@ from kivy.clock import Clock
 from kivy.uix.image import Image
 import kivy.properties as Properties
 from datetime import datetime
+from db.dbWrapper import getHora, saveHora
 
 class ClockWidget(Image):
 
     text = Properties.StringProperty('')
-    seconds=False
-    chosenColor = [1,1,1,1]
-    formato="24h"
+    chosenColor = Properties.ListProperty(getHora().color)
 
     def on_text(self, *_):
             # Just get large texture:
@@ -23,12 +22,12 @@ class ClockWidget(Image):
     
     def __init__(self, **kwargs):
         super(ClockWidget, self).__init__(**kwargs)
-        self.text = datetime.now().strftime(self.update_secondsAndFormat(self.seconds, self.formato))
+        self.text = datetime.now().strftime(self.update_secondsAndFormat(getHora().formato[1], getHora().formato[0]))
         Clock.schedule_interval(self.update_time, 1)
         
         
     def update_time(self, *args):
-        self.text = datetime.now().strftime(self.update_secondsAndFormat(self.seconds, self.formato))
+        self.text = datetime.now().strftime(self.update_secondsAndFormat(getHora().formato[1], getHora().formato[0]))
         self.color = self.chosenColor
 
     def update_secondsAndFormat(self, seconds, formato):
