@@ -17,18 +17,6 @@
             Line:
                 width: 2.
                 rectangle: self.x, self.y, self.width, self.height 
-
-    #Semana
-        TabbedPanelItem:
-            background_color: 1,0,0,0
-            text: "Semana"
-            width: 10
-            id:semana
-            color: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
-            GridLayout:
-                id: showNotes
-                cols: 2
-                padding: 15
     
     #Mes
         TabbedPanelItem:
@@ -42,8 +30,45 @@
                 cols: 2
                 padding: 15
 
+    #Todos
+        TabbedPanelItem:
+            background_color: 1,0,0,0
+            text: "Lista"
+            width: 10
+            id:todos
+            color: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+            Scrolling:
+                GridLayout:
+                    id: todosgrid
+                    cols: 1
+                    padding: 15
+                    spacing: 0,5
+                    size_hint_y: None
+                    height: self.minimum_height
 
-                
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 30
+                        Image:
+                            source: "images\\menu\\weight.png"
+
+                        Image:
+                            source: "images\\menu\\schedule.png"
+                        
+        #############################################
+                    Widget:
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+        #############################################
+
+
     ImageButton:
         id: homeButton
         size_hint_y: None

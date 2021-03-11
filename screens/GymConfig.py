@@ -1,5 +1,7 @@
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy_garden.graph import Graph, MeshLinePlot, SmoothLinePlot
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
 
 from kivy.app import App
 from kivy.animation import Animation
@@ -23,7 +25,7 @@ class GymConfig(Screen):
     def __init__(self, **kwargs):
         super(GymConfig, self).__init__(**kwargs)
         self.pos_hint={'center_y': 0.5, 'center_x': 0.5}       
-
+        self.getAllMonth()
         self.getMonthGraph()
 
 
@@ -43,6 +45,14 @@ class GymConfig(Screen):
         datos=dbWrapper.getWeightByMonth(datetime.datetime.today().month)
         self.ids.mes.add_widget(self.create_graph(datos))
 
+    def getAllMonth(self):
+        datos=dbWrapper.getAllWeight()
+        for j in range(len(datos)-1,-1,-1):
+            i=datos[j]
+            layout= BoxLayout(orientation='horizontal', size_hint_y= None, height= 20)
+            layout.add_widget(Label(text=str(i.weight)))
+            layout.add_widget(Label(text=str(i.month) + "/" + str(i.day)))
+            self.ids.todosgrid.add_widget(layout)
 
     def pressedBack(self, widget):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)
