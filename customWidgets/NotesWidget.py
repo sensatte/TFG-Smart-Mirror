@@ -29,15 +29,29 @@ def showNotes(self):
     for note in noteList:
         if(num < 9 and note.pinned == True):
             num += 1
-            label = BehaviorUtil.DraggableColoredLabel(
+
+            label = BehaviorUtil.ScatterColoredLabel(
                 noteId=note._id,
                 visible=note.pinned,
                 text=note.text,
                 # size_hint_x=None, width=100,
-                background_color=(note.rgb[0]/255, note.rgb[1]/255, note.rgb[2]/255, note.rgb[3]))
-            label.pos = (note.posX, note.posY)
-            label.size_hint = (note.sizeX, note.sizeY)
+                background_color=(
+                    note.rgb[0]/255, note.rgb[1]/255, note.rgb[2]/255, note.rgb[3]),
+                pos=(note.posX, note.posY),
+                scale=note.scale,
+                rotation=note.rotation
+            )
             self.add_widget(label)
+
+            # label = BehaviorUtil.DraggableColoredLabel(
+            #     noteId=note._id,
+            #     visible=note.pinned,
+            #     text=note.text,
+            #     # size_hint_x=None, width=100,
+            #     background_color=(note.rgb[0]/255, note.rgb[1]/255, note.rgb[2]/255, note.rgb[3]))
+            # label.pos = (note.posX, note.posY)
+            # label.size_hint = (note.sizeX, note.sizeY)
+            # self.add_widget(label)
             # self.add_widget(BehaviorUtil.ColoredLabel(visible=note.pinned, text=note.text,  # size_hint_x=None, width=100,
             #                                           background_color=(note.rgb[0]/255, note.rgb[1]/255, note.rgb[2]/255, note.rgb[3])))
 

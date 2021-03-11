@@ -2,7 +2,8 @@
 
 <GifsWidget>:
     pos: 0, 0
-    size: root.size
+    # size: root.size
+    # size_hint: .2, .2
     
     # canvas.before:
     #     Color:
@@ -10,5 +11,26 @@
     #     Rectangle:
     #         pos: self.pos
     #         size: self.size 
+
+<ScatterImage>:
+    source: None
+    on_size: self.center = win.Window.center
+    size: image.size
+    size_hint: None, None
+    auto_bring_to_front: True
+
+    AsyncImage:
+        id: image
+        source: root.source
+        size_hint: 1, 1
+        anim_delay: root.anim_delay
+        # canvas.before:
+        #     Color:
+        #         rgba: 0.2,0.5,0.4,1
+        #     Rectangle:
+        #         pos: self.pos
+        #         size: self.size 
+        
+    
 
 

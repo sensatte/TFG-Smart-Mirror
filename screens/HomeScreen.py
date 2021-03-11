@@ -52,6 +52,7 @@ class HomeScreen(Screen):
                 self.remove_widget(c)
                 gifs = GifsWidget()
                 self.add_widget(gifs)
+
             elif isinstance(c, NotesWidget):
                 self.remove_widget(c)
                 notes = NotesWidget()

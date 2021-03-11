@@ -45,7 +45,7 @@
     font_size: root.height*0.1
     text_size: self.width, None
     # size: self.texture_size
-    size_hint: .2, .2
+    # size_hint: .2, .2
     halign: 'center'
     is_shortened: True
 
@@ -56,4 +56,27 @@
         Rectangle:
             pos: self.pos
             size: self.size
+
+<ScatterColoredLabel>:
+    on_size: self.center = win.Window.center
+    size: label.size
+    size_hint: None, None
+    auto_bring_to_front: True
+    Label:
+        id: label
+        text: root.text
+        font_size: root.height*0.1
+        text_size: self.width, None
+        # size: self.texture_size
+        # size_hint: .2, .2
+        halign: 'center'
+        is_shortened: True
+
+        background_color:
+        canvas.before:
+            Color:
+                rgba: root.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
         
