@@ -23,7 +23,7 @@ class SmartMirrorApp(App):
 
         # TODO es probable que pasen las mierdas de las screens negras y
         # no transparentes porque metemos las screens dentro de las screens
-        #TODO forma bonita de meter las pantallas
+        # TODO forma bonita de meter las pantallas
 
         # Create the screen manager
         scMenu = ScreenManager()
@@ -50,11 +50,11 @@ class SmartMirrorApp(App):
         gym.add_widget(GymConfig())
         scMenu.add_widget(gym)
 
-        # gifs = Screen(name="gifs")
-        # gifs.add_widget(GifsConfig())
-        # scMenu.add_widget(gifs)
+        gifs = Screen(name="gifs")
+        gifs.add_widget(GifsConfig())
+        scMenu.add_widget(gifs)
 
-        scMenu.current = "gym"
+        scMenu.current = "home"
 
         return scMenu
 
