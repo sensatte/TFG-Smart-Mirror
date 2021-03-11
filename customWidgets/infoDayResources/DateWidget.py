@@ -7,6 +7,7 @@ import kivy.properties as Properties
 from datetime import datetime
 
 class DateWidget(Image):
+    #TODO qie se actualice al ser las 00:00
     text = Properties.StringProperty('')
     chosenColor = [1,1,1,1]
     formato= "dd/mm"

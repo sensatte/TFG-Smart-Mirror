@@ -41,7 +41,7 @@
                     spacing: 10
                     size_hint_y: None
                     row_force_default:True
-                    row_default_height:150
+                    row_default_height:130
                     # row_default_height:self.height*1.2
 
 
@@ -63,7 +63,7 @@
                 GridLayout:
                     cols: 1
                     padding: 15
-                    spacing: 10
+                    spacing: 20
                     size_hint_y: None
                     height: self.minimum_height
                     
@@ -71,52 +71,12 @@
                         text: "Crear Nota"
                         font_size:"22"
                         height: 20
-
-        #############################################
-
-                #titulo
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        size_hint_y: None
-                        height: 40
-
-                        Label:
-                            text: "Título:"
-                            size_hint: 0.95, 0.7
-                        TextInput:
-                            id: titletinput
-                            hint_text:'Enter text'
-                            hint_text_color: [1,1,1,1]
-                            pos_hint: {'center_x': 0.5, 'y': 0} 
-                            size_hint: 0.95, 0.7
-                            background_color: [1,1,1,0]
-                            valign: 'bottom'
-                            font_size: 11
-                            cursor_color: [1,1,1,.8]
-                            canvBack: [1,1,1,.4]
-                            canvas.before:
-                                Color:
-                                    rgba: self.canvBack
-                                Line:
-                                    width: 1.
-                                    rectangle: self.x, self.y, self.width, self.height                    
-        #############################################
-                    Widget:
-                        size_hint_y: None
-                        height: 6
-                        canvas:
-                            Color:
-                                rgba: 1., 1., 1., .6
-                            Rectangle:
-                                pos: root.width/20, self.center_y
-                                size: root.width-root.width/10, 2
-        #############################################
                 
                 #texto
                     BoxLayout:
                         size_hint_y: None
                         orientation: 'horizontal'
-                        height: 60
+                        height: 80
 
                         Label:
                             text: "Texto:"
@@ -127,7 +87,7 @@
                             hint_text:'Enter text'
                             hint_text_color: [1,1,1,1]
                             pos_hint: {'center_x': 0.5, 'y': 0} 
-                            size_hint: 0.95, 1
+                            size_hint: 0.95, .8
                             background_color: [1,1,1,0]
                             valign: 'bottom'
                             font_size: 11
@@ -228,8 +188,8 @@
                         background_color:[1,1,1,0]
                         backgSave:[1,1,1,.2]
                         text:"Guardar"
-                        on_press: root.writeNote(titletinput.text, False, textinput.text, None, root.backg) if (titletinput.text!="" and textinput.text!="") else print("falta texto")
-                        on_press: root.badAnim(self) if (titletinput.text=="" or textinput.text=="") else root.goodAnim(self)
+                        on_press: root.writeNote(False, textinput.text, None, root.backg) if (textinput.text!="") else print("falta texto")
+                        on_press: root.badAnim(self) if (textinput.text=="") else root.goodAnim(self)
                         canvas.before:
                             Color:
                                 rgba: self.backgSave
@@ -245,28 +205,7 @@
         size_hint: (.17, .11)
         on_press: root.pressedBack(self)
 
-<ColoredLabelConfig>:
-    font_size: root.height*0.1
-    text_size: self.width, None
-    size: self.texture_size
-    halign: 'center'
-    is_shortened: True
-    on_press: root.pinNote(self.noteid, self.pinned)
-
-    canvas.before:
-        Color:
-            rgba: self.background_color
-        Rectangle:
-            pos: self.pos
-            size: self.size
-    canvas.after:
-        Color:
-            rgba: (1,1,1,1) if self.pinned==True else (1,1,1,0)
-
-        Line:
-            width: 1.
-            rectangle: self.x, self.y, self.width, self.height 
-
+  
 <SmoothButton@Button>:
     background_color: (0,0,0,0)
     background_normal: ''
@@ -279,6 +218,65 @@
             size:self.size[0]-50, self.size[1]+10
             pos:self.pos[0]+25, self.pos[1]-5
             radius: self.border_radius
+
+<ColoredLabelConfig>:
+    cols:1
+    spacing: 0,7
+    ButtonTextInput:
+        id: textValue
+        disabled: not root.editing
+        text: root.texto
+        size_hint: 1,5
+        font_size: root.height*0.1
+        text_size: self.width, None
+        padding:20
+        # size: self.texture_size
+        halign: 'center'
+        valign: 'center'
+        hint_text_color: [1,1,1,1]
+        cursor_color: [1,1,1,.8]
+        foreground_color: (1,1,1,1)
+        disabled_foreground_color: (1,1,1,.8)
+        on_press: print("touchi")
+        background_color: root.bcolor
+        
+        canvas.after:
+            Color:
+                rgba: (1,1,1,1) if root.pinned==True else (1,1,1,0)
+
+            Line:
+                width: 1.
+                rectangle: self.x, self.y, self.width, self.height 
+
+
+    BoxLayout:
+        orientation: 'horizontal'
+
+        ImageButton:
+            id: pin
+            size_hint_y: None
+            color: (1,1,1, 1) if not root.editing else (.3, .3, .3, 1)
+            source: "images/menu/pin.png"
+            size_hint: (.8, .8)
+            on_press: root.pinNote(root.noteid, root.pinned)
+            disabled: root.editing
+
+        ImageButton:
+            id: editar
+            size_hint_y: None
+            source: "images/menu/edit.png" if (not root.editing) else "images/menu/save.png"
+            size_hint: (.8, .8)
+            on_press: root.editing = not root.editing
+
+        ImageButton:
+            id: borrar
+            size_hint_y: None
+            color: (1,1,1, 1) if not root.editing else (.3, .3, .3, 1)
+            source: "images/menu/trash.png"
+            size_hint: (.8, .8)
+            on_press: root.deleteNote()
+            on_press: root.parent.remove_widget(root)
+            disabled: root.editing
 
 # <StrokeButton@Button>:
 #     background_color: (0,0,0,0)

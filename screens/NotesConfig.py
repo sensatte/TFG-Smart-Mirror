@@ -1,5 +1,5 @@
 # pylint: disable=no-member
-from customWidgets.utils.BehaviorUtil import ImageButton, Scrolling, ColoredLabelConfig
+from customWidgets.utils.BehaviorUtil import ColoredLabelConfig, ImageButton, Scrolling
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from kivy.uix.gridlayout import GridLayout
@@ -18,11 +18,10 @@ from kivy.lang import Builder
 Builder.load_file('kv\\notesConfig.kv')
 
 class NotesConfig(Screen):
-    #TODO hacer el kv que se pueda usar pa mas gente
     #TODO color picker
     #TODO que las anim las coja de otro archivo
     #TODO solo poder coger 9
-    #TODO poder editar
+    #TODO que el tamñao de la nota sea para que no esté encojido
 
     showNotes=Properties.ObjectProperty(None)
     backg=Properties.ListProperty([224, 187, 228, 1])
@@ -40,53 +39,18 @@ class NotesConfig(Screen):
         App.get_running_app().root.current = "menu"
 
     def showNotesFunc(self, noteList):
-
         for note in noteList:
-            self.ids.showNotes.add_widget(self.showNote(note, self.ind))
+            self.ids.showNotes.add_widget(ColoredLabelConfig(editing=False, noteid=note._id, 
+                        texto=note.text, pinned=note.pinned, 
+                        bcolor=(note.rgb[0]/255,note.rgb[1]/255,note.rgb[2]/255,note.rgb[3])))
             self.ind+=1
-            # self.ids.showNotes.add_widget(ColoredLabelConfig(noteid=note._id, text=note.title + "\n" + note.text, pinned=note.pinned,
-            #                                 background_color=(note.rgb[0]/255,note.rgb[1]/255,note.rgb[2]/255,note.rgb[3])))
-            # self.ids.showNotes.add_widget(ImageButton(note=note._id, source="images/menu/edit.png", size_hint_y= None, size_hint= (.17, .11)))
-            # self.ids.showNotes.add_widget(self.createButton(note._id, "trash"))
-
-    def showNote(self, note, idwidget):
-        layout=GridLayout(cols=1, spacing=[0,7])
-        layout.id=idwidget
-
-        layout.add_widget(ColoredLabelConfig(noteid=note._id, text=note.title + "\n\n" + note.text, pinned=note.pinned,
-                                            background_color=(note.rgb[0]/255,note.rgb[1]/255,note.rgb[2]/255,note.rgb[3]), size_hint=(1,5)))
-        botones = BoxLayout(orientation='horizontal')
-        botones.add_widget(self.createButton(note._id, idwidget, "edit"))
-        botones.add_widget(self.createButton(note._id, idwidget, "trash"))
-
-        layout.add_widget(botones)
-        return layout
     
-    def writeNote(self, title, pinned, text, date, rgb):
+    def writeNote(self, pinned, text, date, rgb):
         date=datetime.datetime.now()
-        dbWrapper.saveNote(title, pinned, text, date, rgb)
+        dbWrapper.saveNote(pinned, text, date, rgb)
         notas=dbWrapper.getAllNotes()
         nota=notas[len(notas)-1]
-        print(nota)
         self.showNotesFunc([nota])
-
-    def createButton(self, noteid, idwidget, image):
-        button=ImageButton(note=noteid, idwidget=idwidget, source="images/menu/"+image+".png", size_hint_y= None, size_hint= (.8, .8))
-        button.bind(on_press=self.deleteNote)
-        return button
-
-    def deleteNote(self, button):
-        dbWrapper.deleteNoteById(button.note)
-        for child in self.ids.showNotes.children:
-            if child.id == button.idwidget:
-                borrar = child
-                break
-
-        self.ids.showNotes.remove_widget(borrar)
-
-    def editNote(self, button):
-        print(button.note)
-
 
 ##################################
 
@@ -103,10 +67,6 @@ class NotesConfig(Screen):
         # anim += Animation(pos_hint={"center_x": .1, "center_y": .7}, duration=.1)
         anim.bind(on_complete=self.goTop)
         anim.start(boton)
-        if self.ids.titletinput.text=="":
-            anim = Animation(canvBack=[1,0,0,.4], duration=.5)
-            anim += Animation(canvBack=[1,1,1,.4], duration=.9)
-            anim.start(self.ids.titletinput)
         if self.ids.textinput.text=="":
             anim = Animation(canvBack=[1,0,0,.4], duration=.5)
             anim += Animation(canvBack=[1,1,1,.4], duration=.9)
@@ -130,7 +90,6 @@ class NotesConfig(Screen):
 
 
     def clearInputs(self, boton, asd):
-        self.ids.titletinput.text=""
         self.ids.textinput.text=""
 
     def switchElegir(self, boton, asd):

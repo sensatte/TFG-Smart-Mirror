@@ -51,6 +51,7 @@ class HomeScreen(Screen):
 
         self.add_widget(notes)
         # self.add_widget(infoday)
+
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)
         self.parent.current = 'menu'
