@@ -1,8 +1,13 @@
 # pylint: disable=no-member
+import logging
+
+from kivy.clock import Clock
+from utils.ImgurWrapper import ImgurWrapper
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
-from customWidgets.utils.BehaviorUtil import GifConfig, ImageButton, Scrolling, ColoredLabelConfig
+from customWidgets.utils.BehaviorUtil import GifConfig, ImageButton, Scrolling, ColoredLabelConfig, AsyncImageButton
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.recycleview import RecycleView
 
 from kivy.app import App
 from kivy.animation import Animation
@@ -13,6 +18,8 @@ import kivy.properties as Properties
 import db.dbWrapper as dbWrapper
 import datetime
 
+from functools import partial
+
 #import kv
 from kivy.lang import Builder
 Builder.load_file('kv\\gifsConfig.kv')
@@ -20,6 +27,13 @@ Builder.load_file('kv\\gifsConfig.kv')
 
 class GifsConfig(Screen):
     ind = 0
+
+    text = Properties.StringProperty()
+
+    imgurWrapper = ImgurWrapper()
+    rvData = Properties.ListProperty()
+
+    waitUntilFinishesTypingEvent = Properties.ObjectProperty()
 
     def __init__(self, **kwargs):
         super(GifsConfig, self).__init__(**kwargs)
@@ -40,6 +54,9 @@ class GifsConfig(Screen):
         App.get_running_app().root.current = "menu"
 
     def showGifs(self, gifsList):
+
+        for child in self.ids.showGifs.children:
+            self.ids.showGifs.remove_widget(child)
 
         for gif in gifsList:
             self.ids.showGifs.add_widget(self.showGif(gif, self.ind))
@@ -89,3 +106,31 @@ class GifsConfig(Screen):
 
     def writeGif(self, source):
         dbWrapper.saveGif(source)
+
+    def textChanged(self, text):
+
+        try:
+            self.waitUntilFinishesTypingEvent.cancel()
+        except:
+            logging.info('Gifs: No previous event')
+
+        self.text = text
+        self.waitUntilFinishesTypingEvent = Clock.schedule_once(
+            self.updateData, 2)
+
+    def updateData(self, dt):
+        dataList = self.imgurWrapper.search(self.text)
+        self.rvData = [
+            {
+                'source': x,
+                "on_press": partial(self.pressedImage, x),
+            } for x in dataList if x[-3:] != "mp4"]
+
+    def pressedImage(self, pressedImage):
+        print(pressedImage)
+        self.writeGif(pressedImage)
+        self.goToMenuScreen(None, None)
+
+    def on_rvData(self, instance, value):
+        self.ids.imgurRV.data = value
+        # self.ids.imgurRV.refresh_from_data()

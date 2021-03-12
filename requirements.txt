@@ -9,3 +9,4 @@ pylint_django==2.4.2
 pillow==8.1.1
 numpy==1.20.1
 kivy-garden.graph==0.4.1
+imgurpython==1.1.7

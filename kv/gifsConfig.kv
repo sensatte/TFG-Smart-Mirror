@@ -43,9 +43,7 @@
                     height: self.minimum_height
 
 
-
-    
-    # Add gif
+    # Search GIF
         TabbedPanelItem:
             background_color: 1,0,0,0
             width: 10
@@ -56,65 +54,130 @@
                     source: "images\\menu\\writing.png"
                     size: 30,30
                     pos: self.center_x-15, self.center_y-15
-            Scrolling:
-                GridLayout:
-                    cols: 1
-                    padding: 15
-                    spacing: 10
+
+            GridLayout:
+                cols: 1
+                padding: 15
+                spacing: 10
+            
+                TextInput:
+                    id: textinput
+                    hint_text:'Enter text'
+                    hint_text_color: [1,1,1,1]
+                    pos_hint: {'center_x': 0.5, 'y': 0}
+                    on_text: root.textChanged(self.text) 
+                    size_hint: 0.95, .2
+                    background_color: [1,1,1,0]
+                    valign: 'center'
+                    font_size: 11
+                    cursor_color: [1,1,1,.8]
+                    canvBack:[1,1,1,.4]
+                    canvas.before:
+                        Color:
+                            rgba: self.canvBack
+                        Line:
+                            width: 1.
+                            rectangle: self.x, self.y, self.width, self.height
+
+        #############################################
+                Widget:
                     size_hint_y: None
-                    height: self.minimum_height
+                    height: 6
+                    canvas:
+                        Color:
+                            rgba: 1., 1., 1., .6
+                        Rectangle:
+                            pos: root.width/20, self.center_y
+                            size: root.width-root.width/10, 2
+        #############################################
+
+                RecycleView:
+                    id: imgurRV
+                    viewclass: 'AsyncImageButton'
+                    RecycleGridLayout:
+                        # canvas.before:
+                        #     Color:
+                        #         rgba: 0.2,0.5,0.4,1
+                        #     Rectangle:
+                        #         pos: self.pos
+                        #         size: self.size 
+                        cols: 2
+                        default_size: None, dp(56)
+                        default_size_hint: 1, None
+                        size_hint_y: None
+                        height: self.minimum_height
+                        # orientation: 'vertical'
+    
+    # # Add gif
+    #     TabbedPanelItem:
+    #         background_color: 1,0,0,0
+    #         width: 10
+    #         canvas:
+    #             Color:
+    #                 rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+    #             Rectangle:
+    #                 source: "images\\menu\\writing.png"
+    #                 size: 30,30
+    #                 pos: self.center_x-15, self.center_y-15
+    #         Scrolling:
+    #             GridLayout:
+    #                 cols: 1
+    #                 padding: 15
+    #                 spacing: 10
+    #                 size_hint_y: None
+    #                 height: self.minimum_height
                     
-                    Label:
-                        text: "Crear Gif"
-                        font_size:"22"
-                        height: 20
+    #                 Label:
+    #                     text: "Crear Gif"
+    #                     font_size:"22"
+    #                     height: 20
 
-        #############################################
+    #     #############################################
 
-                #titulo
-                    GridLayout:
-                        size_hint_y: None
-                        rows: 1
-                        height: 40
+    #             #titulo
+    #                 GridLayout:
+    #                     size_hint_y: None
+    #                     rows: 1
+    #                     height: 40
 
-                        Label:
-                            # size_hint_y: None
-                            text: "Url:"
-                            width: 20
-                        TextInput:
-                            id: urlIinput
-                            hint_text:'Enter image url'
-                            pos_hint: {'center_x': 0.5, 'y': 0} 
-                            size_hint: 0.95, 0.5
-                            background_color: [1,1,1,0]
-                            valign: 'bottom'
-                            canvas.before:
-                                Color:
-                                    rgba: [1,1,1,.2]
-                                # RoundedRectangle:
-                                #     rounded_rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1], 18)
-                                #     width: 1.2
+    #                     Label:
+    #                         # size_hint_y: None
+    #                         text: "Url:"
+    #                         width: 20
+    #                     TextInput:
+    #                         id: urlIinput
+    #                         hint_text:'Enter image url'
+    #                         pos_hint: {'center_x': 0.5, 'y': 0} 
+    #                         size_hint: 0.95, 0.5
+    #                         background_color: [1,1,1,0]
+    #                         valign: 'bottom'
+    #                         canvas.before:
+    #                             Color:
+    #                                 rgba: [1,1,1,.2]
+    #                             # RoundedRectangle:
+    #                             #     rounded_rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1], 18)
+    #                             #     width: 1.2
                    
-        #############################################
-                    Widget:
-                        size_hint_y: None
-                        height: 6
-                        canvas:
-                            Color:
-                                rgba: 1., 1., 1., .6
-                            Rectangle:
-                                pos: root.width/20, self.center_y
-                                size: root.width-root.width/10, 2
-        #############################################
+    #     #############################################
+    #                 Widget:
+    #                     size_hint_y: None
+    #                     height: 6
+    #                     canvas:
+    #                         Color:
+    #                             rgba: 1., 1., 1., .6
+    #                         Rectangle:
+    #                             pos: root.width/20, self.center_y
+    #                             size: root.width-root.width/10, 2
+    #     #############################################
 
 
-                    SmoothButton:
-                        size_hint_y: None
-                        height: 20
-                        back_color: (1,1,1,.8)
-                        # background_color:[1,1,1,0]
-                        text:"save"
-                        on_press: root.writeGif(urlIinput.text)
+    #                 SmoothButton:
+    #                     size_hint_y: None
+    #                     height: 20
+    #                     back_color: (1,1,1,.8)
+    #                     # background_color:[1,1,1,0]
+    #                     text:"save"
+    #                     on_press: root.writeGif(urlIinput.text)
 
     ImageButton:
         id: homeButton
@@ -136,5 +199,8 @@
         Line:
             width: 1.
             rectangle: self.x, self.y, self.width, self.height 
+
+# <GifsAsyncImageButton>:
+#     on_press: self.parent.parent.parent.parent.parent.parent.pressedImage(self)
 
     

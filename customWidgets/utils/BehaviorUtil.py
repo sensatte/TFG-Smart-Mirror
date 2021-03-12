@@ -1,3 +1,4 @@
+from kivy.uix.recycleview import RecycleView
 from db.Documents import Gifs
 from kivy.uix.behaviors.togglebutton import ToggleButtonBehavior
 from kivy.uix.image import AsyncImage, Image
@@ -16,12 +17,17 @@ from kivy.clock import Clock
 from db.Documents import Notes
 import logging
 import datetime
+from utils.ImgurWrapper import ImgurWrapper
 
 
 class ImageButton(ButtonBehavior, Image):
     note = Properties.NumericProperty()
     gif = Properties.NumericProperty()
     idwidget = Properties.NumericProperty()
+
+
+class AsyncImageButton(ButtonBehavior, AsyncImage):
+    pass
 
 
 class PlayListToggle(ToggleButtonBehavior, AsyncImage):
