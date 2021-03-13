@@ -100,25 +100,12 @@ class ScatterColoredLabel(Scatter):
 
     def on_pos(self, instance, value):
         try:
-            self.bringToFront()
             self.saveOnDBEvent.cancel()
         except:
             logging.info('Notes: No previous event')
-
         self.saveOnDBEvent = Clock.schedule_once(self.saveOnDB, 5)
 
-    def bringToFront(self):
-        parent = self.parent
-        children = parent.children
-        childOnTop = children[0]
-
-        if (self != childOnTop):
-            parent.remove_widget(self)
-            parent.add_widget(self)
-
     def saveOnDB(self, dt):
-        # TODO SAVE SOURCE, POS AND SIZE ON DB
-
         noteToSave = Notes(
             _id=self.noteId,
             pinned=self.visible,
