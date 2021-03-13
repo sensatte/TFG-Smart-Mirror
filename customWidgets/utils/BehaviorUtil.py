@@ -4,6 +4,7 @@ from kivy.uix.image import AsyncImage, Image
 from kivy.uix.behaviors import ButtonBehavior, DragBehavior
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.label import Label
+from kivy.uix.togglebutton import ToggleButton
 from kivy.app import App
 import customWidgets.NotesWidget as NotesWidget
 import kivy.properties as Properties
@@ -36,6 +37,8 @@ class ColoredLabel(Label):
     background_color = Properties.ListProperty((0, 0, 0, 1))
     visible = Properties.BooleanProperty()
 
+class CarouselConfig(ToggleButton):
+    pass
 
 class DraggableColoredLabel(DragBehavior, Label):
     background_color = Properties.ListProperty((0, 0, 0, 1))
