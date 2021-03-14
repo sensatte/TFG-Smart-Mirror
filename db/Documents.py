@@ -58,7 +58,6 @@ class Gifs(Document):
 
 
 class Gym(Document):
-    _id = ObjectIdField(required=True, max_length=100)
     year = IntField(required=True)
     month = IntField(required=True)
     day = IntField(required=True)

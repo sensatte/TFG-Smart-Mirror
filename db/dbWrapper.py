@@ -107,6 +107,18 @@ def getAllWeight():
 def getWeightByMonth(mes):
     return [x for x in Gym.objects if x.month==mes]
 
+def saveWeight(weight):    
+    ultimo=getAllWeight()[len(getAllWeight()) - 1]
+    hoy=datetime.date.today()
+    if(ultimo.year==hoy.year and ultimo.month==hoy.month and ultimo.day==hoy.day):
+        ultimo.weight=weight
+        ultimo.save()
+        print("El peso " + str(weight) + " se ha actualizado")
+    else:
+        noteToSave = Gym(weight=weight, year=hoy.year, month=hoy.month, day=hoy.day)
+        noteToSave.save()
+        print("El peso " + str(weight) + " se ha guardado")
+
 
 # print(getWeightByMonth(2))
 # saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])
