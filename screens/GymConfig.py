@@ -1,6 +1,7 @@
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy_garden.graph import Graph, MeshLinePlot, SmoothLinePlot
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.togglebutton import ToggleButton
 
@@ -24,19 +25,13 @@ Builder.load_file('kv\\gymConfig.kv')
 
 class GymConfig(Screen):
     #TODO cronometro? algo para hacer ejercicio
-    #TODO boton añadir peso cuidao que no exista ya uno
     #TODO que se actualize al cambiar mes
     def __init__(self, **kwargs):
         super(GymConfig, self).__init__(**kwargs)
         self.pos_hint={'center_y': 0.5, 'center_x': 0.5}  
-        self.decenas="0"
-        self.unidades="0"
-        self.decimas="0"
-
         self.getAllMonth()
         self.getMonthGraph()
         self.add_buttons()
-
 
     def create_graph(self, dates):
         graph = Graph(x_ticks_minor=5,
@@ -52,9 +47,14 @@ class GymConfig(Screen):
 
     def getMonthGraph(self):
         datos=dbWrapper.getWeightByMonth(datetime.datetime.today().month)
-        self.ids.mes.add_widget(self.create_graph(datos))
+        self.ids.showNotes.add_widget(self.create_graph(datos))
 
     def getAllMonth(self):
+        # inicio=BoxLayout(size_hint_y= None, orientation="horizontal", height=30)
+        # inicio.add_widget(Image(source= "images\\menu\\weight.png"))
+        # inicio.add_widget(Image(source= "images\\menu\\schedule.png"))
+        # self.ids.todosgrid.add_widget(inicio)
+
         datos=dbWrapper.getAllWeight()
         for j in range(len(datos)-1,-1,-1):
             i=datos[j]
@@ -73,15 +73,23 @@ class GymConfig(Screen):
             uni.add_widget(CarouselConfig(text=str(i), group="uni", state="down" if i==0 else "normal"))
 
     def saveWeight(self):        
-        dic={self.ids.box:self.decenas,self.ids.diez:self.unidades,self.ids.uni:self.decimas}
+        dic={self.ids.box:"0",self.ids.diez:"0",self.ids.uni:"0"}
         
         for grupo in dic:
             for boton in grupo.children:
-                if (boton.state=="down"): dic[grupo]= boton.text
-        peso=(self.decenas+self.unidades+self.decimas)
-        print(peso)
-        # print(self.ids.box.children)
-        # dbWrapper.saveWeight(58.4)
+                if (boton.state=="down"): 
+                    dic[grupo]= boton.text
+                    break
+
+        peso=float(dic[self.ids.box]+dic[self.ids.diez]+dic[self.ids.uni])
+        dbWrapper.saveWeight(peso)
+        self.ids.showNotes.remove_widget(self.ids.showNotes.children[0])
+        self.getMonthGraph()
+        
+        for i in range(2, len(self.ids.todosgrid.children)):
+            self.ids.todosgrid.remove_widget(self.ids.todosgrid.children[0])
+        self.getAllMonth()
+
     def pressedBack(self, widget):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)
         anim += Animation(pos_hint={"center_x": .5, "y": 0}, duration=.1)

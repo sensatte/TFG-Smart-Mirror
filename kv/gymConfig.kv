@@ -8,7 +8,7 @@
         background_color: 0,0,0,0
         do_default_tab: False
         padding: [0,5,0,5]
-        tab_width: self.parent.width / 2
+        tab_width: self.parent.width / 3
         tab_height: 30
         pos_hint: {"center_x": .5, "center_y": .5}
         canvas.before:
@@ -22,19 +22,17 @@
         TabbedPanelItem:
             background_color: 1,0,0,0
             text: "Mes"
-            # width: 10
             id:mes
             color: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
             GridLayout:
                 id: showNotes
-                cols: 2
+                cols: 1
                 padding: 15
 
     #Todos
         TabbedPanelItem:
             background_color: 1,0,0,0
             text: "Lista"
-            # width: 10
             id:todos
             color: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
             Scrolling:
@@ -72,7 +70,6 @@
         TabbedPanelItem:
             background_color: 1,0,0,0
             text: "Añadir"
-            # width: 10
             id:añadir
             color: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
 
