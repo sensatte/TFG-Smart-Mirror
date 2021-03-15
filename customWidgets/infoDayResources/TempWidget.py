@@ -4,6 +4,7 @@ from kivy.uix.image import Image
 import kivy.properties as Properties
 from kivy.clock import Clock
 from kivy.event import EventDispatcher
+from db.dbWrapper import getTemp
 
 import requests
 import json
@@ -11,11 +12,10 @@ import json
 id_endpoint = "http://api.openweathermap.org/data/2.5/weather?id=%s&appid=%s&units=%s"
 
 class TempWidget(Image, EventDispatcher):
-    #TODO actualizar temperatura
     text = Properties.StringProperty('')
-    unit = "metric"
-    c_id= "6361046"
-    chosenColor = Properties.ListProperty([1,1,1,1])
+    unit = Properties.StringProperty()
+    c_id=Properties.StringProperty()
+    chosenColor = Properties.ListProperty()
 
     def on_text(self, *_):
             # Just get large texture:
@@ -30,15 +30,19 @@ class TempWidget(Image, EventDispatcher):
     def __init__(self, **kwargs):
         super(TempWidget, self).__init__(**kwargs)
 
+        
+        currentTemp=getTemp()
+        self.chosenColor=currentTemp.color
+        self.unit=currentTemp.formato
+        self.c_id=currentTemp.c_id
+        self.color = self.chosenColor
         self.bind(chosenColor=self.update_temp)
-
         #Temperature
         self.text=str(int(getWeatherReducedByCityId(self.c_id, self.unit)['temp']))+"º"
-        Clock.schedule_interval(self.update_temp, 500)
+        Clock.schedule_interval(self.update_temp, 200)
         
     def update_temp(self, *args):
         self.text = str(int(getWeatherReducedByCityId(self.c_id, self.unit)['temp']))+"º"
-        print("updated temp from color ", self.color, " to ", self.chosenColor)
         self.color = self.chosenColor
         
 def getWeatherReducedByCityId(city_id, units):

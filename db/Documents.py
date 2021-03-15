@@ -37,12 +37,13 @@ class Temp(Document):
     _id = StringField(required=True, max_length=100)
     color = ListField(required=True)
     formato = StringField(required=True)
+    c_id = StringField(required=True)
 
 
 class Clima(Document):
     _id = StringField(required=True, max_length=100)
-    formato = StringField(required=True)
-
+    formato = IntField(required=True)
+    c_id = StringField(required=True)
 
 class Gifs(Document):
     _id = IntField(required=True)

@@ -14,65 +14,46 @@ from customWidgets.infoDayResources.WeatherWidget import WeatherWidget
 from customWidgets.infoDayResources.TempWidget import TempWidget
 from customWidgets.infoDayResources.ClockWidget import ClockWidget
 
+import db.dbWrapper as dbWrapper
+
 #import kv
 from kivy.lang import Builder
-Builder.load_file('kv\\configs.kv')
+Builder.load_file('kv\\infoConfig.kv')
 
 class InfoDayConfig(Screen):
     #TODO hacer el kv que se pueda usar pa mas gente
     #TODO color picker
-    #TODO la fecha tarda mucho en actualizarse
-    #TODO poder poner la id de ciudad para temp y weather
+    #TODO buscador ue te traduzca de ciudad a id
     #TODO que las anim las coja de otro archivo
-    #TODO alarmas
-    
+    #TODO al abrirse se pone la config por defecto pero no funciona cambiar el state para que mire la db
+    colorHora=Properties.ListProperty([1,1,1,1])
+    formatoHora=Properties.ListProperty(["24h", False])
+
+    colorFecha=Properties.ListProperty([1,1,1,1])
+    formatoFecha=Properties.StringProperty("dd/mm")
+
+    colorTemp=Properties.ListProperty([1,1,1,1])
+    formatoTemp=Properties.StringProperty("metric")
+
+    formatoClima=Properties.NumericProperty(2)
+
+    c_id=Properties.StringProperty('6361046')
+
     def __init__(self, **kwargs):
         super(InfoDayConfig, self).__init__(**kwargs)
-        self.pos_hint={'center_y': 0.5, 'center_x': 0.5}
+        self.pos_hint={'center_y': 0.5, 'center_x': 0.5}        
 
-
-    def secondsClock(self, checkboxInstance):
-        if checkboxInstance.text=="Sí":
-            ClockWidget.seconds=True
-            print("Segundos activados")
-        elif checkboxInstance.text=="No":
-            ClockWidget.seconds=False
-            print("Segundos desactivados")
-
-    def colorClock(self, checkboxInstance):
-        ClockWidget.chosenColor = checkboxInstance.color
-        print("Color cambiado a ", checkboxInstance.color)
-
-    def formatClock(self, checkboxInstance):
-        ClockWidget.formato=checkboxInstance.text
-        print("Formato hora: ", checkboxInstance.text)
-
-
-    def formatDate(self, checkboxInstance):
-        DateWidget.formato=checkboxInstance.text
-        print("Formato fecha: ", checkboxInstance.text)
-
-    def colorDate(self, checkboxInstance):
-        DateWidget.chosenColor = checkboxInstance.color
-        # DateWidget.update_time(DateWidget)
-        print("Color cambiado a ", checkboxInstance.color)
-
-
-    def unitsTemp(self, checkboxInstance):
-        if checkboxInstance.text=="Celcius":
-            TempWidget.unit="metric"
-        elif checkboxInstance.text=="Fahrenheit":
-            TempWidget.unit="imperial"
-        print("Unidades temperatura: ", checkboxInstance.text)
-
-    def colorTemp(self, checkboxInstance):
-        TempWidget.chosenColor = Properties.ListProperty(checkboxInstance.color)
-        # TempWidget.update_time(TempWidget)
-        print("Color cambiado a ", checkboxInstance.color)
-
-    def themeWeather(self, checkboxInstance):
-        WeatherWidget.theme = checkboxInstance
-        print("Cambiado a tema: ", checkboxInstance)
+    def saveConfig(self):
+        #guardar las configs
+        if self.ids.textinput.text=="":
+            self.c_id=self.ids.textinput.hint_text
+        else:
+            self.c_id=self.ids.textinput.text
+        dbWrapper.saveHora("hora", self.formatoHora, self.colorHora)
+        dbWrapper.saveFecha("fecha", self.formatoFecha, self.colorFecha)
+        dbWrapper.saveTemp("temp", self.formatoTemp, self.colorTemp, self.c_id)
+        dbWrapper.saveClima("weather", self.formatoClima, self.c_id)
+        
 
     def pressedBack(self, widget):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)
@@ -80,6 +61,7 @@ class InfoDayConfig(Screen):
         anim.bind(on_complete=partial(self.goToMenuScreen))
         anim.start(widget)
 
-    def goToMenuScreen(self, widget, selected):
+    def goToMenuScreen(self, widget, selected):        
+        self.saveConfig()
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "menu"

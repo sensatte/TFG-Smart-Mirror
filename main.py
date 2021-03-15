@@ -54,7 +54,7 @@ class SmartMirrorApp(App):
         # gifs.add_widget(GifsConfig())
         # scMenu.add_widget(gifs)
 
-        scMenu.current = "gym"
+        scMenu.current = "home"
 
         return scMenu
 

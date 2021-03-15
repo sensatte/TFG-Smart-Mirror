@@ -55,8 +55,8 @@ def saveFecha(id, formato, color):
 def getTemp():
     return Temp.objects[0]
 
-def saveTemp(id, formato, color):    
-    noteToSave = Temp(_id=id, formato=formato, color=color)
+def saveTemp(id, formato, color, c_id):    
+    noteToSave = Temp(_id=id, formato=formato, color=color, c_id=c_id)
     noteToSave.save()
     print("La temperatura se ha actualizado")
 
@@ -64,8 +64,8 @@ def saveTemp(id, formato, color):
 def getClima():
     return Clima.objects[0]
 
-def saveClima(id, formato):    
-    noteToSave = Clima(_id=id, formato=formato)
+def saveClima(id, formato, c_id):    
+    noteToSave = Clima(_id=id, formato=formato, c_id=c_id)
     noteToSave.save()
     print("El clima se ha actualizado")
 

@@ -66,7 +66,7 @@
                             state: "down"
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.colorClock(self)
+                            on_press: root.colorHora=self.color
                             canvas.before:
                                 Color:
                                     rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -80,7 +80,7 @@
                             text: "Morado"                           
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.colorClock(self)
+                            on_press: root.colorHora=self.color
                             canvas.before:
                                 Color:
                                     rgba: [149/255, 125/255, 173/255,.2] if self.state == "down" else [1,1,1,0]
@@ -94,7 +94,7 @@
                             text: "Verde"
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.colorClock(self)
+                            on_press: root.colorHora=self.color
                             canvas.before:
                                 Color:
                                     rgba: [140/255, 183/255, 141/255,.2] if self.state == "down" else [1,1,1,0]
@@ -131,7 +131,7 @@
                             
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.formatClock(self)
+                            on_press: root.formatoHora[0]=self.text
                             canvas.before:
                                 Color:
                                     rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -146,7 +146,7 @@
                             state: "down"                      
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.formatClock(self)
+                            on_press: root.formatoHora[0]=self.text
                             canvas.before:
                                 Color:
                                     rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -181,7 +181,7 @@
                             text: "Sí"
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.secondsClock(self)
+                            on_press: root.formatoHora[1]=True
                             canvas.before:
                                 Color:
                                     rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -197,7 +197,7 @@
                             background_color:[0, 0, 0, 0]
                             state: "down"
                             allow_no_selection: False
-                            on_press: root.secondsClock(self)
+                            on_press: root.formatoHora[1]=False
                             canvas.before:
                                 Color:
                                     rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -256,7 +256,7 @@
                             state: "down"
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.colorDate(self)
+                            on_press: root.colorFecha=self.color
                             canvas.before:
                                 Color:
                                     rgba: [1, 1, 1,.2] if self.state == "down" else [1,1,1,0]
@@ -270,7 +270,7 @@
                             text: "Morado"                           
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.colorDate(self)
+                            on_press: root.colorFecha=self.color
                             canvas.before:
                                 Color:
                                     rgba: [149/255, 125/255, 173/255,.2] if self.state == "down" else [1,1,1,0]
@@ -284,7 +284,7 @@
                             text: "Verde"
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.colorDate(self)
+                            on_press: root.colorFecha=self.color
                             canvas.before:
                                 Color:
                                     rgba: [140/255, 183/255, 141/255,.2] if self.state == "down" else [1,1,1,0]
@@ -330,7 +330,7 @@
                             color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
                             text: "dd/mm/yyyy"
                             allow_no_selection: False
-                            on_press: root.formatDate(self)
+                            on_press: root.formatoFecha=self.text
                             background_color: [0,0,0,0]
                             canvas.before:
                                 Color:
@@ -347,7 +347,7 @@
                             state: "down"
                             allow_no_selection: False
                             background_color: [0,0,0,0]
-                            on_press: root.formatDate(self)
+                            on_press: root.formatoFecha=self.text
                             canvas.before:
                                 Color:
                                     rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -361,7 +361,7 @@
                             text: "mm/dd/yyyy"
                             allow_no_selection: False
                             background_color: [0,0,0,0]
-                            on_press: root.formatDate(self)
+                            on_press: root.formatoFecha=self.text
                             canvas.before:
                                 Color:
                                     rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -375,7 +375,7 @@
                             text: "mm/dd"                           
                             allow_no_selection: False
                             background_color: [0,0,0,0]
-                            on_press: root.formatDate(self)
+                            on_press: root.formatoFecha=self.text
                             canvas.before:
                                 Color:
                                     rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -431,7 +431,7 @@
                             state: "down"
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.colorTemp(self)
+                            on_press: root.colorTemp=self.color
                             canvas.before:
                                 Color:
                                     rgba: [1, 1, 1,.2] if self.state == "down" else [1,1,1,0]
@@ -445,7 +445,7 @@
                             text: "Morado"                           
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.colorTemp(self)
+                            on_press: root.colorTemp=self.color
                             canvas.before:
                                 Color:
                                     rgba: [149/255, 125/255, 173/255,.2] if self.state == "down" else [1,1,1,0]
@@ -459,7 +459,7 @@
                             text: "Verde"
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.colorTemp(self)
+                            on_press: root.colorTemp=self.color
                             canvas.before:
                                 Color:
                                     rgba: [140/255, 183/255, 141/255,.2] if self.state == "down" else [1,1,1,0]
@@ -495,7 +495,7 @@
                             state: "down"
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.unitsTemp(self)
+                            on_press: root.formatoTemp="metric"
                             canvas.before:
                                 Color:
                                     rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -509,7 +509,7 @@
                             text: "Fahrenheit"                           
                             background_color:[0, 0, 0, 0]
                             allow_no_selection: False
-                            on_press: root.unitsTemp(self)
+                            on_press: root.formatoTemp="imperial"
                             canvas.before:
                                 Color:
                                     rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
@@ -543,8 +543,8 @@
                             orientation: "vertical"
                             ImageButton:
                                 source: "images\\icons\\weather_min\\01.png"   
-                                on_press: main.ids.simple.state="down"    
-                                on_press: root.themeWeather(1)                         
+                                on_press: main.ids.simple.state="down"
+                                on_press: root.formatoClima=1                
                             ToggleButton:
                                 group: "weatherTheme"
                                 id: simple
@@ -552,7 +552,7 @@
                                 text: "Simple"
                                 background_color:[0, 0, 0, 0]
                                 allow_no_selection: False
-                                on_press: root.themeWeather(1)                                
+                                on_press: root.formatoClima=1                                 
                                 canvas.before:
                                     Color:
                                         rgba: [1,1,1,.2] if simple.state == "down" else [1,1,1,0]
@@ -574,7 +574,7 @@
                             ImageButton:
                                 source: "images\\icons\\weather_medmin\\01.png"
                                 on_press: simple.state="normal"  
-                                on_press: root.themeWeather(2)                              
+                                on_press: root.formatoClima=2                                      
                             ToggleButton:
                                 group: "weatherTheme"
                                 id: detail
@@ -583,9 +583,48 @@
                                 state: "down"                        
                                 background_color:[0, 0, 0, 0]
                                 allow_no_selection: False
-                                on_press: root.themeWeather(2)
-                                
-                
+                                on_press: root.formatoClima=2       
+
+         #############################################
+                    Widget:
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+        #############################################
+                             
+                #id
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 40
+
+                        Label:
+                            text: "ID Ciudad:"
+                            valign: 'top'
+                            size_hint: 0.95, 1
+                        TextInput:
+                            id: textinput
+                            hint_text:root.c_id
+                            input_filter: 'int'
+                            hint_text_color: [1,1,1,1]
+                            pos_hint: {'center_x': 0.5, 'y': 0} 
+                            size_hint: 0.95, .8
+                            background_color: [1,1,1,0]
+                            valign: 'bottom'
+                            font_size: 11
+                            cursor_color: [1,1,1,.8]
+                            canvBack:[1,1,1,.4]
+                            canvas.before:
+                                Color:
+                                    rgba: self.canvBack
+                                Line:
+                                    width: 1.
+                                    rectangle: self.x, self.y, self.width, self.height                    
 
     ImageButton:
         id: homeButton

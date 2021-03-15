@@ -45,7 +45,6 @@ class HomeScreen(Screen):
             self.add_widget(i)
 
     def refreshPage(self):
-        # TODO echar cuenta a esto porque como se vaya del inicio de la lista veras
 
         for c in self.children:
             if isinstance(c, GifsWidget):
@@ -57,6 +56,11 @@ class HomeScreen(Screen):
                 self.remove_widget(c)
                 notes = NotesWidget()
                 self.add_widget(notes)
+
+            elif isinstance(c, InfoDayWidget):
+                self.remove_widget(c)
+                info = InfoDayWidget()
+                self.add_widget(info)
 
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)

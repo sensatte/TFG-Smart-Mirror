@@ -4,15 +4,16 @@ from kivy.clock import Clock
 from kivy.uix.image import Image
 import kivy.properties as Properties
 from datetime import datetime
-from db.dbWrapper import getHora, saveHora
+from db.dbWrapper import getHora
 
 class ClockWidget(Image):
-
-    text = Properties.StringProperty('')
-    chosenColor = Properties.ListProperty(getHora().color)
+    text = Properties.StringProperty('')    
+    chosenColor = Properties.ListProperty()
+    segundos = Properties.BooleanProperty()
+    horas = Properties.StringProperty()
 
     def on_text(self, *_):
-            # Just get large texture:
+            # Just get large texture:z
             l = Label(text=self.text)
             l.font_size = '1000dp'  # something that'll give texture bigger than phone's screen size
             l.color = self.color
@@ -22,12 +23,17 @@ class ClockWidget(Image):
     
     def __init__(self, **kwargs):
         super(ClockWidget, self).__init__(**kwargs)
-        self.text = datetime.now().strftime(self.update_secondsAndFormat(getHora().formato[1], getHora().formato[0]))
+        currentHora=getHora()
+        self.chosenColor=currentHora.color
+        self.segundos=currentHora.formato[1]
+        self.horas=currentHora.formato[0]
+        self.color = self.chosenColor
+        self.text = datetime.now().strftime(self.update_secondsAndFormat(self.segundos, self.horas))
         Clock.schedule_interval(self.update_time, 1)
         
         
     def update_time(self, *args):
-        self.text = datetime.now().strftime(self.update_secondsAndFormat(getHora().formato[1], getHora().formato[0]))
+        self.text = datetime.now().strftime(self.update_secondsAndFormat(self.segundos, self.horas))
         self.color = self.chosenColor
 
     def update_secondsAndFormat(self, seconds, formato):

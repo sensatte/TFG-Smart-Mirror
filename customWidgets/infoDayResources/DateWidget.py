@@ -3,14 +3,15 @@ from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.uix.image import Image
 import kivy.properties as Properties
+from db.dbWrapper import getFecha
 
 from datetime import datetime
 
 class DateWidget(Image):
     #TODO qie se actualice al ser las 00:00
     text = Properties.StringProperty('')
-    chosenColor = [1,1,1,1]
-    formato= "dd/mm"
+    chosenColor = Properties.ListProperty()
+    formato= Properties.StringProperty()
     def on_text(self, *_):
             # Just get large texture:
             l = Label(text=self.text)
@@ -22,7 +23,10 @@ class DateWidget(Image):
 
     def __init__(self, **kwargs):
         super(DateWidget, self).__init__(**kwargs)
-
+        currentFecha=getFecha()
+        self.chosenColor=currentFecha.color
+        self.formato=currentFecha.formato
+        self.color = self.chosenColor
         self.text=datetime.now().strftime(self.update_Format()) 
         Clock.schedule_interval(self.update_time, 60)
         
