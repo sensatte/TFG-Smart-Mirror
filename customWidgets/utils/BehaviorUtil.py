@@ -1,3 +1,4 @@
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.recycleview import RecycleView
 from db.Documents import Gifs
 from kivy.uix.behaviors.togglebutton import ToggleButtonBehavior
@@ -261,3 +262,25 @@ class GifConfig(ButtonBehavior, AsyncImage):
         gif.posX = 10
         gif.posY = 10
         gif.save()
+
+
+class GifConfig2(BoxLayout):
+    imagenId = Properties.NumericProperty()
+    pinned = Properties.BooleanProperty()
+    delay = Properties.NumericProperty()
+    updateListFunction = Properties.ObjectProperty()
+    source = Properties.StringProperty()
+
+    def pinGif(self):
+
+        self.pinned = not self.pinned
+
+        gif = dbWrapper.findGifById(self.imagenId)
+        gif.pinned = self.pinned
+        gif.posX = 10
+        gif.posY = 10
+        gif.save()
+
+    def deleteGif(self):
+        dbWrapper.deleteGifById(self.imagenId)
+        self.updateListFunction()
