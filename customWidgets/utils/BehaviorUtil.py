@@ -19,6 +19,7 @@ from db.Documents import Notes
 import logging
 import datetime
 from utils.ImgurWrapper import ImgurWrapper
+from kivy.animation import Animation
 
 
 class ImageButton(ButtonBehavior, Image):
@@ -284,3 +285,51 @@ class GifConfig2(BoxLayout):
     def deleteGif(self):
         dbWrapper.deleteGifById(self.imagenId)
         self.updateListFunction()
+
+
+class DraggableBaseWidget(Scatter):
+    dbID = Properties.StringProperty("base")
+    do_rotation = False
+    do_scale = False
+    do_translation = True
+    edit_mode = Properties.BooleanProperty(False)
+    heldForLongEnoughEvent = Properties.ObjectProperty()
+
+    def on_edit_mode(self, instance, value):
+        # print(value)
+        self.do_translation = (self.edit_mode, self.edit_mode)
+        self.scale = 1
+        if (value):
+            transitionName = "in_out_quad"
+            anim = Animation(scale=1.05, duration=.5, t=transitionName)
+            anim += Animation(scale=.95, duration=.5, t=transitionName)
+            anim.repeat = True
+            anim.start(self)
+        else:
+            transitionName = "in_out_sine"
+            Animation.stop_all(self)
+            anim = Animation(scale=1.1, duration=.25, t=transitionName)
+            anim += Animation(scale=.9, duration=.25, t=transitionName)
+            anim += Animation(scale=1, duration=.125, t=transitionName)
+            anim.start(self)
+
+    def on_touch_down(self, touch):
+        if self.edit_mode:
+            # print("edit")
+            if (touch.is_double_tap):
+                self.edit_mode = False
+            else:
+                return super().on_touch_down(touch)
+        else:
+            try:
+                self.heldForLongEnoughEvent.cancel()
+            except:
+                # logging.info('Gifs: No previous event')
+                pass
+
+            self.heldForLongEnoughEvent = Clock.schedule_once(
+                self.heldForLongEnough, 2)
+
+    def heldForLongEnough(self, dt):
+        self.edit_mode = True
+        # print("HELD FOR LONG ENOUGH")
