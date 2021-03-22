@@ -1,6 +1,7 @@
 from kivy.uix.floatlayout import FloatLayout
 
 from customWidgets.NewsWidget import NewsWidget
+from customWidgets.TwitterWidget import TwitterWidget
 from customWidgets.InfoDayWidget import InfoDayWidget
 from customWidgets.QuotesWidget import QuotesWidget
 from customWidgets.NotesWidget import NotesWidget, deleteNotes
@@ -23,8 +24,8 @@ class HomeScreen(Screen):
 
         widgets = []
 
-        spotifyWidget = SpotifyWidget2()
-        widgets.append(spotifyWidget)
+        # spotifyWidget = SpotifyWidget2()
+        # widgets.append(spotifyWidget)
 
         # volumeWidget=VolumeWid()
         # widgets.append(volumeWidget)
@@ -37,6 +38,9 @@ class HomeScreen(Screen):
 
         quotes = QuotesWidget()
         widgets.append(quotes)
+
+        twitter = TwitterWidget()
+        widgets.append(twitter)
 
         # notes = NotesWidget()
         # widgets.append(notes)
@@ -61,6 +65,11 @@ class HomeScreen(Screen):
                 self.remove_widget(c)
                 info = InfoDayWidget()
                 self.add_widget(info)
+
+            elif isinstance(c, TwitterWidget):
+                self.remove_widget(c)
+                twitter = TwitterWidget()
+                self.add_widget(twitter)
 
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)
