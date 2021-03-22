@@ -15,10 +15,10 @@ class NotesWidget(FloatLayout):
     def __init__(self, **kwargs):
         super(NotesWidget, self).__init__(**kwargs)
         self.__name__ = "notas"
-        self.size = Window.size
-        porc = self.size_hint[0]
-        self.pos_hint = {"x": float(Window.width-(self.width)*porc)/Window.width,
-                         "y": float(Window.height-(self.height*porc))/Window.height}
+        # self.size = Window.size
+        # porc = self.size_hint[0]
+        # self.pos_hint = {"x": float(Window.width-(self.width)*porc)/Window.width,
+        #                  "y": float(Window.height-(self.height*porc))/Window.height}
 
         showNotes(self)
 
@@ -37,10 +37,10 @@ def showNotes(self):
                 # size_hint_x=None, width=100,
                 background_color=(
                     note.rgb[0]/255, note.rgb[1]/255, note.rgb[2]/255, note.rgb[3]),
-                pos=(note.posX, note.posY),
                 scale=note.scale,
-                rotation=note.rotation
+                rotation=note.rotation,
             )
+            label.pos = (note.posX, note.posY)
             self.add_widget(label)
 
             # label = BehaviorUtil.DraggableColoredLabel(

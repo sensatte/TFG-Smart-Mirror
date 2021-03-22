@@ -10,6 +10,8 @@ from kivy.uix.screenmanager import FadeTransition, RiseInTransition, ScreenManag
 from kivy.core.window import Window
 from kivy.app import App
 import kivy
+from kivy.uix.vkeyboard import VKeyboard
+from kivy.config import Config
 kivy.require('2.0.0')  # replace with your current kivy version !
 
 Window.size = (540, 700)
@@ -24,6 +26,8 @@ class SmartMirrorApp(App):
         # TODO es probable que pasen las mierdas de las screens negras y
         # no transparentes porque metemos las screens dentro de las screens
         # TODO forma bonita de meter las pantallas
+
+        Config.set("kivy", "keyboard_mode", "systemanddock")
 
         # Create the screen manager
         scMenu = ScreenManager()
@@ -56,7 +60,14 @@ class SmartMirrorApp(App):
 
         scMenu.current = "gym"
 
+        self.set_keyboard()
+
         return scMenu
+
+    def set_keyboard(self):
+        VKeyboard.key_background_normal = "images/keyboard/normal.png"
+        VKeyboard.key_background_down = "images/keyboard/down.png"
+        VKeyboard.background = "images/keyboard/transparent.png"
 
 
 if __name__ == '__main__':

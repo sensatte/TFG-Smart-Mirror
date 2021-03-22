@@ -1,3 +1,5 @@
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.recycleview import RecycleView
 from db.Documents import Gifs
 from kivy.uix.behaviors.togglebutton import ToggleButtonBehavior
 from kivy.uix.image import AsyncImage, Image
@@ -17,12 +19,17 @@ from kivy.clock import Clock
 from db.Documents import Notes
 import logging
 import datetime
+from utils.ImgurWrapper import ImgurWrapper
 
 
 class ImageButton(ButtonBehavior, Image):
     note = Properties.NumericProperty()
     gif = Properties.NumericProperty()
     idwidget = Properties.NumericProperty()
+
+
+class AsyncImageButton(ButtonBehavior, AsyncImage):
+    pass
 
 
 class PlayListToggle(ToggleButtonBehavior, AsyncImage):
@@ -97,25 +104,12 @@ class ScatterColoredLabel(Scatter):
 
     def on_pos(self, instance, value):
         try:
-            self.bringToFront()
             self.saveOnDBEvent.cancel()
         except:
             logging.info('Notes: No previous event')
-
         self.saveOnDBEvent = Clock.schedule_once(self.saveOnDB, 5)
 
-    def bringToFront(self):
-        parent = self.parent
-        children = parent.children
-        childOnTop = children[0]
-
-        if (self != childOnTop):
-            parent.remove_widget(self)
-            parent.add_widget(self)
-
     def saveOnDB(self, dt):
-        # TODO SAVE SOURCE, POS AND SIZE ON DB
-
         noteToSave = Notes(
             _id=self.noteId,
             pinned=self.visible,
@@ -271,3 +265,25 @@ class GifConfig(ButtonBehavior, AsyncImage):
         gif.posX = 10
         gif.posY = 10
         gif.save()
+
+
+class GifConfig2(BoxLayout):
+    imagenId = Properties.NumericProperty()
+    pinned = Properties.BooleanProperty()
+    delay = Properties.NumericProperty()
+    updateListFunction = Properties.ObjectProperty()
+    source = Properties.StringProperty()
+
+    def pinGif(self):
+
+        self.pinned = not self.pinned
+
+        gif = dbWrapper.findGifById(self.imagenId)
+        gif.pinned = self.pinned
+        gif.posX = 10
+        gif.posY = 10
+        gif.save()
+
+    def deleteGif(self):
+        dbWrapper.deleteGifById(self.imagenId)
+        self.updateListFunction()
