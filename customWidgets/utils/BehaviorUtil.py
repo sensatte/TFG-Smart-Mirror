@@ -21,6 +21,7 @@ import datetime
 from utils.ImgurWrapper import ImgurWrapper
 from kivy.animation import Animation
 from kivy.uix.scatterlayout import ScatterLayout
+from db.Documents import Draggable
 
 
 class ImageButton(ButtonBehavior, Image):
@@ -289,11 +290,21 @@ class GifConfig2(BoxLayout):
 
 
 class DraggableBaseWidget(ScatterLayout):
-    dbID = Properties.StringProperty("base")
+    dbName = Properties.StringProperty("base")
     do_rotation = False
     do_scale = False
     do_translation = False
     edit_mode = Properties.BooleanProperty(False)
+    dbInstance = Properties.ObjectProperty()
+
+    # TODO METER EL DEJAR PULSADO DOS SEGUNDOS
+    # TODO QUE AL ENTRAR EN EDIT, SALGA UN MARQUITO Y EL ICONO DE DESPLAZAMIENTO (LAS FLECHAS EN CUATRO DIRECCIONES)
+    # TODO QUE AL ESTAR EN EDIT, PULSAR FUERA DEL WIDGET LO GUARDE, EN VEZ DE ESPERAR POR UN DOUBLE CLICK DENTRO DEL WIDGET
+
+    def __init__(self, **kwargs):
+        super(DraggableBaseWidget, self).__init__(**kwargs)
+        self.dbInstance = self.getInstanceFromDB()
+        self.pos = (self.dbInstance.posX, self.dbInstance.posY)
 
     def on_edit_mode(self, instance, value):
         self.do_translation = (self.edit_mode, self.edit_mode)
@@ -309,6 +320,7 @@ class DraggableBaseWidget(ScatterLayout):
         else:
             # Edit Mode desactivado
             # TODO GUARDAR POSICION EN DB
+            self.updateInstanceOnDB()
             transitionName = "in_out_sine"
             Animation.stop_all(self)
             anim = Animation(scale=1.1, duration=.25, t=transitionName)
@@ -325,3 +337,17 @@ class DraggableBaseWidget(ScatterLayout):
             self.edit_mode = not self.edit_mode
         else:
             return super().on_touch_down(touch)
+
+    def updateInstanceOnDB(self):
+        self.dbInstance.posX = self.pos[0]
+        self.dbInstance.posY = self.pos[1]
+        self.dbInstance.save()
+
+    def getInstanceFromDB(self):
+        try:
+            instance = Draggable.objects.get(draggableName=self.dbName)
+        except:
+            instance = Draggable(draggableName=self.dbName,
+                                 posX=self.pos[0], posY=self.pos[1])
+            instance.save()
+        return instance
