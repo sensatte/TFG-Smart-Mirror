@@ -20,6 +20,7 @@ import logging
 import datetime
 from utils.ImgurWrapper import ImgurWrapper
 from kivy.animation import Animation
+from kivy.uix.scatterlayout import ScatterLayout
 
 
 class ImageButton(ButtonBehavior, Image):
@@ -287,7 +288,7 @@ class GifConfig2(BoxLayout):
         self.updateListFunction()
 
 
-class DraggableBaseWidget(Scatter):
+class DraggableBaseWidget(ScatterLayout):
     dbID = Properties.StringProperty("base")
     do_rotation = False
     do_scale = False
@@ -320,7 +321,7 @@ class DraggableBaseWidget(Scatter):
             return super().on_touch_move(touch)
 
     def on_touch_down(self, touch):
-        if touch.is_double_tap:
+        if self.collide_point(touch.pos[0], touch.pos[1]) and touch.is_double_tap:
             self.edit_mode = not self.edit_mode
         else:
             return super().on_touch_down(touch)
