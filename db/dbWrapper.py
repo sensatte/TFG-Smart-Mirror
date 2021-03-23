@@ -119,7 +119,14 @@ def saveWeight(weight):
         noteToSave.save()
         print("El peso " + str(weight) + " se ha guardado")
 
+##################################
 
+def saveInternacional(dia, info):
+    dayToSave = Internacional(dia=dia, info=info)
+    dayToSave.save()
+
+def getInternacionalByDay(dia):
+    return Internacional.objects(dia= dia)
 # print(getWeightByMonth(2))
 # saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])
 # saveNote(False, "vaya dia de meirda", datetime.date(2021, 1, 21), [125, 150, 176,1])

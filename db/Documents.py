@@ -63,3 +63,8 @@ class Gym(Document):
     month = IntField(required=True)
     day = IntField(required=True)
     weight = DecimalField(required=True)
+
+
+class Internacional(Document):
+    dia = StringField(required=True)
+    info = StringField(required=True)

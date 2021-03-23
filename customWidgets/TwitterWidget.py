@@ -11,6 +11,7 @@ Builder.load_file('kv\\twitter.kv')
 class TwitterWidget(GridLayout):
     
     def __init__(self, **kwargs):
+        #TODO que puedas elegir si quieres RT, aunque entonces sería mejor aumentar los tweets que llegan
         super(TwitterWidget, self).__init__(**kwargs)
         self.chargeTweets("nada")
         Clock.schedule_interval(self.chargeTweets, 60)

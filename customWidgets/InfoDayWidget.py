@@ -2,6 +2,7 @@ from customWidgets.infoDayResources.DateWidget import DateWidget
 from customWidgets.infoDayResources.WeatherWidget import WeatherWidget
 from customWidgets.infoDayResources.TempWidget import TempWidget
 from customWidgets.infoDayResources.ClockWidget import ClockWidget
+from customWidgets.InternationalWidget import InternationalWidget
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
@@ -18,6 +19,7 @@ class InfoDayWidget(RelativeLayout):
         date = DateWidget()
         temp = TempWidget()
         weather = WeatherWidget()
+        info = InternationalWidget()
 
         tempwea=BoxLayout(orientation="horizontal")        
         tempwea.add_widget(temp)
@@ -30,6 +32,7 @@ class InfoDayWidget(RelativeLayout):
         res=BoxLayout(orientation="vertical", padding=[10,10,0,0], spacing=-self.width/4)
         res.add_widget(clock)
         res.add_widget(datetemp)
+        res.add_widget(info)
         self.add_widget(res)
 
 

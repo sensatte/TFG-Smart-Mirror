@@ -39,8 +39,8 @@ class HomeScreen(Screen):
         quotes = QuotesWidget()
         widgets.append(quotes)
 
-        twitter = TwitterWidget()
-        widgets.append(twitter)
+        # twitter = TwitterWidget()
+        # widgets.append(twitter)
 
         # notes = NotesWidget()
         # widgets.append(notes)
