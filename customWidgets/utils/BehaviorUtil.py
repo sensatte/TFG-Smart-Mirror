@@ -289,6 +289,9 @@ class GifConfig2(BoxLayout):
         self.updateListFunction()
 
 
+Builder.load_file("kv/draggableBaseWidget.kv")
+
+
 class DraggableBaseWidget(ScatterLayout):
     dbName = Properties.StringProperty("base")
     do_rotation = False
@@ -296,6 +299,9 @@ class DraggableBaseWidget(ScatterLayout):
     do_translation = False
     edit_mode = Properties.BooleanProperty(False)
     dbInstance = Properties.ObjectProperty()
+
+    # FOR 2 SEC HOLDING
+    heldForLongEnoughEvent = Properties.ObjectProperty()
 
     # TODO METER EL DEJAR PULSADO DOS SEGUNDOS
     # TODO QUE AL ENTRAR EN EDIT, SALGA UN MARQUITO Y EL ICONO DE DESPLAZAMIENTO (LAS FLECHAS EN CUATRO DIRECCIONES)
@@ -319,7 +325,6 @@ class DraggableBaseWidget(ScatterLayout):
             anim.start(self)
         else:
             # Edit Mode desactivado
-            # TODO GUARDAR POSICION EN DB
             self.updateInstanceOnDB()
             transitionName = "in_out_sine"
             Animation.stop_all(self)
@@ -328,15 +333,45 @@ class DraggableBaseWidget(ScatterLayout):
             anim += Animation(scale=1, duration=.125, t=transitionName)
             anim.start(self)
 
-    def on_touch_move(self, touch):
-        if self.edit_mode:
-            return super().on_touch_move(touch)
+    # FOR DOUBLE TAP EDIT
+    # def on_touch_move(self, touch):
+    #     if self.edit_mode:
+    #         return super().on_touch_move(touch)
+
+    # def on_touch_down(self, touch):
+    #     if self.collide_point(touch.pos[0], touch.pos[1]) and touch.is_double_tap:
+    #         self.edit_mode = not self.edit_mode
+    #     else:
+    #         return super().on_touch_down(touch)
+
+    def on_touch_up(self, touch):
+        if (self.collide_point(touch.pos[0], touch.pos[1])):
+            try:
+                self.heldForLongEnoughEvent.cancel()
+            except:
+                pass
+        return super().on_touch_up(touch)
 
     def on_touch_down(self, touch):
-        if self.collide_point(touch.pos[0], touch.pos[1]) and touch.is_double_tap:
-            self.edit_mode = not self.edit_mode
-        else:
+
+        if self.edit_mode:
+            if (not self.collide_point(touch.pos[0], touch.pos[1])):
+                self.edit_mode = False
             return super().on_touch_down(touch)
+        else:
+            if (self.collide_point(touch.pos[0], touch.pos[1])):
+                try:
+                    self.heldForLongEnoughEvent.cancel()
+                except:
+                    pass
+
+                self.heldForLongEnoughEvent = Clock.schedule_once(
+                    self.heldForLongEnough, 2)
+            else:
+                return super().on_touch_down(touch)
+
+    def heldForLongEnough(self, dt):
+        self.edit_mode = True
 
     def updateInstanceOnDB(self):
         self.dbInstance.posX = self.pos[0]
