@@ -62,3 +62,9 @@ class Gym(Document):
     month = IntField(required=True)
     day = IntField(required=True)
     weight = DecimalField(required=True)
+
+
+class Draggable(Document):
+    draggableName = StringField(required=True, max_length=500)
+    posX = FloatField(required=False, default=50)
+    posY = FloatField(required=False, default=50)

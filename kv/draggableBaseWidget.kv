@@ -1,0 +1,17 @@
+#:kivy 1.0
+
+<DraggableBaseWidget>:
+    canvas.after:
+        Color:
+            rgba: (1,1,1,1) if self.edit_mode else (1,1,1,0)
+
+        Line:
+            width: 1.
+            rectangle: self.x, self.y, self.width*self.scale, self.height*self.scale
+
+    Image:
+        source: "images/icons/move_white.png"
+        color: (1, 1, 1)
+        opacity: 1 if root.edit_mode else 0
+        pos_hint: {"top":1, "right":1}
+        size_hint: .3, .3

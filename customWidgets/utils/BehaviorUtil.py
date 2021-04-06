@@ -20,6 +20,9 @@ from db.Documents import Notes
 import logging
 import datetime
 from utils.ImgurWrapper import ImgurWrapper
+from kivy.animation import Animation
+from kivy.uix.scatterlayout import ScatterLayout
+from db.Documents import Draggable
 
 
 class ImageButton(ButtonBehavior, Image):
@@ -287,3 +290,102 @@ class GifConfig2(BoxLayout):
     def deleteGif(self):
         dbWrapper.deleteGifById(self.imagenId)
         self.updateListFunction()
+
+
+Builder.load_file("kv/draggableBaseWidget.kv")
+
+
+class DraggableBaseWidget(ScatterLayout):
+    dbName = Properties.StringProperty("base")
+    do_rotation = False
+    do_scale = False
+    do_translation = False
+    edit_mode = Properties.BooleanProperty(False)
+    dbInstance = Properties.ObjectProperty()
+
+    # FOR 2 SEC HOLDING
+    heldForLongEnoughEvent = Properties.ObjectProperty()
+
+    # TODO METER EL DEJAR PULSADO DOS SEGUNDOS
+    # TODO QUE AL ENTRAR EN EDIT, SALGA UN MARQUITO Y EL ICONO DE DESPLAZAMIENTO (LAS FLECHAS EN CUATRO DIRECCIONES)
+    # TODO QUE AL ESTAR EN EDIT, PULSAR FUERA DEL WIDGET LO GUARDE, EN VEZ DE ESPERAR POR UN DOUBLE CLICK DENTRO DEL WIDGET
+
+    def __init__(self, **kwargs):
+        super(DraggableBaseWidget, self).__init__(**kwargs)
+        self.dbInstance = self.getInstanceFromDB()
+        self.pos = (self.dbInstance.posX, self.dbInstance.posY)
+
+    def on_edit_mode(self, instance, value):
+        self.do_translation = (self.edit_mode, self.edit_mode)
+        self.scale = 1
+        self.do_translation = value
+        if (value):
+            # Edit Mode activado
+            transitionName = "in_out_quad"
+            anim = Animation(scale=1.05, duration=.5, t=transitionName)
+            anim += Animation(scale=.95, duration=.5, t=transitionName)
+            anim.repeat = True
+            anim.start(self)
+        else:
+            # Edit Mode desactivado
+            self.updateInstanceOnDB()
+            transitionName = "in_out_sine"
+            Animation.stop_all(self)
+            anim = Animation(scale=1.1, duration=.25, t=transitionName)
+            anim += Animation(scale=.9, duration=.25, t=transitionName)
+            anim += Animation(scale=1, duration=.125, t=transitionName)
+            anim.start(self)
+
+    # FOR DOUBLE TAP EDIT
+    # def on_touch_move(self, touch):
+    #     if self.edit_mode:
+    #         return super().on_touch_move(touch)
+
+    # def on_touch_down(self, touch):
+    #     if self.collide_point(touch.pos[0], touch.pos[1]) and touch.is_double_tap:
+    #         self.edit_mode = not self.edit_mode
+    #     else:
+    #         return super().on_touch_down(touch)
+
+    def on_touch_up(self, touch):
+        if (self.collide_point(touch.pos[0], touch.pos[1])):
+            try:
+                self.heldForLongEnoughEvent.cancel()
+            except:
+                pass
+        return super().on_touch_up(touch)
+
+    def on_touch_down(self, touch):
+
+        if self.edit_mode:
+            if (not self.collide_point(touch.pos[0], touch.pos[1])):
+                self.edit_mode = False
+            return super().on_touch_down(touch)
+        else:
+            if (self.collide_point(touch.pos[0], touch.pos[1])):
+                try:
+                    self.heldForLongEnoughEvent.cancel()
+                except:
+                    pass
+
+                self.heldForLongEnoughEvent = Clock.schedule_once(
+                    self.heldForLongEnough, 2)
+            else:
+                return super().on_touch_down(touch)
+
+    def heldForLongEnough(self, dt):
+        self.edit_mode = True
+
+    def updateInstanceOnDB(self):
+        self.dbInstance.posX = self.pos[0]
+        self.dbInstance.posY = self.pos[1]
+        self.dbInstance.save()
+
+    def getInstanceFromDB(self):
+        try:
+            instance = Draggable.objects.get(draggableName=self.dbName)
+        except:
+            instance = Draggable(draggableName=self.dbName,
+                                 posX=self.pos[0], posY=self.pos[1])
+            instance.save()
+        return instance
