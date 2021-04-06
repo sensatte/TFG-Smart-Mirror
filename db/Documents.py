@@ -66,5 +66,7 @@ class Gym(Document):
 
 
 class Internacional(Document):
-    dia = StringField(required=True)
-    info = StringField(required=True)
+    dia = StringField()
+    info = StringField()
+    color = ListField()
+    _id = StringField()

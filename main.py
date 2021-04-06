@@ -2,9 +2,11 @@ from screens.GifsConfig import GifsConfig
 from screens.MenuScreen import MenuScreen
 from kivy.lang import Builder
 from screens.InfoDayConfig import InfoDayConfig
+from screens.InternationalConfig import InternationalConfig
 from screens.SpotifyConfig import SpotifyConfig
 from screens.GymConfig import GymConfig
 from screens.HomeScreen import HomeScreen
+from screens.DrawingScreen import DrawingScreen
 from screens.NotesConfig import NotesConfig
 from kivy.uix.screenmanager import FadeTransition, RiseInTransition, ScreenManager, Screen
 from kivy.core.window import Window
@@ -50,11 +52,19 @@ class SmartMirrorApp(App):
         gym.add_widget(GymConfig())
         scMenu.add_widget(gym)
 
+        inter = Screen(name="international")
+        inter.add_widget(InternationalConfig())
+        scMenu.add_widget(inter)
+
+        drawing = Screen(name="drawing")
+        drawing.add_widget(DrawingScreen())
+        scMenu.add_widget(drawing)
+
         # gifs = Screen(name="gifs")
         # gifs.add_widget(GifsConfig())
         # scMenu.add_widget(gifs)
 
-        scMenu.current = "home"
+        scMenu.current = "drawing"
 
         return scMenu
 

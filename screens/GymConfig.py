@@ -25,7 +25,6 @@ Builder.load_file('kv\\gymConfig.kv')
 
 class GymConfig(Screen):
     #TODO cronometro? algo para hacer ejercicio
-    #TODO que se actualize al cambiar mes
     def __init__(self, **kwargs):
         super(GymConfig, self).__init__(**kwargs)
         self.pos_hint={'center_y': 0.5, 'center_x': 0.5}  
@@ -34,10 +33,17 @@ class GymConfig(Screen):
         self.add_buttons()
 
     def create_graph(self, dates):
-        graph = Graph(x_ticks_minor=5,
-                    y_ticks_minor=5, x_ticks_major=5, y_ticks_major=5,
-                    y_grid_label=True, x_grid_label=True, padding=5, border_color=[0,0,0,0], font_size=8,
-                    xmin=0, xmax=calendar.monthrange(dates[0].year,dates[0].month)[1], ymin=int(min([x.weight for x in dates])-5), ymax=int(max([x.weight for x in dates])+5))
+        if len(dates)>0:
+            graph = Graph(x_ticks_minor=5,
+                        y_ticks_minor=5, x_ticks_major=5, y_ticks_major=5,
+                        y_grid_label=True, x_grid_label=True, padding=5, border_color=[0,0,0,0], font_size=8,
+                        xmin=0, xmax=calendar.monthrange(dates[0].year,dates[0].month)[1], ymin=int(min([x.weight for x in dates])-5), ymax=int(max([x.weight for x in dates])+5))
+        else:
+            graph = Graph(x_ticks_minor=5,
+                        y_ticks_minor=5, x_ticks_major=5, y_ticks_major=5,
+                        y_grid_label=True, x_grid_label=True, padding=5, border_color=[0,0,0,0], font_size=8,
+                        xmin=0, ymin=0)
+        
         plot = SmoothLinePlot(color=[1, 105/255, 97/255, 1])
         plot.points = [(x.day, float(x.weight)) for x in dates]
         graph.add_plot(plot)
@@ -50,11 +56,6 @@ class GymConfig(Screen):
         self.ids.showNotes.add_widget(self.create_graph(datos))
 
     def getAllMonth(self):
-        # inicio=BoxLayout(size_hint_y= None, orientation="horizontal", height=30)
-        # inicio.add_widget(Image(source= "images\\menu\\weight.png"))
-        # inicio.add_widget(Image(source= "images\\menu\\schedule.png"))
-        # self.ids.todosgrid.add_widget(inicio)
-
         datos=dbWrapper.getAllWeight()
         for j in range(len(datos)-1,-1,-1):
             i=datos[j]

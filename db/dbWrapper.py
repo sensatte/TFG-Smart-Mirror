@@ -127,6 +127,15 @@ def saveInternacional(dia, info):
 
 def getInternacionalByDay(dia):
     return Internacional.objects(dia= dia)
+
+def getInternacionalByID():
+    return Internacional.objects(_id= 'inter')[0]
+
+def saveInternationalConfig(id, color):    
+    noteToSave = Internacional(_id=id, color = color)
+    noteToSave.save()
+    print("Los festivos se han actualizado")
+
 # print(getWeightByMonth(2))
 # saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])
 # saveNote(False, "vaya dia de meirda", datetime.date(2021, 1, 21), [125, 150, 176,1])

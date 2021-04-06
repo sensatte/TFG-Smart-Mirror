@@ -5,6 +5,7 @@ import customWidgets.utils.BehaviorUtil as BehaviorUtil
 import db.dbWrapper as dbWrapper
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.lang import Builder
 Builder.load_file('kv\\notes.kv')
 
 

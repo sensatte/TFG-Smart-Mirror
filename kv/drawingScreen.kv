@@ -1,0 +1,86 @@
+#:kivy 1.7.0
+
+
+<DrawingScreen>:
+    Frame:
+        id:rueda
+        colorPincel: [1,0,0,1]
+        size_hint: .2,.2
+        pos_hint: {"center_x": .5, "center_y": 0}
+        opacity:0
+    GridLayout:
+        cols:1
+        size: root.size
+        padding: 20
+        spacing: 50
+
+        MyPaintWidget:
+            id: painter
+            # size: 100000, 100000
+            # size_hint: 100000, 100000
+            size_hint: 1,.9
+
+        BoxLayout:
+            id: caja
+            orientation: 'horizontal'
+            size_hint: 1,.1
+
+            ImageButton:
+                id: homeButton
+                # size_hint_y: None
+                source: "images/menu/previous.png"
+                # pos_hint: {"center_x": .5, "y": 0}
+                # size_hint: (.17, .11)
+                on_press: root.pressedBack(self)
+
+            Button:
+                text: "Clear"
+                on_press: root.clearDrawing(self)
+
+            Button:
+                text:'Color'
+                on_press: root.showColorWheel()
+                background_color:[0, 0, 0, 0]
+                canvas.after:
+                    Color:
+                        rgba: rueda.colorPincel
+                    Ellipse:
+                        pos: self.pos
+                        size: self.size 
+            
+            # FloatLayout:
+            #     Spinner:
+            #         size_hint: None, None
+            #         size: 100, 44
+            #         pos_hint: {'center': (.5, .5)}
+            #         text: 'Home'
+            #         values: 'Home', 'Work', 'Other', 'Custom'
+            #         on_text:
+            #             print("The spinner {} has text {}".format(self, self.text))
+
+<CustomDropDown>:
+    Button:
+        text: 'My first Item'
+        size_hint_y: None
+        height: 44
+        on_release: root.select('item1')
+    Label:
+        text: 'Unselectable item'
+        size_hint_y: None
+        height: 44
+    Button:
+        text: 'My second Item'
+        size_hint_y: None
+        height: 44
+        on_release: root.select('item2')
+
+
+<Frame>:
+    CustomColorWheel:
+        id: colory
+        pos_hint: {"center_x": .5, "center_y": .5}
+        on_press: root.update()
+        on_press: root.colorPincel = self.color
+        on_release: print('on_release')
+
+        

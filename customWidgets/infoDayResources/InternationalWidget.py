@@ -10,13 +10,11 @@ import db.dbWrapper as dbWrapper
 from kivy.uix.image import Image
 import kivy.properties as Properties
 
-from kivy.lang import Builder
-Builder.load_file('kv\\twitter.kv')
-
 class InternationalWidget(Image):
     #TODO mirar si cuando es un dia <10 no de problemas
     #TODO se actualizara?
     text = Properties.StringProperty('')
+    chosenColor = Properties.ListProperty()
 
     def on_text(self, *_):
             # Just get large texture:
@@ -28,11 +26,12 @@ class InternationalWidget(Image):
             self.texture = l.texture    
     
     def __init__(self, **kwargs):
-        super(InternationalWidget, self).__init__(**kwargs)        
+        super(InternationalWidget, self).__init__(**kwargs)  
+        self.chosenColor = dbWrapper.getInternacionalByID().color
+        self.size_hint = (1,.2)
         hoy = dbWrapper.getInternacionalByDay(datetime.date.today().strftime('%d/%m'))
-        self.text=hoy[0]['info']
-        self.color=[1,1,1,1]
-
+        self.text=hoy[0]['info'] if len(hoy)!=0 else "Día Mundial del Teatro"
+        self.color=self.chosenColor if len(hoy)!=0 else [1,1,1,0]
 
 
 
