@@ -16,8 +16,8 @@ from kivy.uix.vkeyboard import VKeyboard
 from kivy.config import Config
 kivy.require('2.0.0')  # replace with your current kivy version !
 
-Window.size = (540, 700)
-# Window.size = (540, 960)
+# Window.size = (540, 700)
+Window.size = (540, 960)
 Window.minimum_width, Window.minimum_height = Window.size
 
 
@@ -44,9 +44,9 @@ class SmartMirrorApp(App):
         infoDay.add_widget(InfoDayConfig())
         scMenu.add_widget(infoDay)
 
-        # notes = Screen(name="notes")
-        # notes.add_widget(NotesConfig())
-        # scMenu.add_widget(notes)
+        notes = Screen(name="notes")
+        notes.add_widget(NotesConfig())
+        scMenu.add_widget(notes)
 
         spotify = Screen(name="spotify")
         spotify.add_widget(SpotifyConfig())
@@ -64,11 +64,11 @@ class SmartMirrorApp(App):
         drawing.add_widget(DrawingScreen())
         scMenu.add_widget(drawing)
 
-        # gifs = Screen(name="gifs")
-        # gifs.add_widget(GifsConfig())
-        # scMenu.add_widget(gifs)
+        gifs = Screen(name="gifs")
+        gifs.add_widget(GifsConfig())
+        scMenu.add_widget(gifs)
 
-        scMenu.current = "drawing"
+        scMenu.current = "home"
 
         self.set_keyboard()
 

@@ -369,7 +369,7 @@ class DraggableBaseWidget(ScatterLayout):
                     pass
 
                 self.heldForLongEnoughEvent = Clock.schedule_once(
-                    self.heldForLongEnough, 2)
+                    self.heldForLongEnough, 1)
             else:
                 return super().on_touch_down(touch)
 

@@ -97,10 +97,10 @@ class SpotifyWidget2(RelativeLayout, EventDispatcher):
             volUp.pos = (100, 100)
 
             imageAnim = songImageAnim = Animation(
-                size_hint=(.7, .7), transition=inTransition)
+                size_hint=(.7, .7), transition=inTransition, duration=.6)
 
             anim = Animation(
-                pos_hint={'center_x': 0.5, "center_y": .5}, duration=1, transition=inTransition) & Animation(opacity=0, duration=1)
+                pos_hint={'center_x': 0.5, "center_y": .5}, duration=.5, transition=inTransition) & Animation(opacity=0, duration=1)
 
             for widget in all:
                 anim.start(widget)
