@@ -16,6 +16,7 @@ class Notes(Document):
     posX = FloatField(required=False, default=20)
     posY = FloatField(required=False, default=20)
 
+
 class Counters(Document):
     _id = StringField(required=True, max_length=100)
     cont = IntField(required=True, default=0)
@@ -45,6 +46,7 @@ class Clima(Document):
     formato = IntField(required=True)
     c_id = StringField(required=True)
 
+
 class Gifs(Document):
     _id = IntField(required=True)
     source = StringField(required=True, max_length=500)
@@ -70,3 +72,9 @@ class Internacional(Document):
     info = StringField()
     color = ListField()
     _id = StringField()
+
+
+class Draggable(Document):
+    draggableName = StringField(required=True, max_length=500)
+    posX = FloatField(required=False, default=50)
+    posY = FloatField(required=False, default=50)
