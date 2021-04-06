@@ -42,9 +42,9 @@ class SmartMirrorApp(App):
         infoDay.add_widget(InfoDayConfig())
         scMenu.add_widget(infoDay)
 
-        notes = Screen(name="notes")
-        notes.add_widget(NotesConfig())
-        scMenu.add_widget(notes)
+        # notes = Screen(name="notes")
+        # notes.add_widget(NotesConfig())
+        # scMenu.add_widget(notes)
 
         spotify = Screen(name="spotify")
         spotify.add_widget(SpotifyConfig())
@@ -54,11 +54,11 @@ class SmartMirrorApp(App):
         gym.add_widget(GymConfig())
         scMenu.add_widget(gym)
 
-        gifs = Screen(name="gifs")
-        gifs.add_widget(GifsConfig())
-        scMenu.add_widget(gifs)
+        # gifs = Screen(name="gifs")
+        # gifs.add_widget(GifsConfig())
+        # scMenu.add_widget(gifs)
 
-        scMenu.current = "home"
+        scMenu.current = "gym"
 
         self.set_keyboard()
 

@@ -29,8 +29,8 @@ class HomeScreen(Screen):
         # volumeWidget=VolumeWid()
         # widgets.append(volumeWidget)
 
-        gifs = GifsWidget()
-        widgets.append(gifs)
+        # gifs = GifsWidget()
+        # widgets.append(gifs)
 
         infoDay = InfoDayWidget()
         widgets.append(infoDay)
@@ -38,8 +38,8 @@ class HomeScreen(Screen):
         quotes = QuotesWidget()
         widgets.append(quotes)
 
-        notes = NotesWidget()
-        widgets.append(notes)
+        # notes = NotesWidget()
+        # widgets.append(notes)
 
         for i in widgets:
             self.add_widget(i)

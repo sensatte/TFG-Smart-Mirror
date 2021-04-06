@@ -8,7 +8,7 @@
         background_color: 0,0,0,0
         do_default_tab: False
         padding: [0,5,0,5]
-        tab_width: self.parent.width / 2
+        tab_width: self.parent.width / 3
         tab_height: 30
         pos_hint: {"center_x": .5, "center_y": .5}
         canvas.before:
@@ -17,33 +17,143 @@
             Line:
                 width: 2.
                 rectangle: self.x, self.y, self.width, self.height 
-
-    #Semana
-        TabbedPanelItem:
-            background_color: 1,0,0,0
-            text: "Semana"
-            width: 10
-            id:semana
-            color: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
-            GridLayout:
-                id: showNotes
-                cols: 2
-                padding: 15
     
     #Mes
         TabbedPanelItem:
             background_color: 1,0,0,0
             text: "Mes"
-            width: 10
             id:mes
             color: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
             GridLayout:
                 id: showNotes
-                cols: 2
+                cols: 1
                 padding: 15
 
+    #Todos
+        TabbedPanelItem:
+            background_color: 1,0,0,0
+            text: "Lista"
+            id:todos
+            color: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+            Scrolling:
+                GridLayout:
+                    id: todosgrid
+                    cols: 1
+                    padding: 15
+                    spacing: 0,5
+                    size_hint_y: None
+                    height: self.minimum_height
 
-                
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 30
+                        Image:
+                            source: "images\\menu\\weight.png"
+
+                        Image:
+                            source: "images\\menu\\schedule.png"
+                        
+        #############################################
+                    Widget:
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+        #############################################
+
+    #añadir
+        TabbedPanelItem:
+            background_color: 1,0,0,0
+            text: "Añadir"
+            id:añadir
+            color: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+
+            GridLayout:
+                cols:1
+                size_hint_y: 1
+                spacing: self.height*.15
+                # padding: 5
+                BoxLayout:
+                    pos_hint: {'center_x':.5, 'top': 1}
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    
+
+                    ScrollView:
+                        pos_hint: {'center_x':.5, 'top': 1}
+                        # padding: 5
+                        size_hint: 1, None
+                        height: root.height/2.5
+                        do_scroll_x: False
+                        scroll_type: ['content']
+                        bar_color: [0,0,0,0]
+                        bar_inactive_color: [0,0,0,0]
+                        BoxLayout:
+                            id: box
+                            size_hint_x: 1
+                            size_hint_y: None
+                            height: self.minimum_height*3.5
+                            orientation: 'vertical'
+                            padding: 10
+                            spacing: 10
+
+                    ScrollView:
+                        pos_hint: {'center_x':.5, 'top': 1}
+                        size_hint: 1, None
+                        height: root.height/2.5
+                        do_scroll_x: False
+                        scroll_type: ['content']
+                        bar_color: [0,0,0,0]
+                        bar_inactive_color: [0,0,0,0]
+                        BoxLayout:
+                            id: diez
+                            size_hint_x: 1
+                            size_hint_y: None
+                            height: self.minimum_height*3.5
+                            orientation: 'vertical'
+                            padding: 10
+                            spacing: 10
+                            
+                    ScrollView:
+                        pos_hint: {'center_x':.5, 'top': 1}
+                        size_hint: 1, None
+                        height: root.height/2.5
+                        do_scroll_x: False
+                        scroll_type: ['content']
+                        bar_color: [0,0,0,0]
+                        bar_inactive_color: [0,0,0,0]
+                        BoxLayout:
+                            id: uni
+                            size_hint_x: 1
+                            size_hint_y: None
+                            height: self.minimum_height*3.5
+                            orientation: 'vertical'
+                            padding: 10
+                            spacing: 10
+                Button:
+                    size_hint_y: None
+                    size_hint_x: .5
+                    height: 20
+                    background_color:[1,1,1,0]
+                    backgSave:[1,1,1,.2]
+                    text:"Guardar"
+                    on_press: root.goodAnim(self)
+                    on_press: root.saveWeight()
+                    canvas.before:
+                        Color:
+                            rgba: self.backgSave
+                        RoundedRectangle:
+                            size:self.size[0]-50, self.size[1]+10
+                            pos:self.pos[0]+25, self.pos[1]-5
+                            radius: [18]
+
+
     ImageButton:
         id: homeButton
         size_hint_y: None
@@ -51,3 +161,16 @@
         pos_hint: {"center_x": .5, "y": 0}
         size_hint: (.17, .11)
         on_press: root.pressedBack(self)
+
+
+<CarouselConfig>:
+    background_color:[0, 0, 0, 0]
+    allow_no_selection: False
+        
+    canvas.after:
+        Color:
+            rgba: (1,1,1,1) if self.state=="down" else (1,1,1,0)
+
+        Line:
+            width: 1.
+            rectangle: self.x, self.y, self.width, self.height 

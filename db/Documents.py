@@ -16,7 +16,6 @@ class Notes(Document):
     posX = FloatField(required=False, default=20)
     posY = FloatField(required=False, default=20)
 
-
 class Counters(Document):
     _id = StringField(required=True, max_length=100)
     cont = IntField(required=True, default=0)
@@ -59,7 +58,6 @@ class Gifs(Document):
 
 
 class Gym(Document):
-    _id = ObjectIdField(required=True, max_length=100)
     year = IntField(required=True)
     month = IntField(required=True)
     day = IntField(required=True)
