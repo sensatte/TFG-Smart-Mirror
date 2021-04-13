@@ -69,10 +69,17 @@ class Gym(Document):
 
 class Internacional(Document):
     dia = StringField()
+    mes = StringField()
     info = StringField()
     color = ListField()
     _id = StringField()
 
+class Quote(Document):
+    _id = StringField(required=True, max_length=100)
+    state = BooleanField(required=True)
+    text = StringField(required=True)
+    color = ListField(required=True)    
+    font = StringField(required=True)
 
 class Draggable(Document):
     draggableName = StringField(required=True, max_length=500)

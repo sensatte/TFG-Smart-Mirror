@@ -15,6 +15,7 @@ from kivy.uix.screenmanager import FadeTransition, RiseInTransition, Screen
 #import kv
 from kivy.lang import Builder
 Builder.load_file("kv/homeScreen.kv")
+import db.dbWrapper as dbWrapper
 
 
 class HomeScreen(Screen):
@@ -24,14 +25,14 @@ class HomeScreen(Screen):
 
         widgets = []
 
-        spotifyWidget = SpotifyWidget2()
-        widgets.append(spotifyWidget)
+        # spotifyWidget = SpotifyWidget2()
+        # widgets.append(spotifyWidget)
 
         # volumeWidget=VolumeWid()
         # widgets.append(volumeWidget)
 
-        gifs = GifsWidget()
-        widgets.append(gifs)
+        # gifs = GifsWidget()
+        # widgets.append(gifs)
 
         infoDay = InfoDayWidget()
         widgets.append(infoDay)
@@ -42,13 +43,14 @@ class HomeScreen(Screen):
         twitter = TwitterWidget()
         widgets.append(twitter)
 
-        notes = NotesWidget()
-        widgets.append(notes)
+        # notes = NotesWidget()
+        # widgets.append(notes)
 
         for i in widgets:
             self.add_widget(i)
 
     def refreshPage(self):
+        state = dbWrapper.getQuote().state
 
         for c in self.children:
             if isinstance(c, GifsWidget):
@@ -70,6 +72,14 @@ class HomeScreen(Screen):
                 self.remove_widget(c)
                 twitter = TwitterWidget()
                 self.add_widget(twitter)
+
+            elif isinstance(c, QuotesWidget):
+                self.remove_widget(c)
+
+            # elif state == True:
+            #     quote = QuotesWidget()
+            #     self.add_widget(quote)
+
 
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)

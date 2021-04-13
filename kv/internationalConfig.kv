@@ -122,7 +122,24 @@
                                 size:self.size
                                 pos:self.pos
                                 radius: [15]
+        #############################################
+                Widget:
+                    size_hint_y: None
+                    height: 6
+                    canvas:
+                        Color:
+                            rgba: 1., 1., 1., .6
+                        Rectangle:
+                            pos: root.width/20, self.center_y
+                            size: root.width-root.width/10, 2
+        #############################################
+                GridLayout:
+                    id:todos
+                    cols:1
+                    size_hint_y: None
+                    height: self.minimum_height
 
+             
     ImageButton:
         id: homeButton
         size_hint_y: None
@@ -138,3 +155,4 @@
     bar_color: [1,1,1,.5]
     bar_inactive_color: [1,1,1,.2]
     scroll_type: ['content']
+

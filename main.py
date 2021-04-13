@@ -4,6 +4,7 @@ from kivy.lang import Builder
 from screens.InfoDayConfig import InfoDayConfig
 from screens.InternationalConfig import InternationalConfig
 from screens.SpotifyConfig import SpotifyConfig
+from screens.QuotesConfig import QuotesConfig
 from screens.GymConfig import GymConfig
 from screens.HomeScreen import HomeScreen
 from screens.DrawingScreen import DrawingScreen
@@ -16,8 +17,8 @@ from kivy.uix.vkeyboard import VKeyboard
 from kivy.config import Config
 kivy.require('2.0.0')  # replace with your current kivy version !
 
-# Window.size = (540, 700)
-Window.size = (540, 960)
+Window.size = (540, 700)
+# Window.size = (540, 960)
 Window.minimum_width, Window.minimum_height = Window.size
 
 
@@ -44,13 +45,13 @@ class SmartMirrorApp(App):
         infoDay.add_widget(InfoDayConfig())
         scMenu.add_widget(infoDay)
 
-        notes = Screen(name="notes")
-        notes.add_widget(NotesConfig())
-        scMenu.add_widget(notes)
+        # notes = Screen(name="notes")
+        # notes.add_widget(NotesConfig())
+        # scMenu.add_widget(notes)
 
-        spotify = Screen(name="spotify")
-        spotify.add_widget(SpotifyConfig())
-        scMenu.add_widget(spotify)
+        # spotify = Screen(name="spotify")
+        # spotify.add_widget(SpotifyConfig())
+        # scMenu.add_widget(spotify)
 
         gym = Screen(name="gym")
         gym.add_widget(GymConfig())
@@ -64,9 +65,13 @@ class SmartMirrorApp(App):
         drawing.add_widget(DrawingScreen())
         scMenu.add_widget(drawing)
 
-        gifs = Screen(name="gifs")
-        gifs.add_widget(GifsConfig())
-        scMenu.add_widget(gifs)
+        # gifs = Screen(name="gifs")
+        # gifs.add_widget(GifsConfig())
+        # scMenu.add_widget(gifs)
+
+        quotes = Screen(name="quotes")
+        quotes.add_widget(QuotesConfig())
+        scMenu.add_widget(quotes)
 
         scMenu.current = "home"
 

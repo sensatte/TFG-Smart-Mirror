@@ -121,8 +121,8 @@ def saveWeight(weight):
 
 ##################################
 
-def saveInternacional(dia, info):
-    dayToSave = Internacional(dia=dia, info=info)
+def saveInternacional(dia, mes, info):
+    dayToSave = Internacional(dia=dia, info=info, mes=mes)
     dayToSave.save()
 
 def getInternacionalByDay(dia):
@@ -131,10 +131,22 @@ def getInternacionalByDay(dia):
 def getInternacionalByID():
     return Internacional.objects(_id= 'inter')[0]
 
+def getAllInterByMonth(month):
+    return Internacional.objects(mes=month)
+    
 def saveInternationalConfig(id, color):    
     noteToSave = Internacional(_id=id, color = color)
     noteToSave.save()
     print("Los festivos se han actualizado")
+
+##################################
+
+def saveQuote(state, text, font, color):
+    dayToSave = Quote(_id='quote',state=state, text=text, font=font, color=color)
+    dayToSave.save()
+
+def getQuote():
+    return Quote.objects[0]
 
 # print(getWeightByMonth(2))
 # saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])

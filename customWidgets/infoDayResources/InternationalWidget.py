@@ -27,6 +27,7 @@ class InternationalWidget(Image):
     
     def __init__(self, **kwargs):
         super(InternationalWidget, self).__init__(**kwargs)  
+        # self.almacenar_bd()
         self.chosenColor = dbWrapper.getInternacionalByID().color
         self.size_hint = (1,.2)
         hoy = dbWrapper.getInternacionalByDay(datetime.date.today().strftime('%d/%m'))
@@ -37,6 +38,7 @@ class InternationalWidget(Image):
 
 
 
+# {"_id":"inter","color":[1,1,1,0]}
 
 
 ################################
@@ -62,6 +64,7 @@ class InternationalWidget(Image):
                     info = v.find("h3").text
 
                 lista.append(str(dia)+'/'+(str(mes+1) if mes >=10 else '0'+str(mes+1)))
+                lista.append(str(mes+1) if mes >=10 else '0'+str(mes+1))
                 lista.append(info)
                 if lista not in internacionales:
                     internacionales.append(lista)
@@ -71,7 +74,7 @@ class InternationalWidget(Image):
     def almacenar_bd(self): 
         internacionales = self.readPage()
         for inter in internacionales:
-            dbWrapper.saveInternacional(inter[0], inter[1])
+            dbWrapper.saveInternacional(inter[0], inter[1], inter[2])
 
 class LabelAjustado(Label):
     def __init__(self, text, colorb, max, **kwargs):
