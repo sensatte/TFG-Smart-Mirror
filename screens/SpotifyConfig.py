@@ -18,11 +18,12 @@ from functools import partial
 #import kv
 from kivy.lang import Builder
 Builder.load_file('kv/spotifyConfig.kv')
-
+import db.dbWrapper as dbWrapper
 
 class SpotifyConfig(Screen):
 
     wrapper = ObjectProperty(SpotifyWrapper2())
+    activeInter = Properties.BooleanProperty(True)
 
     def __init__(self, **kwargs):
         super(SpotifyConfig, self).__init__(**kwargs)
@@ -69,6 +70,11 @@ class SpotifyConfig(Screen):
         f.write(option)
         f.close()
 
+    def saveConfig(self):
+        #guardar las configs
+        print(self.activeInter)
+        dbWrapper.saveSpotify(self.activeInter)
+
     def pressedBack(self, widget):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)
         anim += Animation(pos_hint={"center_x": .5, "y": 0}, duration=.1)
@@ -76,5 +82,6 @@ class SpotifyConfig(Screen):
         anim.start(widget)
 
     def goToMenuScreen(self, widget, selected):
+        self.saveConfig()
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "menu"

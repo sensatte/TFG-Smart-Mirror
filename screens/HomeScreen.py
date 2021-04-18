@@ -37,15 +37,6 @@ class HomeScreen(Screen):
         infoDay = InfoDayWidget()
         widgets.append(infoDay)
 
-        quotes = QuotesWidget()
-        widgets.append(quotes)
-
-        twitter = TwitterWidget()
-        widgets.append(twitter)
-
-        # notes = NotesWidget()
-        # widgets.append(notes)
-
         for i in widgets:
             self.add_widget(i)
 
@@ -53,6 +44,7 @@ class HomeScreen(Screen):
         state = dbWrapper.getQuote().state
         stateTwitter = dbWrapper.getTwitter().state
         stateSpotify = dbWrapper.getSpotify().state
+        stateNotes = dbWrapper.getNoteState().state
 
         for c in self.children:
             if isinstance(c, GifsWidget):
@@ -62,8 +54,6 @@ class HomeScreen(Screen):
 
             elif isinstance(c, NotesWidget):
                 self.remove_widget(c)
-                notes = NotesWidget()
-                self.add_widget(notes)
 
             elif isinstance(c, InfoDayWidget):
                 self.remove_widget(c)
@@ -90,6 +80,10 @@ class HomeScreen(Screen):
         if stateSpotify == True:
             spotify = SpotifyWidget2()
             self.add_widget(spotify)
+
+        if stateNotes == True:
+            notes = NotesWidget()
+            self.add_widget(notes)
 
 
     def goToConfigScreen(self):

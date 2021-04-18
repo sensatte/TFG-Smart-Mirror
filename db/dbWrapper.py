@@ -159,8 +159,21 @@ def getTwitter():
 
 ##################################
 
+def saveSpotify(state):
+    dayToSave = Actives(_id='spotify',state=state)
+    dayToSave.save()
+
 def getSpotify():
     return Actives.objects.get(_id='spotify')
+
+##################################
+
+def saveNoteState(state):
+    dayToSave = Actives(_id='notes',state=state)
+    dayToSave.save()
+
+def getNoteState():
+    return Actives.objects.get(_id='notes')
 
 # print(getWeightByMonth(2))
 # saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])

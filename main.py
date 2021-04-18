@@ -46,9 +46,9 @@ class SmartMirrorApp(App):
         infoDay.add_widget(InfoDayConfig())
         scMenu.add_widget(infoDay)
 
-        # notes = Screen(name="notes")
-        # notes.add_widget(NotesConfig())
-        # scMenu.add_widget(notes)
+        notes = Screen(name="notes")
+        notes.add_widget(NotesConfig())
+        scMenu.add_widget(notes)
 
         # spotify = Screen(name="spotify")
         # spotify.add_widget(SpotifyConfig())
@@ -78,7 +78,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "twitter"
+        scMenu.current = "home"
 
         self.set_keyboard()
 

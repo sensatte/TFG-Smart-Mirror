@@ -23,6 +23,7 @@ class NotesConfig(Screen):
     #TODO solo poder coger 9
     #TODO que el tamñao de la nota sea para que no esté encojido
 
+    activeInter = Properties.BooleanProperty(True)
     showNotes=Properties.ObjectProperty(None)
     backg=Properties.ListProperty([224, 187, 228, 1])
     ind=0
@@ -35,6 +36,7 @@ class NotesConfig(Screen):
         self.showNotesFunc(noteList)
 
     def goToMenuScreen(self, widget, selected):
+        self.saveConfig()
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "menu"
 
@@ -53,6 +55,10 @@ class NotesConfig(Screen):
         self.showNotesFunc([nota])
 
 ##################################
+    def saveConfig(self):
+        #guardar las configs
+        print(self.activeInter)
+        dbWrapper.saveNoteState(self.activeInter)
 
     def pressedBack(self, widget):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)
