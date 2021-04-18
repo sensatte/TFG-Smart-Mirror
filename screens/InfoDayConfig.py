@@ -21,10 +21,7 @@ from kivy.lang import Builder
 Builder.load_file('kv\\infoConfig.kv')
 
 class InfoDayConfig(Screen):
-    #TODO hacer el kv que se pueda usar pa mas gente
-    #TODO color picker
     #TODO buscador ue te traduzca de ciudad a id
-    #TODO que las anim las coja de otro archivo
     #TODO al abrirse se pone la config por defecto pero no funciona cambiar el state para que mire la db
     colorHora=Properties.ListProperty([1,1,1,1])
     formatoHora=Properties.ListProperty(["24h", False])
@@ -38,6 +35,7 @@ class InfoDayConfig(Screen):
     formatoClima=Properties.NumericProperty(2)
 
     c_id=Properties.StringProperty('6361046')
+    activeInter = Properties.BooleanProperty(True)
 
     def __init__(self, **kwargs):
         super(InfoDayConfig, self).__init__(**kwargs)
@@ -53,6 +51,7 @@ class InfoDayConfig(Screen):
         dbWrapper.saveFecha("fecha", self.formatoFecha, self.colorFecha)
         dbWrapper.saveTemp("temp", self.formatoTemp, self.colorTemp, self.c_id)
         dbWrapper.saveClima("weather", self.formatoClima, self.c_id)
+        dbWrapper.saveInfoState(self.activeInter)
         
 
     def pressedBack(self, widget):

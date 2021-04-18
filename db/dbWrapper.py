@@ -175,6 +175,24 @@ def saveNoteState(state):
 def getNoteState():
     return Actives.objects.get(_id='notes')
 
+##################################
+
+def saveInfoState(state):
+    dayToSave = Actives(_id='info',state=state)
+    dayToSave.save()
+
+def getInfoState():
+    return Actives.objects.get(_id='info')
+
+##################################
+
+def saveGifState(state):
+    dayToSave = Actives(_id='gif',state=state)
+    dayToSave.save()
+
+def getGifState():
+    return Actives.objects.get(_id='gif')
+
 # print(getWeightByMonth(2))
 # saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])
 # saveNote(False, "vaya dia de meirda", datetime.date(2021, 1, 21), [125, 150, 176,1])

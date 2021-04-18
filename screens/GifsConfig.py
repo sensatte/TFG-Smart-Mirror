@@ -37,6 +37,8 @@ class GifsConfig(Screen):
 
     waitUntilFinishesTypingEvent = Properties.ObjectProperty()
 
+    activeInter = Properties.BooleanProperty(True)
+
     def __init__(self, **kwargs):
         super(GifsConfig, self).__init__(**kwargs)
 
@@ -57,6 +59,11 @@ class GifsConfig(Screen):
             } for gif in gifsList
         ]
 
+    def saveConfig(self):
+        #guardar las configs
+        print(self.activeInter)
+        dbWrapper.saveGifState(self.activeInter)
+
     def pressedBack(self, widget):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)
         anim += Animation(pos_hint={"center_x": .5, "y": 0}, duration=.1)
@@ -64,6 +71,7 @@ class GifsConfig(Screen):
         anim.start(widget)
 
     def goToMenuScreen(self, widget, selected):
+        self.saveConfig()
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "menu"
 

@@ -22,43 +22,27 @@ class HomeScreen(Screen):
 
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
-
-        widgets = []
-
-        # spotifyWidget = SpotifyWidget2()
-        # widgets.append(spotifyWidget)
-
         # volumeWidget=VolumeWid()
         # widgets.append(volumeWidget)
 
-        # gifs = GifsWidget()
-        # widgets.append(gifs)
-
-        infoDay = InfoDayWidget()
-        widgets.append(infoDay)
-
-        for i in widgets:
-            self.add_widget(i)
 
     def refreshPage(self):
         state = dbWrapper.getQuote().state
         stateTwitter = dbWrapper.getTwitter().state
         stateSpotify = dbWrapper.getSpotify().state
         stateNotes = dbWrapper.getNoteState().state
+        stateInfo = dbWrapper.getInfoState().state
+        stateGifs = dbWrapper.getGifState().state
 
         for c in self.children:
             if isinstance(c, GifsWidget):
                 self.remove_widget(c)
-                gifs = GifsWidget()
-                self.add_widget(gifs)
 
             elif isinstance(c, NotesWidget):
                 self.remove_widget(c)
 
             elif isinstance(c, InfoDayWidget):
                 self.remove_widget(c)
-                info = InfoDayWidget()
-                self.add_widget(info)
 
             elif isinstance(c, TwitterWidget):
                 self.remove_widget(c)
@@ -84,6 +68,14 @@ class HomeScreen(Screen):
         if stateNotes == True:
             notes = NotesWidget()
             self.add_widget(notes)
+
+        if stateInfo == True:
+            info = InfoDayWidget()
+            self.add_widget(info)
+
+        if stateGifs == True:
+            gifs = GifsWidget()
+            self.add_widget(gifs)
 
 
     def goToConfigScreen(self):

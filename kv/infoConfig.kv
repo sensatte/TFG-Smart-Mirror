@@ -48,7 +48,43 @@
                             text: "Hora"
                             font_size:"22"
 
-        #############################################
+            #############################################
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 20
+                        Label:
+                            text: "Desactivar:"  if main.ids.switch.active else 'Activar:'
+                            # font_size:"22"
+                        Switch:
+                            id:switch
+                            active: True
+                            on_touch_down: root.activeInter = not self.active
+                            canvas.after:
+                                Color:
+                                    rgb: 1,1,1
+                                Rectangle:
+                                    source: 'images\\icon.png'        # make or download your background jpg
+                                    size: sp(86), sp(32)
+                                    pos: int(self.center_x - sp(41)), int(self.center_y - sp(16))
+                                Rectangle:
+                                    source: 'images\\icon_slider.png' # make or download your slider jpg
+                                    size: sp(43), sp(32)
+                                    pos: int(self.center_x - sp(41) + self.active_norm_pos * sp(41)), int(self.center_y - sp(16))
+
+            #############################################
+                    Widget:
+                        padding:[10,0,0,0]
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+            #############################################
+
 
                     Label:
                         height: 20

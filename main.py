@@ -70,15 +70,15 @@ class SmartMirrorApp(App):
         twitter.add_widget(TwitterConfig())
         scMenu.add_widget(twitter)
 
-        # gifs = Screen(name="gifs")
-        # gifs.add_widget(GifsConfig())
-        # scMenu.add_widget(gifs)
+        gifs = Screen(name="gifs")
+        gifs.add_widget(GifsConfig())
+        scMenu.add_widget(gifs)
 
         quotes = Screen(name="quotes")
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "home"
+        scMenu.current = "gifs"
 
         self.set_keyboard()
 
