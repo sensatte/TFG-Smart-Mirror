@@ -141,12 +141,26 @@ def saveInternationalConfig(id, color):
 
 ##################################
 
-def saveQuote(state, text, font, color):
-    dayToSave = Quote(_id='quote',state=state, text=text, font=font, color=color)
+def saveQuote(state, text, font, color, halign):
+    dayToSave = Quote(_id='quote',state=state, text=text, font=font, color=color, halign=halign)
     dayToSave.save()
 
 def getQuote():
     return Quote.objects[0]
+
+##################################
+
+def saveTwitter(state, color, halign):
+    dayToSave = Actives(_id='twitter',state=state, color=color, halign=halign)
+    dayToSave.save()
+
+def getTwitter():
+    return Actives.objects.get(_id='twitter')
+
+##################################
+
+def getSpotify():
+    return Actives.objects.get(_id='spotify')
 
 # print(getWeightByMonth(2))
 # saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])

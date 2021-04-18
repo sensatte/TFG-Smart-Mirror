@@ -82,9 +82,13 @@
                         size_hint_y: None
                         text: "Frase:"
 
-                    Button:
+                    ImageButton:
                         text: 'shuffle'
                         on_press: root.changeQuote()
+                        id: editar
+                        size_hint_y: None
+                        source: "images\icons\shuffle.png"
+                        size_hint: (.8, .8)
 
                 BoxLayout:
                     size_hint_y: None
@@ -99,6 +103,7 @@
                         text_size: self.width, None
                         size: self.texture_size
                         halign: 'right'
+                        valign: 'center'
                         font_size: 15
                         size_hint_y: None     
                         text_size: self.width, None
@@ -331,7 +336,41 @@
                             pos: root.width/20, self.center_y
                             size: root.width-root.width/10, 2
         #############################################
+                BoxLayout:
+                    size_hint_y: None
+                    orientation: 'horizontal'
+                    height: 40
 
+                    ImageButton:
+                        size_hint_y: None
+                        source: "images/icons/left-align.png"
+                        size_hint: (.8, .8)
+                        on_press: root.changeHalign('left')
+
+                    ImageButton:
+                        size_hint_y: None
+                        source: "images/icons/center-align.png"
+                        size_hint: (.8, .8)
+                        on_press: root.changeHalign('center')
+
+                    ImageButton:
+                        size_hint_y: None
+                        source: "images/icons/right-align.png"
+                        size_hint: (.8, .8)
+                        on_press: root.changeHalign('right')
+
+        #############################################
+                Widget:
+                    padding:[10,0,0,0]
+                    size_hint_y: None
+                    height: 6
+                    canvas:
+                        Color:
+                            rgba: 1., 1., 1., .6
+                        Rectangle:
+                            pos: root.width/20, self.center_y
+                            size: root.width-root.width/10, 2
+        #############################################
 
                 Label:
                     height: 30

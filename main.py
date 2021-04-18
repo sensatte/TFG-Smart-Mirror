@@ -7,6 +7,7 @@ from screens.SpotifyConfig import SpotifyConfig
 from screens.QuotesConfig import QuotesConfig
 from screens.GymConfig import GymConfig
 from screens.HomeScreen import HomeScreen
+from screens.TwitterConfig import TwitterConfig
 from screens.DrawingScreen import DrawingScreen
 from screens.NotesConfig import NotesConfig
 from kivy.uix.screenmanager import FadeTransition, RiseInTransition, ScreenManager, Screen
@@ -65,6 +66,10 @@ class SmartMirrorApp(App):
         drawing.add_widget(DrawingScreen())
         scMenu.add_widget(drawing)
 
+        twitter = Screen(name="twitter")
+        twitter.add_widget(TwitterConfig())
+        scMenu.add_widget(twitter)
+
         # gifs = Screen(name="gifs")
         # gifs.add_widget(GifsConfig())
         # scMenu.add_widget(gifs)
@@ -73,7 +78,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "home"
+        scMenu.current = "twitter"
 
         self.set_keyboard()
 

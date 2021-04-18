@@ -4,18 +4,28 @@ import json
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.clock import Clock
+import kivy.properties as Properties
 
 from kivy.lang import Builder
 Builder.load_file('kv\\twitter.kv')
+import db.dbWrapper as dbWrapper
 
 class TwitterWidget(GridLayout):
-    
+
+    colorInter = Properties.ListProperty([1, 1, 1, 1])
+    halign = Properties.StringProperty('right')
+
     def __init__(self, **kwargs):
         #TODO que puedas elegir si quieres RT, aunque entonces sería mejor aumentar los tweets que llegan
         super(TwitterWidget, self).__init__(**kwargs)
+        fields = dbWrapper.getTwitter()
+        self.colorInter = fields.color
+        self.halign = fields.halign
         self.chargeTweets("nada")
+
         Clock.schedule_interval(self.chargeTweets, 60)
 
+        
 
     # Aquí introducimos nuestras claves de Twitter
     def oauth(self) :
@@ -54,18 +64,20 @@ class TwitterWidget(GridLayout):
                 for k in range(0,len(js)):
                     tweet = js[k]['text']
                     author = js[k]['user']['name']
-                    self.add_widget(LabelAjustado(text='[b]'+author+'[/b]' + ": " + tweet, colorb=k, max=len(js)-1))
+                    self.add_widget(LabelAjustado(text='[b]'+author+'[/b]' + ": " + tweet, colorb=k, max=len(js)-1, halign=self.halign, color=self.colorInter))
             else:
-                self.add_widget(LabelAjustado(text="No hay tweets que mostrar", colorb=0, max=0))
+                self.add_widget(LabelAjustado(text="No hay tweets que mostrar", colorb=0, max=0, halign=self.halign, color=self.colorInter))
         except:
-            self.add_widget(LabelAjustado(text="Se ha excedido el tiempo, prueba más tarde", colorb=0, max=0))
+            self.add_widget(LabelAjustado(text="Se ha excedido el tiempo, prueba más tarde", colorb=0, max=0, halign=self.halign, color=self.colorInter))
 
 class LabelAjustado(Label):
-    def __init__(self, text, colorb, max, **kwargs):
+    def __init__(self, text, colorb, max, halign, color, **kwargs):
         super(LabelAjustado, self).__init__(**kwargs)
         self.text=text
         self.colorb = colorb
         self.max = max
+        self.halign = halign
+        self.color = color
 
 
 

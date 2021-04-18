@@ -51,6 +51,8 @@ class HomeScreen(Screen):
 
     def refreshPage(self):
         state = dbWrapper.getQuote().state
+        stateTwitter = dbWrapper.getTwitter().state
+        stateSpotify = dbWrapper.getSpotify().state
 
         for c in self.children:
             if isinstance(c, GifsWidget):
@@ -70,15 +72,24 @@ class HomeScreen(Screen):
 
             elif isinstance(c, TwitterWidget):
                 self.remove_widget(c)
-                twitter = TwitterWidget()
-                self.add_widget(twitter)
 
             elif isinstance(c, QuotesWidget):
                 self.remove_widget(c)
 
-            # elif state == True:
-            #     quote = QuotesWidget()
-            #     self.add_widget(quote)
+            elif isinstance(c, SpotifyWidget2):
+                self.remove_widget(c)
+
+        if state == True:
+            quote = QuotesWidget()
+            self.add_widget(quote)
+
+        if stateTwitter == True:
+            twitter = TwitterWidget()
+            self.add_widget(twitter)
+
+        if stateSpotify == True:
+            spotify = SpotifyWidget2()
+            self.add_widget(spotify)
 
 
     def goToConfigScreen(self):

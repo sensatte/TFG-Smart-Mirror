@@ -80,6 +80,13 @@ class Quote(Document):
     text = StringField(required=True)
     color = ListField(required=True)    
     font = StringField(required=True)
+    halign = StringField(required=True)
+
+class Actives(Document):
+    _id = StringField(required=True, max_length=100)
+    state = BooleanField()
+    color = ListField()    
+    halign = StringField()
 
 class Draggable(Document):
     draggableName = StringField(required=True, max_length=500)

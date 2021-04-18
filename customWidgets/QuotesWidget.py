@@ -26,6 +26,9 @@ class QuotesWidget(AnchorLayout):
 
     def changeQuote(self, quoteList):
         self.ids["quoteid"].text=quoteList.text
+        self.ids["quoteid"].font_name = 'fonts\\' +  quoteList.font
+        self.ids["quoteid"].halign = quoteList.halign
+        self.ids["quoteid"].color = quoteList.color
 
 
 # {'text': 'Genius is one percent inspiration and ninety-nine percent perspiration.', 'author': 'Thomas Edison'}
