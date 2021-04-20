@@ -4,6 +4,8 @@ from kivy.lang import Builder
 from screens.InfoDayConfig import InfoDayConfig
 from screens.InternationalConfig import InternationalConfig
 from screens.SpotifyConfig import SpotifyConfig
+from screens.SaveScreen import SaveScreen
+from screens.SettingsScreen import SettingsScreen
 from screens.QuotesConfig import QuotesConfig
 from screens.GymConfig import GymConfig
 from screens.HomeScreen import HomeScreen
@@ -42,9 +44,17 @@ class SmartMirrorApp(App):
         menu = MenuScreen(name="menu")
         scMenu.add_widget(menu)
 
+        settings = Screen(name="settings")
+        settings.add_widget(SettingsScreen())
+        scMenu.add_widget(settings)
+
         infoDay = Screen(name="clock")
         infoDay.add_widget(InfoDayConfig())
         scMenu.add_widget(infoDay)
+
+        save = Screen(name="save")
+        save.add_widget(SaveScreen())
+        scMenu.add_widget(save)
 
         notes = Screen(name="notes")
         notes.add_widget(NotesConfig())
@@ -78,7 +88,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "gifs"
+        scMenu.current = "save"
 
         self.set_keyboard()
 
