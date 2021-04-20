@@ -1,25 +1,32 @@
 #:kivy 1.7.0
 
 <DrawingScreen>:
-    Frame:
-        id:rueda
-        colorPincel: [.4,1,1]
-        size_hint: .2,.2
-        pos_hint: {"center_x": .5, "center_y": 0}
-        opacity:0    
 
-    GridLayout:
-        cols:1
-        size: root.size
-        padding: 20
-        spacing: 50
-
-    MyPaintWidget:
+    CanvasWidget:
         id: painter
-        # size: 100000, 100000
-        # size_hint: 100000, 100000
         size_hint: 1,.9
 
+    ColorWheel:
+        id: rueda
+        pos_hint:{'center_y': 0, 'center_x': 0.5}
+        size_hint:(0.2, 0.2)
+        opacity:0
+
+        on_color: root.colorPincel = self.color
+
+    Slider:
+        id: grosor
+        pos_hint:{'center_y': 0, 'center_x': 0.5}
+        size_hint:(0.2, 0.2)
+        opacity:0
+
+        value: 10
+        min: 5
+        max: 20
+        step: 1
+        orientation: 'vertical'
+        
+        on_value: root.grosorLinea = self.value
 
     BoxLayout:
         id: caja
@@ -28,10 +35,7 @@
 
         ImageButton:
             id: homeButton
-            # size_hint_y: None
             source: "images/menu/previous.png"
-            # pos_hint: {"center_x": .5, "y": 0}
-            # size_hint: (.17, .11)
             on_press: root.pressedBack(self)
 
         Button:
@@ -42,75 +46,16 @@
             id:colorcito
             color:[.5,1,1]
             text:'Color'
-            pos_hint: {"center_x": .8, "center_y": .8}
-            on_press: root.showColorWheel()
+            on_press: root.ruedaOut = not root.ruedaOut
             background_color:[0, 0, 0, 0]
-            on_release: painter.color = rueda.colorPincel
             canvas.after:
                 Color:
-                    rgba: rueda.colorPincel
+                    rgba: rueda.color
                 Ellipse:
                     pos: self.pos
-                    size: self.size 
-
-        FloatLayout:
-            Spinner:
-                size_hint: None, None
-                size: 100, 44
-                pos_hint: {'center': (.5, .5)}
-                text: 'Home'
-                values: 'Home', 'Work', 'Other', 'Custom'
-                on_text:
-                    print("The spinner {} has text {}".format(self, self.text))
-        CustomDropDown:
-
-
-<CustomDropDown>:
-    Button:
-        id: btn
-        text: 'Press'
-        on_release: dropdown.open(self)
-        size_hint_y: None
-        height: '48dp'
-
-    DropDown:
-
-        id: dropdown
-        on_parent: self.dismiss()
-        on_select: btn.text = '{}'.format(args[1])
+                    size: self.size
 
         Button:
-            text: 'First Item'
-            size_hint_y: None
-            height: '48dp'
-            on_release: dropdown.select('First Item')
-
-        Label:
-            text: 'Second Item'
-            size_hint_y: None
-            height: '48dp'
-
-        Button:
-            text: 'Third Item'
-            size_hint_y: None
-            height: '48dp'
-            on_release: dropdown.select('Third Item')
-<Frame>:
-    CustomColorWheel:
-        id: colory
-        pos_hint: {"center_x": .5, "center_y": .5}
-        on_press: root.update()
-        on_press: root.colorPincel = self.color
-        on_release: print('on_release')
-        on__hsv: painter.color=root.update()
-        
-
-<MyPaintWidget>:
-    id: painter
-    Frame:
-        id:rueda
-        colorPincel: [1,0,0,1]
-        size_hint: .2,.2
-        pos_hint: {"center_x": .5, "center_y": 0}
-        opacity:0    
-    
+            id:grosorcito
+            text:'Width'
+            on_press: root.grosorOut = not root.grosorOut
