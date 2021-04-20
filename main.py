@@ -50,9 +50,9 @@ class SmartMirrorApp(App):
         notes.add_widget(NotesConfig())
         scMenu.add_widget(notes)
 
-        # spotify = Screen(name="spotify")
-        # spotify.add_widget(SpotifyConfig())
-        # scMenu.add_widget(spotify)
+        spotify = Screen(name="spotify")
+        spotify.add_widget(SpotifyConfig())
+        scMenu.add_widget(spotify)
 
         gym = Screen(name="gym")
         gym.add_widget(GymConfig())
@@ -62,9 +62,9 @@ class SmartMirrorApp(App):
         inter.add_widget(InternationalConfig())
         scMenu.add_widget(inter)
 
-        drawing = Screen(name="drawing")
-        drawing.add_widget(DrawingScreen())
-        scMenu.add_widget(drawing)
+        # drawing = Screen(name="drawing")
+        # drawing.add_widget(DrawingScreen())
+        # scMenu.add_widget(drawing)
 
         twitter = Screen(name="twitter")
         twitter.add_widget(TwitterConfig())
