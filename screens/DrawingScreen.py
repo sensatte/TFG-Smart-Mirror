@@ -1,5 +1,6 @@
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
+from mongoengine.base.fields import ObjectIdField
 from customWidgets.utils.BehaviorUtil import ImageButton
 from kivy.clock import Clock
 
@@ -16,6 +17,8 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.dropdown import DropDown
 import kivy.properties as Properties
 from datetime import datetime
+from pathlib import Path
+from db import dbWrapper
 
 #import kv
 from kivy.lang import Builder
@@ -101,7 +104,10 @@ class DrawingScreen(Screen):
 
         canvas.export_to_png(imageName)
 
-        # TODO ACABAR DE GUARDAR LA IMAGEN EN DB O ALGO
+        Path("./"+imageName).rename("./images/saveScreen/"+imageName)
+
+        # TODO QUE NO SE SETEE EL ID A "SAVE"
+        dbWrapper.saveSaveScreen(imageName)
 
 
 class CanvasWidget(Widget):
