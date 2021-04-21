@@ -72,9 +72,9 @@ class SmartMirrorApp(App):
         inter.add_widget(InternationalConfig())
         scMenu.add_widget(inter)
 
-        # drawing = Screen(name="drawing")
-        # drawing.add_widget(DrawingScreen())
-        # scMenu.add_widget(drawing)
+        drawing = Screen(name="drawing")
+        drawing.add_widget(DrawingScreen())
+        scMenu.add_widget(drawing)
 
         twitter = Screen(name="twitter")
         twitter.add_widget(TwitterConfig())
@@ -88,7 +88,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "settings"
+        scMenu.current = "drawing"
 
         self.set_keyboard()
 

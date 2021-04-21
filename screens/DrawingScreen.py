@@ -20,16 +20,24 @@ import kivy.properties as Properties
 from kivy.lang import Builder
 Builder.load_file('kv\\drawingScreen.kv')
 
+
 class DrawingScreen(Screen):
-    #TODO primera vez que pula sale negro
+    # TODO que lo que dibuejs puedas guardarlo para luego verlo en una galeria (la que muestre los salvapantallas?))
+    # TODO poner bonitos los botones grosorcito y colorcito
 
-    #TODO que lo que dibuejs puedas guardarlo para luego verlo en una galeria (la que muestre los salvapantallas?))
+    ruedaOut = Properties.BooleanProperty(False)
+    grosorOut = Properties.BooleanProperty(False)
+    colorPincel = Properties.ListProperty((.4, 1, 1))
+    grosorLinea = Properties.NumericProperty(10)
 
-    # colorPincel = Properties.ListProperty([1,0,0,1])
+    def on_colorPincel(self, instance, value):
+        self.ids.painter.colorLinea = value
+
+    def on_grosorLinea(self, instance, value):
+        self.ids.painter.grosorLinea = value
 
     def __init__(self, **kwargs):
         super(DrawingScreen, self).__init__(**kwargs)
-        # self.add_widget(Frame())
 
     def clearDrawing(self, obj):
         self.ids.painter.canvas.clear()
@@ -44,100 +52,65 @@ class DrawingScreen(Screen):
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "menu"
 
-    def showColorWheel(self):
-        if self.ids.rueda.center_y==0:
+    def on_ruedaOut(self, instance, value):
+        if value:
             anim = Animation(opacity=1, duration=.5)
-            anim &= Animation(pos_hint={'center_y': 0.5, 'center_x': 0.5}, duration=.5)
-            anim &= Animation(size_hint=(0.4,0.3), duration=.5)
+            anim &= Animation(
+                pos_hint={'center_y': 0.5, 'center_x': 0.5}, duration=.5)
+            anim &= Animation(size_hint=(0.4, 0.3), duration=.5)
             anim.start(self.ids.rueda)
-            self.ids.painter.disabled=True
+            self.ids.painter.disabled = True
+            self.ids.grosorcito.disabled = True
+
         else:
             anim = Animation(opacity=0, duration=.5)
-            anim &= Animation(pos_hint={'center_y': 0, 'center_x': 0.5}, duration=.5)
-            anim &= Animation(size_hint=(0.2,0.2), duration=.5)
+            anim &= Animation(
+                pos_hint={'center_y': 0, 'center_x': 0.5}, duration=.5)
+            anim &= Animation(size_hint=(0.2, 0.2), duration=.5)
             anim.start(self.ids.rueda)
-            
-            self.ids.painter.disabled=False
-            self.ids.painter.color = self.ids.rueda.colorPincel
+
+            self.ids.painter.disabled = False
+            self.ids.grosorcito.disabled = False
+
+    def on_grosorOut(self, instance, value):
+        if value:
+            anim = Animation(opacity=1, duration=.5)
+            anim &= Animation(
+                pos_hint={'center_y': 0.5, 'center_x': 0.5}, duration=.5)
+            anim &= Animation(size_hint=(0.4, 0.3), duration=.5)
+            anim.start(self.ids.grosor)
+
+            self.ids.painter.disabled = True
+            self.ids.colorcito.disabled = True
+
+        else:
+            anim = Animation(opacity=0, duration=.5)
+            anim &= Animation(
+                pos_hint={'center_y': 0, 'center_x': 0.5}, duration=.5)
+            anim &= Animation(size_hint=(0.2, 0.2), duration=.5)
+            anim.start(self.ids.grosor)
+
+            self.ids.painter.disabled = False
+            self.ids.colorcito.disabled = False
 
 
-class MyPaintWidget(Widget):
-    colora = Properties.ListProperty((.4,1,1))
+class CanvasWidget(Widget):
+    colorLinea = Properties.ListProperty((.4, 1, 1))
+    grosorLinea = Properties.NumericProperty(10)
+
     def __init__(self, **kwargs):
-        super(MyPaintWidget, self).__init__(**kwargs)
-        Clock.schedule_once(self.on_start)
-
-    def on_start(self, *args):
-        self.colora=DrawingScreen().ids.rueda.colorPincel
+        super(CanvasWidget, self).__init__(**kwargs)
 
     def on_touch_down(self, touch):
-        # color = (random(), 1, 1)
-        self.colora=DrawingScreen().ids.rueda.colorPincel
-        with self.canvas:
-            Color(*self.colora, mode='rgb')
-            d = 10.
-            Ellipse(pos=(touch.x - d / 2, touch.y - d / 2), size=(d, d))
-            touch.ud['line'] = Line(points=(touch.x, touch.y), size=(d, d), width=4)
+        if not self.disabled:
+            with self.canvas:
+                Color(*self.colorLinea, mode='rgb')
+                d = self.grosorLinea
+                w = self.grosorLinea*0.5
+                Ellipse(pos=(touch.x - d / 2, touch.y - d / 2), size=(d, d))
+                touch.ud['line'] = Line(
+                    points=(touch.x, touch.y), size=(d, d), width=w)
 
     def on_touch_move(self, touch):
-        touch.ud['line'].points += [touch.x, touch.y]
-
-    def showColorWheel(self):
-        if self.ids.rueda.center_y==0:
-            anim = Animation(opacity=1, duration=.5)
-            anim &= Animation(pos_hint={'center_y': 0.5, 'center_x': 0.5}, duration=.5)
-            anim &= Animation(size_hint=(0.4,0.3), duration=.5)
-            anim.start(self.ids.rueda)
-            self.ids.painter.disabled=True
-        else:
-            anim = Animation(opacity=0, duration=.5)
-            anim &= Animation(pos_hint={'center_y': 0, 'center_x': 0.5}, duration=.5)
-            anim &= Animation(size_hint=(0.2,0.2), duration=.5)
-            anim.start(self.ids.rueda)
-            
-            self.ids.painter.disabled=False
-            self.ids.painter.color = self.ids.rueda.colorPincel
-
-
-# class AutonomousColorWheel(ColorWheel):
-#     def __init__(self, **kwarg):
-#         super(AutonomousColorWheel, self).__init__(**kwarg)
-#         self.init_wheel(dt = 0) 
-
-#     def on__hsv(self, instance, value):
-#         super(AutonomousColorWheel, self).on__hsv(instance, value)
-#         print(instance.hsv)     #Or any method you want to trigger
-
-
-class CustomColorWheel(ColorWheel):
-    def __init__(self, **kwargs):
-        super(CustomColorWheel, self).__init__(**kwargs)
-        self.register_event_type('on_press')
-        self.register_event_type('on_release')
-
-    def on_touch_down(self, touch):
-        res = super(CustomColorWheel, self).on_touch_down(touch)
-        if res is None:
-            self.dispatch('on_press')
-        return res
-
-    def on_touch_up(self, touch):
-        super(CustomColorWheel, self).on_touch_up(touch)
-        if self.collide_point(*touch.pos) and touch.grab_current is self:
-            self.dispatch('on_release')
-            return True
-
-    def on_press(self):
-        pass
-
-    def on_release(self):
-        pass
-
-class Frame(FloatLayout):
-    def update(self):
-        color = self.ids['colory']
-        # DrawingScreen().ids.rueda.colorPincel=color
-        print(color.color)
-
-class CustomDropDown(FloatLayout):
-    pass
+        if not self.disabled:
+            touch.ud['line'].points += [touch.x, touch.y]
