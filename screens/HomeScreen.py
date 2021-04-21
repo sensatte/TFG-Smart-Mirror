@@ -10,7 +10,10 @@ from customWidgets.utils.BehaviorUtil import ImageButton
 from customWidgets.SpotifyWidget2 import SpotifyWidget2
 from customWidgets.GifsWidget import GifsWidget
 from utils.volume import VolumeWid
+
 from kivy.uix.screenmanager import FadeTransition, RiseInTransition, Screen
+from kivy.clock import Clock
+from kivy.app import App
 
 #import kv
 from kivy.lang import Builder
@@ -22,11 +25,17 @@ class HomeScreen(Screen):
 
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
+        
         # volumeWidget=VolumeWid()
         # widgets.append(volumeWidget)
 
+    def saveScreen(self, a):
+        Clock.unschedule(self.saveScreen)
+        App.get_running_app().root.transition = FadeTransition(duration=.3)
+        App.get_running_app().root.current = "save"
 
     def refreshPage(self):
+        Clock.schedule_once(self.saveScreen, 10)
         state = dbWrapper.getQuote().state
         stateTwitter = dbWrapper.getTwitter().state
         stateSpotify = dbWrapper.getSpotify().state

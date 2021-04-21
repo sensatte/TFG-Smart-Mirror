@@ -2,6 +2,7 @@
 
 <SettingsScreen>:
     size_hint:.4,.4
+    showNotes: showNotes
     id: main
     TabbedPanel:
         size_hint: 1,.75
@@ -169,7 +170,7 @@
 
                         Label:
                             text: "Salvapantallas"
-                            font_size:"15"
+                            font_size:"12"
 
             #############################################
                     Widget:
@@ -190,6 +191,8 @@
                         padding: 15
                         spacing: 10
                         size_hint_y: None
+                        row_force_default:True
+                        row_default_height:100
 
     #Tiempo
         TabbedPanelItem:
@@ -296,7 +299,6 @@
 
 <Fondo>:
     id: pin
-    size_hint_y: None
     checked: False
     source: ""
     # size_hint: (.8, .8)

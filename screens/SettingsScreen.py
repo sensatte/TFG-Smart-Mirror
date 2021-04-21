@@ -23,22 +23,18 @@ class SettingsScreen(Screen):
     colorHora=Properties.ListProperty([1,1,1,1])
     formatoHora=Properties.ListProperty(["24h", False])
 
-    colorFecha=Properties.ListProperty([1,1,1,1])
-    formatoFecha=Properties.StringProperty("dd/mm")
-
     colorTemp=Properties.ListProperty([1,1,1,1])
     formatoTemp=Properties.StringProperty("metric")
 
     formatoClima=Properties.NumericProperty(2)
 
-    c_id=Properties.StringProperty('6361046')
-    activeInter = Properties.BooleanProperty(True)
-
     image=Properties.StringProperty('wolf')
+    showNotes=Properties.ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(SettingsScreen, self).__init__(**kwargs)
         self.pos_hint={'center_y': 0.5, 'center_x': 0.5}    
+        self.showNotes.bind(minimum_height=self.showNotes.setter('height'))
         self.showSaveScreenFunc()  
 
 
@@ -63,13 +59,14 @@ class SettingsScreen(Screen):
 
 
 class Fondo(ToggleButtonBehavior, Image):
+    imagen=Properties.StringProperty("")
     def __init__(self, imagen, **kwargs):
         super(Fondo, self).__init__(**kwargs)
         self.imagen=imagen
         self.source="images/saveScreen/"+imagen
 
     def saveSaveScreen(self):
-        dbWrapper.saveSaveScreen(self.image)
+        dbWrapper.saveSaveScreen(self.imagen)
 
     def on_state(self, widget, value):
         if value == 'down':
