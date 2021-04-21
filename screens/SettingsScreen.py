@@ -9,6 +9,8 @@ from kivy.animation import Animation
 from functools import partial
 from kivy.uix.screenmanager import FadeTransition
 import kivy.properties as Properties
+from kivy.uix.behaviors.togglebutton import ToggleButtonBehavior
+from kivy.uix.image import Image
 
 import db.dbWrapper as dbWrapper
 import datetime
@@ -31,25 +33,19 @@ class SettingsScreen(Screen):
 
     c_id=Properties.StringProperty('6361046')
     activeInter = Properties.BooleanProperty(True)
-    image=Properties.StringProperty('wolf')
 
-    currentGifsData = Properties.ListProperty()
+    image=Properties.StringProperty('wolf')
 
     def __init__(self, **kwargs):
         super(SettingsScreen, self).__init__(**kwargs)
-        self.pos_hint={'center_y': 0.5, 'center_x': 0.5}        
+        self.pos_hint={'center_y': 0.5, 'center_x': 0.5}    
+        self.showSaveScreenFunc()  
 
-    def updateCurrentGifsData(self):
-        gifsList = dbWrapper.getAllGifs()
-        self.currentGifsData = [
-            {
-                "imagenId": gif._id,
-                "source": gif.source,
-                "pinned": gif.pinned,
-                "anim_delay": gif.delay,
-                "updateListFunction": self.updateCurrentGifsData
-            } for gif in gifsList
-        ]
+
+    def showSaveScreenFunc(self):
+        imagenes = dbWrapper.getAllSaveScreen()
+        for imagen in imagenes:
+            self.ids.showNotes.add_widget(Fondo(imagen=imagen.image))
 
     def saveConfig(self):
         dbWrapper.saveSaveScreen(self.image)        
@@ -64,3 +60,17 @@ class SettingsScreen(Screen):
         self.saveConfig()
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "menu"
+
+
+class Fondo(ToggleButtonBehavior, Image):
+    def __init__(self, imagen, **kwargs):
+        super(Fondo, self).__init__(**kwargs)
+        self.imagen=imagen
+        self.source="images/saveScreen/"+imagen
+
+    def saveSaveScreen(self):
+        dbWrapper.saveSaveScreen(self.image)
+
+    def on_state(self, widget, value):
+        if value == 'down':
+            self.saveSaveScreen()

@@ -88,7 +88,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "save"
+        scMenu.current = "settings"
 
         self.set_keyboard()
 
