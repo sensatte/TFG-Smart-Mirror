@@ -48,7 +48,7 @@
             text:'Color'
             on_press: root.ruedaOut = not root.ruedaOut
             background_color:[0, 0, 0, 0]
-            canvas.after:
+            canvas.before:
                 Color:
                     rgba: rueda.color
                 Ellipse:
@@ -59,3 +59,8 @@
             id:grosorcito
             text:'Width'
             on_press: root.grosorOut = not root.grosorOut
+
+        Button:
+            id:guardar
+            text:'Guardar'
+            on_press: root.guardarImagen()
