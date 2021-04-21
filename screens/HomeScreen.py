@@ -1,3 +1,4 @@
+import db.dbWrapper as dbWrapper
 from kivy.uix.floatlayout import FloatLayout
 
 from customWidgets.NewsWidget import NewsWidget
@@ -18,7 +19,6 @@ from kivy.app import App
 #import kv
 from kivy.lang import Builder
 Builder.load_file("kv/homeScreen.kv")
-import db.dbWrapper as dbWrapper
 
 
 class HomeScreen(Screen):
@@ -43,24 +43,17 @@ class HomeScreen(Screen):
         stateInfo = dbWrapper.getInfoState().state
         stateGifs = dbWrapper.getGifState().state
 
-        for c in self.children:
-            if isinstance(c, GifsWidget):
-                self.remove_widget(c)
+        #print("Before deleting", self.children)
 
-            elif isinstance(c, NotesWidget):
-                self.remove_widget(c)
+        i = 0
+        while len(self.children) > 1:
+            #print("Trying to delete ", self.children[i])
+            if not isinstance(self.children[i], ImageButton):
+                self.remove_widget(self.children[i])
+            else:
+                i = 1
 
-            elif isinstance(c, InfoDayWidget):
-                self.remove_widget(c)
-
-            elif isinstance(c, TwitterWidget):
-                self.remove_widget(c)
-
-            elif isinstance(c, QuotesWidget):
-                self.remove_widget(c)
-
-            elif isinstance(c, SpotifyWidget2):
-                self.remove_widget(c)
+        #print("Before adding", self.children)
 
         if state == True:
             quote = QuotesWidget()
@@ -86,6 +79,7 @@ class HomeScreen(Screen):
             gifs = GifsWidget()
             self.add_widget(gifs)
 
+        #print("After adding", self.children)
 
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)

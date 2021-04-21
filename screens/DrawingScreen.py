@@ -1,5 +1,6 @@
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
+from mongoengine.base.fields import ObjectIdField
 from customWidgets.utils.BehaviorUtil import ImageButton
 from kivy.clock import Clock
 
@@ -15,6 +16,9 @@ from kivy.uix.colorpicker import ColorWheel
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.dropdown import DropDown
 import kivy.properties as Properties
+from datetime import datetime
+from pathlib import Path
+from db import dbWrapper
 
 #import kv
 from kivy.lang import Builder
@@ -22,7 +26,6 @@ Builder.load_file('kv\\drawingScreen.kv')
 
 
 class DrawingScreen(Screen):
-    # TODO que lo que dibuejs puedas guardarlo para luego verlo en una galeria (la que muestre los salvapantallas?))
     # TODO poner bonitos los botones grosorcito y colorcito
 
     ruedaOut = Properties.BooleanProperty(False)
@@ -92,6 +95,19 @@ class DrawingScreen(Screen):
 
             self.ids.painter.disabled = False
             self.ids.colorcito.disabled = False
+
+    def guardarImagen(self):
+        canvas = self.ids.painter
+
+        now = datetime.now()
+        imageName = now.strftime("drawing-%d-%m-%Y-%H-%M-%S.png")
+
+        canvas.export_to_png(imageName)
+
+        Path("./"+imageName).rename("./images/saveScreen/"+imageName)
+
+        # TODO QUE NO SE SETEE EL ID A "SAVE"
+        dbWrapper.addNewSaveScreen(imageName)
 
 
 class CanvasWidget(Widget):
