@@ -107,7 +107,7 @@ class DrawingScreen(Screen):
         Path("./"+imageName).rename("./images/saveScreen/"+imageName)
 
         # TODO QUE NO SE SETEE EL ID A "SAVE"
-        dbWrapper.saveSaveScreen(imageName)
+        dbWrapper.addNewSaveScreen(imageName)
 
 
 class CanvasWidget(Widget):

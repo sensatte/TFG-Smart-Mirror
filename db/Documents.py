@@ -74,23 +74,26 @@ class Internacional(Document):
     color = ListField()
     _id = StringField()
 
+
 class Quote(Document):
     _id = StringField(required=True, max_length=100)
     state = BooleanField(required=True)
     text = StringField(required=True)
-    color = ListField(required=True)    
+    color = ListField(required=True)
     font = StringField(required=True)
     halign = StringField(required=True)
+
 
 class Actives(Document):
     _id = StringField(required=True, max_length=100)
     state = BooleanField()
-    color = ListField()    
+    color = ListField()
     halign = StringField()
 
+
 class SaveScreen(Document):
-    _id = StringField(required=True, max_length=100)
     image = StringField(required=True)
+
 
 class Draggable(Document):
     draggableName = StringField(required=True, max_length=500)
