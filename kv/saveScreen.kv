@@ -1,0 +1,21 @@
+#:kivy 1.0
+<SaveScreen>:
+    id:main
+
+    FloatLayout:
+        # size_hint:.8,.8
+      
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: "images\\saveScreen\\paint.png"
+
+        Button:
+            text:""
+            background_color:[0, 0, 0, 0]
+            on_press: root.goToMenuScreen(self)
+
+
+
+    
