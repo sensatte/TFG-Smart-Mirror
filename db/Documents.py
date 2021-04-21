@@ -88,6 +88,10 @@ class Actives(Document):
     color = ListField()    
     halign = StringField()
 
+class SaveScreen(Document):
+    _id = StringField(required=True, max_length=100)
+    image = StringField(required=True)
+
 class Draggable(Document):
     draggableName = StringField(required=True, max_length=500)
     posX = FloatField(required=False, default=50)

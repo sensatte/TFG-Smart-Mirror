@@ -193,6 +193,18 @@ def saveGifState(state):
 def getGifState():
     return Actives.objects.get(_id='gif')
 
+##################################
+
+def saveSaveScreen(image):
+    dayToSave = SaveScreen(_id='save',image=image)
+    dayToSave.save()
+
+def getSaveScreen():
+    return SaveScreen.objects.get(_id='save')
+
+def getAllSaveScreen():
+    return SaveScreen.objects[1:]
+
 # print(getWeightByMonth(2))
 # saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])
 # saveNote(False, "vaya dia de meirda", datetime.date(2021, 1, 21), [125, 150, 176,1])
