@@ -35,7 +35,7 @@ class HomeScreen(Screen):
         App.get_running_app().root.current = "save"
 
     def refreshPage(self):
-        Clock.schedule_once(self.saveScreen, 10)
+        Clock.schedule_once(self.saveScreen, 100)
         state = dbWrapper.getQuote().state
         stateTwitter = dbWrapper.getTwitter().state
         stateSpotify = dbWrapper.getSpotify().state
