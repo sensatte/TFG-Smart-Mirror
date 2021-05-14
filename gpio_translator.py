@@ -53,3 +53,6 @@ def gpio_translate ():
             logging.info('GPIO Transl.: Enter')
 
         
+
+def gpio_leds():
+    pass
