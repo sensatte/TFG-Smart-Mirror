@@ -16,7 +16,7 @@
                 rectangle: self.x, self.y, self.width, self.height 
 
         Scrolling:
-    #############################################
+    #--------------------------------
             GridLayout:
                 cols: 1
                 padding: 15
@@ -35,14 +35,13 @@
                         text: "Frases"
                         font_size:"22"
 
-    #############################################
+    #--------------------------------
                 BoxLayout:
                     size_hint_y: None
                     orientation: "horizontal"
                     height: 20
                     Label:
                         text: "Desactivar:"  if main.ids.switch.active else 'Activar:'
-                        # font_size:"22"
                     Switch:
                         id:switch
                         active: True
@@ -59,7 +58,7 @@
                                 size: sp(43), sp(32)
                                 pos: int(self.center_x - sp(41) + self.active_norm_pos * sp(41)), int(self.center_y - sp(16))
 
-        #############################################
+        #--------------------------------
                 Widget:
                     padding:[10,0,0,0]
                     size_hint_y: None
@@ -70,7 +69,7 @@
                         Rectangle:
                             pos: root.width/20, self.center_y
                             size: root.width-root.width/10, 2
-        #############################################
+        #--------------------------------
 
                 BoxLayout:
                     size_hint_y: None
@@ -108,7 +107,7 @@
                         size_hint_y: None     
                         text_size: self.width, None
                         height:self.texture_size[1]
-        #############################################
+        #--------------------------------
                 Widget:
                     padding:[10,0,0,0]
                     size_hint_y: None
@@ -119,8 +118,7 @@
                         Rectangle:
                             pos: root.width/20, self.center_y
                             size: root.width-root.width/10, 2
-        #############################################
-
+        #--------------------------------
 
                 Label:
                     height: 20
@@ -324,7 +322,7 @@
                                 size:self.size[0], self.size[1]
                                 pos:self.pos
                                 radius: [15]
-        #############################################
+        #--------------------------------
                 Widget:
                     padding:[10,0,0,0]
                     size_hint_y: None
@@ -335,7 +333,7 @@
                         Rectangle:
                             pos: root.width/20, self.center_y
                             size: root.width-root.width/10, 2
-        #############################################
+        #--------------------------------
                 BoxLayout:
                     size_hint_y: None
                     orientation: 'horizontal'
@@ -359,7 +357,7 @@
                         size_hint: (.8, .8)
                         on_press: root.changeHalign('right')
 
-        #############################################
+        #--------------------------------
                 Widget:
                     padding:[10,0,0,0]
                     size_hint_y: None
@@ -370,7 +368,7 @@
                         Rectangle:
                             pos: root.width/20, self.center_y
                             size: root.width-root.width/10, 2
-        #############################################
+        #--------------------------------
 
                 Label:
                     height: 30
@@ -440,4 +438,3 @@
     bar_color: [1,1,1,.5]
     bar_inactive_color: [1,1,1,.2]
     scroll_type: ['content']
-

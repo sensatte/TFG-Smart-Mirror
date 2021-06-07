@@ -33,7 +33,7 @@ def update_counter(sequenceName):
 def deleteNoteById(noteid):
     Notes.objects(_id=noteid).delete()
 
-####################################
+# ---------------------------------
 
 
 def getHora():
@@ -75,7 +75,7 @@ def saveClima(id, formato, c_id):
     noteToSave.save()
     print("El clima se ha actualizado")
 
-####################################
+# --------------------------------
 
 
 def getAllGifs():
@@ -109,7 +109,7 @@ def saveGif(source):
 
 def deleteGifById(gifid):
     Gifs.objects(_id=gifid).delete()
-####################################
+# -------------------------------------
 
 
 def getAllWeight():
@@ -133,7 +133,7 @@ def saveWeight(weight):
         noteToSave.save()
         print("El peso " + str(weight) + " se ha guardado")
 
-##################################
+# ------------------------------------
 
 
 def saveInternacional(dia, mes, info):
@@ -158,7 +158,7 @@ def saveInternationalConfig(id, color):
     noteToSave.save()
     print("Los festivos se han actualizado")
 
-##################################
+# ---------------------------------
 
 
 def saveQuote(state, text, font, color, halign):
@@ -170,7 +170,7 @@ def saveQuote(state, text, font, color, halign):
 def getQuote():
     return Quote.objects[0]
 
-##################################
+# ---------------------------------
 
 
 def saveTwitter(state, color, halign):
@@ -181,7 +181,7 @@ def saveTwitter(state, color, halign):
 def getTwitter():
     return Actives.objects.get(_id='twitter')
 
-##################################
+# --------------------------------
 
 
 def saveSpotify(state):
@@ -192,7 +192,7 @@ def saveSpotify(state):
 def getSpotify():
     return Actives.objects.get(_id='spotify')
 
-##################################
+# --------------------------------
 
 
 def saveNoteState(state):
@@ -203,7 +203,7 @@ def saveNoteState(state):
 def getNoteState():
     return Actives.objects.get(_id='notes')
 
-##################################
+# --------------------------------
 
 
 def saveInfoState(state):
@@ -214,7 +214,7 @@ def saveInfoState(state):
 def getInfoState():
     return Actives.objects.get(_id='info')
 
-##################################
+# --------------------------------
 
 
 def saveGifState(state):
@@ -225,7 +225,7 @@ def saveGifState(state):
 def getGifState():
     return Actives.objects.get(_id='gif')
 
-##################################
+# --------------------------------
 
 
 def saveSaveScreen(image):
@@ -244,17 +244,3 @@ def addNewSaveScreen(image):
 
 def getAllSaveScreen():
     return SaveScreen.objects[1:]
-
-# print(getWeightByMonth(2))
-# saveNote(True, "Tengo que recoger al niño de la escuela", datetime.date(2021, 1, 21), [224, 187, 228,1])
-# saveNote(False, "vaya dia de meirda", datetime.date(2021, 1, 21), [125, 150, 176,1])
-# saveNote(True, "eat the rich", datetime.date(2021, 1, 21), [140, 183, 141,1])
-# saveNote( True, "cambiarle el agua al perro", datetime.date(2021, 1, 21), [149, 125, 173,1])
-
-# print(getHora().formato)
-# print(getFecha().formato)
-# print(getTemp().formato)
-# print(getClima().formato)
-
-# print(getAllNotes())
-# print(findNoteById(2).text)

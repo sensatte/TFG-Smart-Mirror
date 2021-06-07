@@ -47,8 +47,10 @@ class ColoredLabel(Label):
     background_color = Properties.ListProperty((0, 0, 0, 1))
     visible = Properties.BooleanProperty()
 
+
 class CarouselConfig(ToggleButton):
     pass
+
 
 class DraggableColoredLabel(DragBehavior, Label):
     background_color = Properties.ListProperty((0, 0, 0, 1))
@@ -75,8 +77,6 @@ class DraggableColoredLabel(DragBehavior, Label):
             parent.add_widget(self)
 
     def saveOnDB(self, dt):
-        # TODO SAVE SOURCE, POS AND SIZE ON DB
-
         noteToSave = Notes(
             _id=self.noteId,
             pinned=self.visible,
@@ -195,8 +195,6 @@ class DragImage(DragBehavior, AsyncImage):
             parent.add_widget(self)
 
     def saveOnDB(self, dt):
-        # TODO SAVE SOURCE, POS AND SIZE ON DB
-
         gifToSave = Gifs(
             _id=self.imagenId,
             source=self.source,
@@ -219,8 +217,6 @@ class ScatterImage(Scatter):
 
     def on_pos(self, instance, value):
         try:
-            # self.bringToFront()
-
             self.saveOnDBEvent.cancel()
         except:
             logging.info('Gifs: No previous event')
@@ -237,15 +233,11 @@ class ScatterImage(Scatter):
             parent.add_widget(self)
 
     def saveOnDB(self, dt):
-        # TODO SAVE SOURCE, POS AND SIZE ON DB
-
         gifToSave = Gifs(
             _id=self.imagenId,
             source=self.source,
             posX=self.pos[0],
             posY=self.pos[1],
-            # sizeX=self.size_hint[0],
-            # sizeY=self.size_hint[1],
             scale=self.scale,
             rotation=self.rotation,
             delay=self.anim_delay)

@@ -177,8 +177,7 @@ def getNewSongThread(widget):
                     widget.songName = song["item"]["name"]
                     widget.songImageUrl = song["item"]["album"]["images"][-1]["url"].replace(
                         "https://", "")
-                    # TODO IMAGEN DE LA CANCION
-                    # return
+
             except:
                 print("error")
                 print(song)

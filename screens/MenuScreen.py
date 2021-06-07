@@ -72,7 +72,6 @@ class MenuScreen(Screen):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)
         anim += Animation(pos_hint={"center_x": .5, "y": 0}, duration=.1)
         anim.bind(on_complete=partial(self.fadeOut))
-        # anim.bind(on_complete=partial(self.goToHomeScreen))
         anim.start(widget)
 
     def fadeIn(self):

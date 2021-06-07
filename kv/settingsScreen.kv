@@ -89,7 +89,7 @@
                                     pos:self.pos
                                     radius: [15]
                    
-        #############################################
+        #--------------------------------
                     Widget:
                         size_hint_y: None
                         height: 6
@@ -99,7 +99,7 @@
                             Rectangle:
                                 pos: root.width/20, self.center_y
                                 size: root.width-root.width/10, 2
-        #############################################
+        #--------------------------------
 
                     Label:
                         height: 20
@@ -172,7 +172,7 @@
                             text: "Salvapantallas"
                             font_size:"12"
 
-            #############################################
+            #--------------------------------
                     Widget:
                         padding:[10,0,0,0]
                         size_hint_y: None
@@ -183,7 +183,7 @@
                             Rectangle:
                                 pos: root.width/20, self.center_y
                                 size: root.width-root.width/10, 2
-            #############################################
+            #--------------------------------
 
                     GridLayout:
                         id: showNotes
@@ -223,7 +223,7 @@
                             text: "Tiempo"
                             font_size:"22"
 
-        #############################################
+        #--------------------------------
                     Label:
                         height: 20
                         size_hint_y: None
@@ -301,11 +301,9 @@
     id: pin
     checked: False
     source: ""
-    # size_hint: (.8, .8)
     group: "horaColor"
     background_color:[0, 0, 0, 0]
     allow_no_selection: False    
-    # on_press: root.saveSaveScreen()
     canvas.after:
         Color:
             rgba: (1,1,1,1) if self.state=='down' else (1,1,1,0)

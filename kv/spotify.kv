@@ -3,23 +3,9 @@
 #:set cloudImage "https://asxornvikq.cloudimg.io/v7/"
 #:set roundedCorners "?radius=32&force_format=png"
 
-#TODO AÑADIR RESTO DE WIDGETS
-
 <SpotifyWidget>:
     size_hint:(.2, .1)
     pos: 0,5
-    # canvas.before:
-    #     Color:
-    #         rgba: 0.2,0.5,0.4,1
-    #     Rectangle:
-    #         pos: 0, 0
-    #         size: self.size
-
-    # Label:
-    #     id: deviceId
-    #     text: root.deviceId[-4:] if root.deviceId != None else ""
-    #     pos_hint: {"center_x": .5, "center_y": .9}
-    #     #TODO WHY WONT POS_HINT WORK HERE
 
     ImageButton:
         id: startPauseButton
@@ -35,12 +21,6 @@
         on_press: root.pushedButtonAnim(self)
         on_press: root.paused = not root.paused
         on_press: print(self.source)
-        # canvas.before:
-        #     Color:
-        #         rgba: 0.2,0.5,0.4,1
-        #     Rectangle:
-        #         pos: self.pos
-        #         size: self.size
 
     ImageButton:
         id: nextButton
@@ -55,12 +35,6 @@
         on_press: root.wrapper.next(root.deviceId)
         on_press: root.pushedButtonAnim(self)
         on_press: root.paused = False
-        # canvas.before:
-        #     Color:
-        #         rgba: 0.2,0.5,0.4,1
-        #     Rectangle:
-        #         pos: self.pos
-        #         size: self.size
 
     ImageButton:
         id: previousButton
@@ -75,12 +49,6 @@
         on_press: root.wrapper.previous(root.deviceId)
         on_press: root.pushedButtonAnim(self)
         on_press: root.paused = False
-        # canvas.before:
-        #     Color:
-        #         rgba: 0.2,0.5,0.4,1
-        #     Rectangle:
-        #         pos: self.pos
-        #         size: self.size
 
     ImageButton:
         id: volDown
@@ -95,12 +63,6 @@
         on_press: print("volDown")
         on_press: root.pushedButtonAnim(self)
         on_press: root.volDown()
-        # canvas.before:
-        #     Color:
-        #         rgba: 0.2,0.5,0.4,1
-        #     Rectangle:
-        #         pos: self.pos
-        #         size: self.size
 
     ImageButton:
         id: volUp
@@ -115,12 +77,6 @@
         on_press: print("volUp")
         on_press: root.pushedButtonAnim(self)
         on_press: root.volUp()
-        # canvas.before:
-        #     Color:
-        #         rgba: 0.2,0.5,0.4,1
-        #     Rectangle:
-        #         pos: self.pos
-        #         size: self.size
 
     AsyncImageButton:
         id: songImage
@@ -139,8 +95,6 @@
                 origin: self.center
         canvas.after:
             PopMatrix
-
-    
 
     Label:
         id: songNameLabel

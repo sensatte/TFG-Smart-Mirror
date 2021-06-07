@@ -16,7 +16,7 @@
                 rectangle: self.x, self.y, self.width, self.height 
 
         Scrolling:
-    #############################################
+    #--------------------------------
             GridLayout:
                 cols: 1
                 padding: 15
@@ -35,14 +35,13 @@
                         text: "Twitter"
                         font_size:"22"
 
-    #############################################
+    #--------------------------------
                 BoxLayout:
                     size_hint_y: None
                     orientation: "horizontal"
                     height: 20
                     Label:
                         text: "Desactivar:"  if main.ids.switch.active else 'Activar:'
-                        # font_size:"22"
                     Switch:
                         id:switch
                         active: True
@@ -59,7 +58,7 @@
                                 size: sp(43), sp(32)
                                 pos: int(self.center_x - sp(41) + self.active_norm_pos * sp(41)), int(self.center_y - sp(16))
 
-        #############################################
+        #--------------------------------
                 Widget:
                     padding:[10,0,0,0]
                     size_hint_y: None
@@ -70,7 +69,7 @@
                         Rectangle:
                             pos: root.width/20, self.center_y
                             size: root.width-root.width/10, 2
-        #############################################
+        #--------------------------------
 
                 BoxLayout:
                     size_hint_y: None
@@ -135,7 +134,7 @@
                                 pos:self.pos
                                 radius: [15]
 
-        #############################################
+        #--------------------------------
                 Widget:
                     padding:[10,0,0,0]
                     size_hint_y: None
@@ -146,7 +145,7 @@
                         Rectangle:
                             pos: root.width/20, self.center_y
                             size: root.width-root.width/10, 2
-        #############################################
+        #--------------------------------
 
                 Label:
                     height: 30

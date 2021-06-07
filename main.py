@@ -18,7 +18,7 @@ from kivy.app import App
 import kivy
 from kivy.uix.vkeyboard import VKeyboard
 from kivy.config import Config
-kivy.require('2.0.0')  # replace with your current kivy version !
+kivy.require('2.0.0')
 
 Window.size = (540, 700)
 # Window.size = (540, 960)

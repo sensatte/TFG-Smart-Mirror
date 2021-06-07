@@ -13,8 +13,6 @@ Builder.load_file("kv/gifsWidget.kv")
 
 class GifsWidget(FloatLayout):
 
-    # TODO CREAR EL BUSCADOR DE GIFS
-
     def __init__(self, **kwargs):
         super(GifsWidget, self).__init__(**kwargs)
         self.__name__ = "gifs"
@@ -23,21 +21,9 @@ class GifsWidget(FloatLayout):
 
         for image in self.images:
 
-            # imageWid = DragImage(
-            #     imagenId=image._id,
-            #     source=image.source,
-            #     size_hint=(image.sizeX, image.sizeY),
-            #     pos=(image.posX, image.posY),
-            #     keep_ratio=False,
-            #     allow_stretch=True,
-            #     anim_delay=image.delay,
-            #     mipmap=True,
-            # )
-
             imageWid = ScatterImage(
                 imagenId=image._id,
                 source=image.source,
-                # size_hint=(image.sizeX, image.sizeY),
                 scale=image.scale,
                 rotation=image.rotation,
                 pos=(image.posX, image.posY),

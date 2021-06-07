@@ -1,5 +1,7 @@
 # pylint: disable=no-member
 
+import db.dbWrapper as dbWrapper
+from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 import kivy.properties as Properties
 from kivy.app import App
@@ -14,15 +16,12 @@ import json
 id_endpoint = "https://type.fit/api/quotes"
 
 #import kv
-from kivy.lang import Builder
 
 Builder.load_file('kv\\quotesConfig.kv')
 
-import db.dbWrapper as dbWrapper
-
 
 class QuotesConfig(Screen):
-    #TODO tema de longituf
+    # TODO tema de longituf
 
     quoteList = Properties.ListProperty()
     colorInter = Properties.ListProperty([1, 1, 1, 1])
@@ -37,15 +36,13 @@ class QuotesConfig(Screen):
         super(QuotesConfig, self).__init__(**kwargs)
         self.pos_hint = {'center_y': 0.5, 'center_x': 0.5}
 
-        #Cambio a fuente
+        # Cambio a fuente
         self.changeFont('Good Mood')
 
-        #Recojo todas las quotes
+        # Recojo todas las quotes
         self.quoteList = self.getQuotes()
 
     def changeFont(self, font):
-        # fonts=['Baby Darling', 'Berkah Ramadhan', 'MelanieRoselyn', 'Pumpkin Story', 'Good Mood',
-        #     'Revans-Medium', 'Silent Landfield', 'Winter Creative', 'Hallington']
         if font == 'Revans-Medium':
             self.ids["quoteid"].font_size = 12
         else:
@@ -57,7 +54,7 @@ class QuotesConfig(Screen):
         self.ids["quoteid"].halign = halign
         self.halign = halign
 
-    #Recoge todas las frases
+    # Recoge todas las frases
     def getQuotes(self):
         res = {}
 
@@ -91,7 +88,7 @@ class QuotesConfig(Screen):
         self.currentQuote = quote["text"] + "\n- " + quote["author"]
 
     def saveConfig(self):
-        #guardar las configs
+        # guardar las configs
         print(self.activeInter)
         dbWrapper.saveQuote(self.activeInter, self.currentQuote,
                             self.currentFont, self.colorInter, self.halign)

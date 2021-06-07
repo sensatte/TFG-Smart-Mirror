@@ -1,7 +1,6 @@
 #:kivy 1.0
 <NotesWidget>:
     id:notesWidget
-    # size_hint:.3,.3
     pos: 0, 0
     size: root.size
 
@@ -14,13 +13,6 @@
     col_force_default:True
     row_default_height:self.height/3
     col_default_width:self.width/3
-
-    # canvas.before:
-    #     Color:
-    #         rgba: 0.2,0.5,0.4,1
-    #     Rectangle:
-    #         pos: self.pos
-    #         size: self.size 
 
 <ColoredLabel>:
     font_size: root.height*0.1
@@ -43,8 +35,6 @@
 
     font_size: root.height*0.1
     text_size: self.width, None
-    # size: self.texture_size
-    # size_hint: .2, .2
     halign: 'center'
     is_shortened: True
 
@@ -66,8 +56,6 @@
         text: root.text
         font_size: root.height*0.1
         text_size: self.width, None
-        # size: self.texture_size
-        # size_hint: .2, .2
         halign: 'center'
         is_shortened: True
 

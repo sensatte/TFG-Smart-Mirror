@@ -38,17 +38,12 @@ class HomeScreen(Screen):
         stateInfo = dbWrapper.getInfoState().state
         stateGifs = dbWrapper.getGifState().state
 
-        #print("Before deleting", self.children)
-
         i = 0
         while len(self.children) > 1:
-            #print("Trying to delete ", self.children[i])
             if not isinstance(self.children[i], ImageButton):
                 self.remove_widget(self.children[i])
             else:
                 i = 1
-
-        #print("Before adding", self.children)
 
         if state == True:
             quote = QuotesWidget()
@@ -73,8 +68,6 @@ class HomeScreen(Screen):
         if stateGifs == True:
             gifs = GifsWidget()
             self.add_widget(gifs)
-
-        #print("After adding", self.children)
 
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)
