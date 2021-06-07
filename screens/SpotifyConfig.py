@@ -1,5 +1,6 @@
 # pylint: disable=no-member
 
+import db.dbWrapper as dbWrapper
 import os
 from kivy.uix.screenmanager import ScreenManager, Screen
 import kivy.properties as Properties
@@ -11,18 +12,18 @@ from kivy.uix.screenmanager import FadeTransition
 from kivy.uix.togglebutton import ToggleButton
 from customWidgets.utils.BehaviorUtil import ImageButton, Scrolling
 from kivy.properties import ObjectProperty
-from utils.SpotifyWrapper2 import SpotifyWrapper2
+from utils.SpotifyWrapper import SpotifyWrapper
 from customWidgets.utils.BehaviorUtil import PlayListToggle
 from functools import partial
 
 #import kv
 from kivy.lang import Builder
 Builder.load_file('kv/spotifyConfig.kv')
-import db.dbWrapper as dbWrapper
+
 
 class SpotifyConfig(Screen):
 
-    wrapper = ObjectProperty(SpotifyWrapper2())
+    wrapper = ObjectProperty(SpotifyWrapper())
     activeInter = Properties.BooleanProperty(True)
 
     def __init__(self, **kwargs):
@@ -71,7 +72,7 @@ class SpotifyConfig(Screen):
         f.close()
 
     def saveConfig(self):
-        #guardar las configs
+        # guardar las configs
         print(self.activeInter)
         dbWrapper.saveSpotify(self.activeInter)
 

@@ -6,9 +6,8 @@ from customWidgets.TwitterWidget import TwitterWidget
 from customWidgets.InfoDayWidget import InfoDayWidget
 from customWidgets.QuotesWidget import QuotesWidget
 from customWidgets.NotesWidget import NotesWidget, deleteNotes
-from customWidgets.SpotifyWidget import SpotifyWidget
 from customWidgets.utils.BehaviorUtil import ImageButton
-from customWidgets.SpotifyWidget2 import SpotifyWidget2
+from customWidgets.SpotifyWidget import SpotifyWidget
 from customWidgets.GifsWidget import GifsWidget
 
 from kivy.uix.screenmanager import FadeTransition, RiseInTransition, Screen
@@ -60,7 +59,7 @@ class HomeScreen(Screen):
             self.add_widget(twitter)
 
         if stateSpotify == True:
-            spotify = SpotifyWidget2()
+            spotify = SpotifyWidget()
             self.add_widget(spotify)
 
         if stateNotes == True:
