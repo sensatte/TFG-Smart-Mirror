@@ -37,7 +37,7 @@ class InternationalWidget(Image):
         self.color = self.chosenColor if len(hoy) != 0 else [1, 1, 1, 0]
 
 
-################################
+# --------------------------------
 
 
     def readPage(self):
