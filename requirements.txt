@@ -8,6 +8,7 @@ dnspython==2.1.0
 pylint_django==2.4.2
 pillow==8.1.1
 numpy==1.20.1
-kivy-garden.graph==0.4.1
+kivy-garden.graph==0.4.0
 tweepy==3.10.0
 imgurpython==1.1.7
+bs4==0.0.1
