@@ -49,7 +49,6 @@ class SpotifyWidget(RelativeLayout, EventDispatcher):
         self.wrapper.shuffle(deviceId=self.deviceId, value=value)
 
     def on_deviceId(self, instance, value):
-        print("Got the deviceId ", value)
         self.relaxing = False
 
         self.volume = 50  # TODO GUARDAR EN MEMORIA EN VEZ DE HARDCODEAR

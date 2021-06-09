@@ -1,10 +1,9 @@
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
-import customWidgets.utils.BehaviorUtil
+import customWidgets.utils.BehaviorUtil as BehaviorUtil
 import db.dbWrapper as dbWrapper
 from kivy.app import App
-from kivy.lang import Builder
 from kivy.lang import Builder
 Builder.load_file('kv/notes.kv')
 
