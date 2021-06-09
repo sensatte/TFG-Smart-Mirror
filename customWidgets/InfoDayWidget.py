@@ -12,7 +12,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 from kivy.lang import Builder
 
-Builder.load_file('kv\\infoDay.kv')
+Builder.load_file('kv/infoDay.kv')
 
 
 class InfoDayWidget(DraggableBaseWidget):

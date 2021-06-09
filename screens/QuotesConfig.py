@@ -17,7 +17,7 @@ id_endpoint = "https://type.fit/api/quotes"
 
 #import kv
 
-Builder.load_file('kv\\quotesConfig.kv')
+Builder.load_file('kv/quotesConfig.kv')
 
 
 class QuotesConfig(Screen):
@@ -47,7 +47,7 @@ class QuotesConfig(Screen):
             self.ids["quoteid"].font_size = 12
         else:
             self.ids["quoteid"].font_size = 15
-        self.ids["quoteid"].font_name = 'fonts\\' + font
+        self.ids["quoteid"].font_name = 'fonts/' + font
         self.currentFont = font
 
     def changeHalign(self, halign):

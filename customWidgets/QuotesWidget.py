@@ -9,7 +9,7 @@ import json
 id_endpoint = "https://type.fit/api/quotes"
 
 from kivy.lang import Builder
-Builder.load_file('kv\\quotes.kv')
+Builder.load_file('kv/quotes.kv')
 
 import db.dbWrapper as dbWrapper
 
@@ -26,7 +26,7 @@ class QuotesWidget(AnchorLayout):
 
     def changeQuote(self, quoteList):
         self.ids["quoteid"].text=quoteList.text
-        self.ids["quoteid"].font_name = 'fonts\\' +  quoteList.font
+        self.ids["quoteid"].font_name = 'fonts/' +  quoteList.font
         self.ids["quoteid"].halign = quoteList.halign
         self.ids["quoteid"].color = quoteList.color
 

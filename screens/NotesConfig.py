@@ -15,7 +15,7 @@ import datetime
 
 #import kv
 from kivy.lang import Builder
-Builder.load_file('kv\\notesConfig.kv')
+Builder.load_file('kv/notesConfig.kv')
 
 
 class NotesConfig(Screen):

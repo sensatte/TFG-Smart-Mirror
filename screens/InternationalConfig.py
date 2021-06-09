@@ -18,7 +18,7 @@ import db.dbWrapper as dbWrapper
 
 #import kv
 from kivy.lang import Builder
-Builder.load_file('kv\\internationalConfig.kv')
+Builder.load_file('kv/internationalConfig.kv')
 
 
 class InternationalConfig(Screen):

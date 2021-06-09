@@ -9,7 +9,7 @@ import db.dbWrapper as dbWrapper
 
 #import kv
 from kivy.lang import Builder
-Builder.load_file('kv\\saveScreen.kv')
+Builder.load_file('kv/saveScreen.kv')
 
 
 class SaveScreen(Screen):

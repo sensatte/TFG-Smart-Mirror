@@ -22,7 +22,7 @@ from functools import partial
 
 #import kv
 from kivy.lang import Builder
-Builder.load_file('kv\\gifsConfig.kv')
+Builder.load_file('kv/gifsConfig.kv')
 
 
 class GifsConfig(Screen):
