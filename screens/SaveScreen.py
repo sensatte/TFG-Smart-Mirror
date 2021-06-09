@@ -19,6 +19,6 @@ class SaveScreen(Screen):
         super(SaveScreen, self).__init__(**kwargs)
         self.fondo=dbWrapper.getSaveScreen().image
 
-    def goToMenuScreen(self, widget):
+    def goToHomeScreen(self, widget):
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "home"

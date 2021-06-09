@@ -87,7 +87,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "menu"
+        scMenu.current = "home"
 
         self.set_keyboard()
 

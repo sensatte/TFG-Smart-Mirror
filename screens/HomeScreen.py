@@ -14,6 +14,8 @@ from kivy.uix.screenmanager import FadeTransition, RiseInTransition, Screen
 from kivy.clock import Clock
 from kivy.app import App
 
+from kivy.core.window import Window
+
 #import kv
 from kivy.lang import Builder
 Builder.load_file("kv/homeScreen.kv")
@@ -23,14 +25,24 @@ class HomeScreen(Screen):
 
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
+        Window.bind(mouse_pos=self.on_mouse_pos)
+
+    def on_mouse_pos(self, window, pos):
+        if App.get_running_app().root.current != "save":
+            try:
+                Clock.unschedule(self.saveScreen)
+            except:
+                pass
+
+        Clock.schedule_once(self.saveScreen, 100)
 
     def saveScreen(self, a):
-        Clock.unschedule(self.saveScreen)
+        #Clock.unschedule(self.saveScreen)
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "save"
 
     def refreshPage(self):
-        Clock.schedule_once(self.saveScreen, 100)
+        #Clock.schedule_once(self.saveScreen, 100)
         state = dbWrapper.getQuote().state
         stateTwitter = dbWrapper.getTwitter().state
         stateSpotify = dbWrapper.getSpotify().state
