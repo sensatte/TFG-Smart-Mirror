@@ -17,7 +17,7 @@ import datetime
 
 #import kv
 from kivy.lang import Builder
-Builder.load_file('kv\\settingsScreen.kv')
+Builder.load_file('kv/settingsScreen.kv')
 
 class SettingsScreen(Screen):
     colorHora=Properties.ListProperty([1,1,1,1])

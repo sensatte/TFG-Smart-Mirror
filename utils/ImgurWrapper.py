@@ -20,8 +20,6 @@ class ImgurWrapper():
     def search(self, query):
         response = self.imgurObject.gallery_search(
             q=query,
-            # advanced={"q_any": query, "q_type": [
-            #     "gif", "png", "jpg"], "q_size_px": "small"},
             sort="time",
         )
 
@@ -35,9 +33,3 @@ class ImgurWrapper():
                 linksList.append(item.link)
 
         return linksList
-
-
-# test = ImgurWrapper()
-
-# testList = test.search("ACEITUNA")
-# print(testList)

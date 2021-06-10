@@ -22,7 +22,7 @@ from db import dbWrapper
 
 #import kv
 from kivy.lang import Builder
-Builder.load_file('kv\\drawingScreen.kv')
+Builder.load_file('kv/drawingScreen.kv')
 
 
 class DrawingScreen(Screen):

@@ -1,235 +1,212 @@
-from PIL import Image, ImageDraw
-import numpy as np
-import io
-from kivy.core.image import Image as CoreImage
-from kivy.core.window import Window
-from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.floatlayout import FloatLayout
-from numpy.core.numeric import False_
-from pyautogui import sleep
-from utils.SpotifyWrapper import SpotifyWrapper
-from utils.volume import CircularProgressBar
-from kivy.clock import Clock
 from kivy.animation import Animation
-import kivy.properties as properties
-import requests
-from kivy.graphics import Color, Rectangle, Ellipse
-
-from kivy.lang import Builder
-
-import threading
+from kivy.event import EventDispatcher
+from kivy.uix.relativelayout import RelativeLayout
+from utils.SpotifyWrapper import SpotifyWrapper
+from kivy.properties import StringProperty, ObjectProperty, BooleanProperty, NumericProperty
+import time
+from threading import Thread
+import logging
+from kivy.loader import Loader
+from customWidgets.AsyncImageButton import AsyncImageButton
 
 import socket
-# TODO QUE NO PETE
 
-# TODO MEJOR FORMA DE IMAGEN REDONDA
+from kivy.lang import Builder
+Builder.load_file('kv/spotify.kv')
 
-# TODO que se actualice el volumen
-
-
-kv_file = """
-<SpotifyWidget>:
-    size_hint:.5, .15
-
-    GridLayout
-        cols: 2
-        rows:1
-
-        Image:
-            size_hint_x:None
-            width:root.width/3
-            id: songImage
-            source: "images/menu/Spotify_bonico.png"
-            canvas.before:
-                PushMatrix
-                Rotate:
-                    angle: root.angle
-                    axis: 0, 0, 1
-                    origin: self.center
-            canvas.after:
-                PopMatrix
-
-        BoxLayout
-            orientation:"vertical"
-            spacing:-self.height*.7
-            Label:
-                text: ""
-                id: songName
-                halign:'left'
-                shorten: True
-                font_size: root.width*0.05
-                text_size: self.width, None
-                size: self.texture_size
-
-            Label:
-                text: ""
-                id: songArtist
-                halign:'left'
-                shorten: True
-                font_size: root.width*0.05
-                text_size: self.width, None
-                size: self.texture_size
-
-"""
+# TODO PETA SOFT CUANDO SPOTIFY FUNCIONA PERO GETCURRENTSONG DA NULL POSYOQUESEPORQUE
 
 
-Builder.load_string(kv_file)
-
-
-class SpotifyWidget(RelativeLayout):
-    angle = properties.NumericProperty()
+class SpotifyWidget(RelativeLayout, EventDispatcher):
+    songName = StringProperty("Loading")
+    songImageUrl = StringProperty("")
+    wrapper = ObjectProperty(SpotifyWrapper())
+    deviceId = StringProperty(None)
+    relaxing = BooleanProperty(True)
+    songImageAngle = NumericProperty(0)
+    paused = BooleanProperty(False)
+    volume = NumericProperty(0)
+    collapsed = BooleanProperty(True)
+    playListURI = StringProperty("")
+    shuffle = StringProperty("")
 
     def __init__(self, **kwargs):
         super(SpotifyWidget, self).__init__(**kwargs)
 
-        self.currentSong = None
-        self.searchingNextSong = True
+        t = Thread(target=getDeviceIdThread, args=(self,), daemon=True)
+        t.start()
 
-        # Keyboard Handling for menuing
-        self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
-        self._keyboard.bind(on_key_down=self._on_keyboard_down)
-        self._keyboard.enabled = True
+    def on_volume(self, instance, value):
+        if (self.deviceId != None):
+            self.wrapper.setVolume(deviceId=self.deviceId, volume=value)
 
-        self.spotifyWrapper = SpotifyWrapper(deviceName=socket.gethostname())
+    def on_playListURI(self, instance, value):
+        self.wrapper.setPlaylist(
+            playlistUri=value, deviceId=self.deviceId)
+        animSpin(self)
 
-        self.deviceId = self.spotifyWrapper.getDeviceId()
+    def on_shuffle(self, instance, value):
+        self.wrapper.shuffle(deviceId=self.deviceId, value=value)
 
-        Clock.schedule_interval(self.update_label, 1)
+    def on_deviceId(self, instance, value):
+        self.relaxing = False
 
-        # t = threading.Thread(target=self.updateLabel)
-        # t.setDaemon(True)
-        # t.start()
+        self.volume = 50  # TODO GUARDAR EN MEMORIA EN VEZ DE HARDCODEAR
 
-    def _keyboard_closed(self):
-        self._keyboard.unbind(on_key_down=self._on_keyboard_down)
-        self._keyboard = None
+        t = Thread(target=getNewSongThread, args=(
+            self,), daemon=True)
+        t.start()
 
-    def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
+        # TODO AVISAR A TODO DE QUE TENEMOS ID Y POR LO TANTO TODO DEBERIA WORKEAR
 
-        if (self._keyboard.enabled):
+    def relaxWithThePresses(self):
+        t = Thread(target=relaxWithThePressesThread, args=(self,), daemon=True)
+        t.start()
 
-            if keycode[1] == 'enter':
-                if (self.spotifyWrapper.getCurrentPlaylist() == None or self.spotifyWrapper.getCurrentPlaylist()["is_playing"] == False):
-                    print("Resume")
-                    self.spotifyWrapper.resume(deviceId=self.deviceId)
-                    self.animSpin()
-                else:
-                    print("Pause")
-                    self.spotifyWrapper.pause(deviceId=self.deviceId)
-                    self.animSpinStop()
-            elif keycode[1] == "d":
-                print("Next")
-                self.spotifyWrapper.next(deviceId=self.deviceId)
-                self.animSpin()
-                self.searchingNextSong = True
+    def volUp(self):
+        if (self.volume <= 95):
+            self.volume += 5
+
+    def volDown(self):
+        if (self.volume >= 5):
+            self.volume -= 5
+
+    def on_paused(self, instance, value):
+        if value:
+            stopAnim(self)
+        else:
+            animSpin(self)
+
+    def on_collapsed(self, instance, value):
+        pauseButton = self.ids.startPauseButton
+        nextButton = self.ids.nextButton
+        previousButton = self.ids.previousButton
+        songImage = self.ids.songImage
+        volUp = self.ids.volUp
+        volDown = self.ids.volDown
+
+        all = [pauseButton, nextButton,
+               previousButton, volUp, volDown]
+
+        inTransition = "in_back"
+        outTransition = "out_bounce"
+
+        if (value):
+            # COLLAPSED
+            volUp.pos = (100, 100)
+
+            imageAnim = songImageAnim = Animation(
+                size_hint=(.7, .7), transition=inTransition, duration=.6)
+
+            anim = Animation(
+                pos_hint={'center_x': 0.5, "center_y": .5}, duration=.5, transition=inTransition) & Animation(opacity=0, duration=1)
+
+            for widget in all:
+                anim.start(widget)
+
+            imageAnim.start(songImage)
+
+        else:
+            # UNCOLLAPSED
+            songImageAnim = Animation(
+                size_hint=(.5, .5), transition=outTransition)
+
+            pauseAnim = Animation(
+                pos_hint={"center_x": .5, "center_y": .1}, duration=1, transition=outTransition) & Animation(opacity=1, duration=1)
+
+            nextAnim = Animation(
+                pos_hint={"center_x": .75, "center_y": .2}, duration=1, transition=outTransition) & Animation(opacity=1, duration=1)
+            previousAnim = Animation(
+                pos_hint={"center_x": .25, "center_y": .2}, duration=1, transition=outTransition) & Animation(opacity=1, duration=1)
+            volUpAnim = Animation(
+                pos_hint={"center_x": .66, "center_y": .85}, duration=1, transition=outTransition) & Animation(opacity=1, duration=1)
+            volDownAnim = Animation(
+                pos_hint={"center_x": .33, "center_y": .85}, duration=1, transition=outTransition) & Animation(opacity=1, duration=1)
+
+            songImageAnim.start(songImage)
+
+            pauseAnim.start(pauseButton)
+            nextAnim.start(nextButton)
+            previousAnim.start(previousButton)
+            volUpAnim.start(volUp)
+            volDownAnim.start(volDown)
+
+    def pushedButtonAnim(self, widget):
+        inTransition = "in_back"
+        outTransition = "out_bounce"
+        anim = Animation(size_hint=(.15, .2), duration=.2,
+                         transition=inTransition)
+        anim += Animation(size_hint=(.2, .25), duration=.3,
+                          transition=outTransition)
+        anim.start(widget)
+
+
+def animSpin(self):
+    stopAnim(self)
+
+    anim = Animation(songImageAngle=-360, duration=3.5)
+    anim += Animation(songImageAngle=0, duration=0)
+    anim.repeat = True
+    anim.start(self)
+
+
+def stopAnim(self):
+    Animation.cancel_all(self)
+    anim = Animation(songImageAngle=0, duration=0)
+    anim.start(self)
+
+
+def getNewSongThread(widget):
+    while (True):
+        f = open("spotifyPlaylistURI.txt", "r")
+        currentPlaylistURI = f.read()
+        f.close()
+        widget.playListURI = currentPlaylistURI
+        f = open("spotifyShuffle.txt", "r")
+        shuffle = f.read()
+        widget.shuffle = shuffle
+        f.close()
+        logging.info('Spotipy: Looking for new song')
+        song = widget.wrapper.getCurrentSong()
+        if (song != None):
+            try:
+                if (song["item"]["name"] != widget.songName):
+                    logging.info('Spotipy: Found new song: ' +
+                                 song["item"]["name"])
+                    widget.songName = song["item"]["name"]
+                    widget.songImageUrl = song["item"]["album"]["images"][-1]["url"].replace(
+                        "https://", "")
+
+            except:
+                print("error")
+                print(song)
                 pass
-            elif keycode[1] == "a":
-                print("Previous")
-                self.spotifyWrapper.previous(deviceId=self.deviceId)
-                self.animSpin()
-                self.searchingNextSong = True
-                pass
-            elif keycode[1] == "w":
-                print("VolUp")
-                self.spotifyWrapper.volUp(deviceId=self.deviceId)
-                self.volume = self.spotifyWrapper.getVolume()
-                pass
-            elif keycode[1] == "s":
-                print("VolDown")
-                self.spotifyWrapper.volDown(deviceId=self.deviceId)
-                self.volume = self.spotifyWrapper.getVolume()
-                pass
+        else:
+            pass
+        time.sleep(1)
 
-            t = threading.Thread(target=self.disableKeyboard)
-            t.start()
 
-        return True
+def getDeviceIdThread(widget):
+    deviceName = socket.gethostname()
 
-    def disableKeyboardIndefinitely(self):
-        self._keyboard.enabled = False
+    while (widget.deviceId == None):
+        logging.info('Spotipy: Looking for device ID')
 
-    def enableKeyboard(self):
-        self._keyboard.enabled = True
+        devicesList = widget.wrapper.getAllDevices()
+        if (devicesList != None and len(devicesList) > 0):
+            for device in devicesList:
+                if (device["name"] == deviceName):
+                    logging.info('Spotipy: Found device ID: '+device["id"])
+                    widget.deviceId = device["id"]
+                    return
 
-    def disableKeyboard(self):
-        #print("Disabled keyboard")
-        self._keyboard.enabled = False
-        sleep(1)
-        self._keyboard.enabled = True
-        #print("Enabled keyboard")
-        exit()
+        time.sleep(10)
 
-    def update_label(self, *args):
-        if (self.searchingNextSong):
-            song = self.spotifyWrapper.getCurrentSong()
-            if (song != None and song != self.currentSong):
-                print("detected song change")
-                self.currentSong = song
-                self.searchingNextSong = False
-                songName = song["name"]
-                songArtist = song["album"]["artists"][0]["name"]
-                songImage = song["album"]["images"][-1]["url"]
 
-                self.ids.songName.text = songName
-                self.ids.songArtist.text = songArtist
-                self.ids.songImage.texture = self.editSongImage(songImage)
-                self.ids.songImage.texture.ask_update(None)
-            else:
-                songName = ""
-                songImage = "images/menu/Spotify_bonico.png"
-                self.ids.songName.text = songName
-                self.ids.songName.source = songImage
-
-    def editSongImage(self, songImage):
-
-        response = requests.get(songImage)
-
-        # Open the input image as numpy array, convert to RGB
-        img = Image.open(io.BytesIO(response.content)).convert("RGB")
-        npImage = np.array(img)
-        h, w = img.size
-
-        # Create same size alpha layer with circle
-        alpha = Image.new('L', img.size, 0)
-        draw = ImageDraw.Draw(alpha)
-        draw.pieslice([0, 0, h, w], 0, 360, fill=255)
-
-        # Convert alpha Image to numpy array
-        npAlpha = np.array(alpha)
-
-        # Add alpha layer to RGB
-        npImage = np.dstack((npImage, npAlpha))
-
-        imgIO = io.BytesIO()
-
-        # Save with alpha
-        Image.fromarray(npImage).save(imgIO, "png")
-
-        imgIO.seek(0)
-        imgData = io.BytesIO(imgIO.read())
-        finalTexture = CoreImage(imgData, ext='png').texture
-
-        return finalTexture
-
-    def animSpin(self):
-        Animation.cancel_all(self, "angle")
-        anim = Animation(opacity=1, duration=.1)
-        anim &= Animation(size_hint_y=0.1, duration=.2)
-        anim += Animation(size_hint_y=0.15, duration=.2)
-        anim.start(self)
-        anim = Animation(angle=360, duration=2)
-        anim += Animation(angle=360, duration=2)
-        anim.repeat = True
-        anim.start(self)
-
-    def animSpinStop(self):
-        Animation.cancel_all(self, "angle")
-        anim = Animation(size_hint_y=0.1, duration=.1)
-        anim += Animation(size_hint_y=0.15, duration=.2)
-        anim += Animation(opacity=0, duration=.1)
-
-        anim.start(self)
-
-    def on_angle(self, item, angle):
-        if angle == 360:
-            item.angle = 0
+def relaxWithThePressesThread(widget):
+    logging.info('Spotipy: Stopped listening for a bit')
+    widget.relaxing = True
+    time.sleep(.5)
+    widget.relaxing = False
+    logging.info('Spotipy: Back to work!')
+    return

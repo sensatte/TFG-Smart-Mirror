@@ -10,7 +10,7 @@ from kivy.animation import Animation
 #import kv
 from kivy.lang import Builder
 
-Builder.load_file('kv\\twitterConfig.kv')
+Builder.load_file('kv/twitterConfig.kv')
 
 import db.dbWrapper as dbWrapper
 

@@ -18,10 +18,9 @@ from kivy.app import App
 import kivy
 from kivy.uix.vkeyboard import VKeyboard
 from kivy.config import Config
-kivy.require('2.0.0')  # replace with your current kivy version !
+kivy.require('2.0.0')
 
-Window.size = (540, 700)
-# Window.size = (540, 960)
+Window.size = (540, 960)
 Window.minimum_width, Window.minimum_height = Window.size
 
 
@@ -88,7 +87,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "menu"
+        scMenu.current = "home"
 
         self.set_keyboard()
 

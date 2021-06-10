@@ -28,37 +28,21 @@
                 Color:
                     rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
                 Rectangle:
-                    source: "images\\menu\\notes.png"
+                    source: "images/menu/notes.png"
                     size: 30,30
                     pos: self.center_x-15, self.center_y-15
 
                     
             RecycleView:
                 viewclass: 'GifConfig2'
-                # viewclass: 'AsyncImage'
                 data: root.currentGifsData
                 RecycleGridLayout:
                     cols: 1
-                    # rows:2
                     spacing: 10
                     padding: 10
-                    # default_size: None, dp(56)
                     default_size_hint: 1, None
                     size_hint_y: None
                     height: self.minimum_height
-
-
-            # Scrolling:
-            #     GridLayout:
-            #         id: showGifs
-            #         cols: 2
-            #         padding: 15
-            #         spacing: 10
-            #         size_hint_y: None
-            #         row_force_default:True
-            #         row_default_height:150
-            #         height: self.minimum_height
-
 
     # Search GIF
         TabbedPanelItem:
@@ -68,7 +52,7 @@
                 Color:
                     rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
                 Rectangle:
-                    source: "images\\menu\\writing.png"
+                    source: "images/menu/writing.png"
                     size: 30,30
                     pos: self.center_x-15, self.center_y-15
 
@@ -79,14 +63,13 @@
 
 
 
-    #############################################
+    #--------------------------------
                 BoxLayout:
                     size_hint_y: None
                     orientation: "horizontal"
                     height: 20
                     Label:
                         text: "Desactivar:"  if main.ids.switch.active else 'Activar:'
-                        # font_size:"22"
                     Switch:
                         id:switch
                         active: True
@@ -95,15 +78,15 @@
                             Color:
                                 rgb: 1,1,1
                             Rectangle:
-                                source: 'images\\icon.png'        # make or download your background jpg
+                                source: 'images/icon.png'        # make or download your background jpg
                                 size: sp(86), sp(32)
                                 pos: int(self.center_x - sp(41)), int(self.center_y - sp(16))
                             Rectangle:
-                                source: 'images\\icon_slider.png' # make or download your slider jpg
+                                source: 'images/icon_slider.png' # make or download your slider jpg
                                 size: sp(43), sp(32)
                                 pos: int(self.center_x - sp(41) + self.active_norm_pos * sp(41)), int(self.center_y - sp(16))
 
-        #############################################
+        #--------------------------------
                 Widget:
                     padding:[10,0,0,0]
                     size_hint_y: None
@@ -114,7 +97,7 @@
                         Rectangle:
                             pos: root.width/20, self.center_y
                             size: root.width-root.width/10, 2
-        #############################################
+        #--------------------------------
                 
             
                 TextInput:
@@ -136,7 +119,7 @@
                             width: 1.
                             rectangle: self.x, self.y, self.width, self.height
 
-        #############################################
+        #--------------------------------
                 Widget:
                     size_hint_y: None
                     height: 6
@@ -146,7 +129,7 @@
                         Rectangle:
                             pos: root.width/20, self.center_y
                             size: root.width-root.width/10, 2
-        #############################################
+        #--------------------------------
 
                 RecycleView:
                     id: imgurRV
@@ -179,13 +162,8 @@
             width: 1.
             rectangle: self.x, self.y, self.width, self.height 
 
-# <GifsAsyncImageButton>:
-#     on_press: self.parent.parent.parent.parent.parent.parent.pressedImage(self)
-
 <GifConfig2>:
     orientation: "vertical"
-    # spacing: 10
-    # padding: 10
 
     AsyncImageButton:
         on_press: root.pinGif()
@@ -204,9 +182,3 @@
         on_press: root.deleteGif()
         size_hint: .5, .5
         pos_hint: {"center_x":.5}
-
-# <GifsAsyncImageButton>:
-#     on_press: self.parent.parent.parent.parent.parent.parent.pressedImage(self)
-
-    
-    

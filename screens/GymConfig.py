@@ -20,7 +20,7 @@ from kivy.uix.button import Button
 
 #import kv
 from kivy.lang import Builder
-Builder.load_file('kv\\gymConfig.kv')
+Builder.load_file('kv/gymConfig.kv')
 
 
 class GymConfig(Screen):

@@ -18,7 +18,7 @@ import db.dbWrapper as dbWrapper
 
 #import kv
 from kivy.lang import Builder
-Builder.load_file('kv\\infoConfig.kv')
+Builder.load_file('kv/infoConfig.kv')
 
 class InfoDayConfig(Screen):
     #TODO buscador ue te traduzca de ciudad a id

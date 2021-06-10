@@ -7,7 +7,7 @@ from kivy.clock import Clock
 import kivy.properties as Properties
 
 from kivy.lang import Builder
-Builder.load_file('kv\\twitter.kv')
+Builder.load_file('kv/twitter.kv')
 import db.dbWrapper as dbWrapper
 
 class TwitterWidget(GridLayout):

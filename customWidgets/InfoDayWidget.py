@@ -12,7 +12,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 from kivy.lang import Builder
 
-Builder.load_file('kv\\infoDay.kv')
+Builder.load_file('kv/infoDay.kv')
 
 
 class InfoDayWidget(DraggableBaseWidget):
@@ -21,8 +21,6 @@ class InfoDayWidget(DraggableBaseWidget):
         self.__name__ = "info"
         self.dbName = "infoDay"
         self.size_hint = (.3, .15)
-        # self.pos_hint = {"x": 0, "top": 1}
-        # self.pos = (0, Window.size[1] - self.height)
         clock = ClockWidget(size_hint=(1, .7))
         date = DateWidget()
         temp = TempWidget()
@@ -48,5 +46,4 @@ class InfoDayWidget(DraggableBaseWidget):
         res.add_widget(datetemp)
         res.add_widget(info)
 
-        # self.add_widget(res)
         self.add_widget(res)

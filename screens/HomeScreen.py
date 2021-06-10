@@ -6,15 +6,15 @@ from customWidgets.TwitterWidget import TwitterWidget
 from customWidgets.InfoDayWidget import InfoDayWidget
 from customWidgets.QuotesWidget import QuotesWidget
 from customWidgets.NotesWidget import NotesWidget, deleteNotes
-from customWidgets.SpotifyWidget import SpotifyWidget
 from customWidgets.utils.BehaviorUtil import ImageButton
-from customWidgets.SpotifyWidget2 import SpotifyWidget2
+from customWidgets.SpotifyWidget import SpotifyWidget
 from customWidgets.GifsWidget import GifsWidget
-from utils.volume import VolumeWid
 
 from kivy.uix.screenmanager import FadeTransition, RiseInTransition, Screen
 from kivy.clock import Clock
 from kivy.app import App
+
+from kivy.core.window import Window
 
 #import kv
 from kivy.lang import Builder
@@ -25,17 +25,24 @@ class HomeScreen(Screen):
 
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
-        
-        # volumeWidget=VolumeWid()
-        # widgets.append(volumeWidget)
+        Window.bind(mouse_pos=self.on_mouse_pos)
+
+    def on_mouse_pos(self, window, pos):
+        if App.get_running_app().root.current != "save":
+            try:
+                Clock.unschedule(self.saveScreen)
+            except:
+                pass
+
+        Clock.schedule_once(self.saveScreen, 100)
 
     def saveScreen(self, a):
-        Clock.unschedule(self.saveScreen)
+        #Clock.unschedule(self.saveScreen)
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "save"
 
     def refreshPage(self):
-        Clock.schedule_once(self.saveScreen, 100)
+        #Clock.schedule_once(self.saveScreen, 100)
         state = dbWrapper.getQuote().state
         stateTwitter = dbWrapper.getTwitter().state
         stateSpotify = dbWrapper.getSpotify().state
@@ -43,17 +50,12 @@ class HomeScreen(Screen):
         stateInfo = dbWrapper.getInfoState().state
         stateGifs = dbWrapper.getGifState().state
 
-        #print("Before deleting", self.children)
-
         i = 0
         while len(self.children) > 1:
-            #print("Trying to delete ", self.children[i])
             if not isinstance(self.children[i], ImageButton):
                 self.remove_widget(self.children[i])
             else:
                 i = 1
-
-        #print("Before adding", self.children)
 
         if state == True:
             quote = QuotesWidget()
@@ -64,7 +66,7 @@ class HomeScreen(Screen):
             self.add_widget(twitter)
 
         if stateSpotify == True:
-            spotify = SpotifyWidget2()
+            spotify = SpotifyWidget()
             self.add_widget(spotify)
 
         if stateNotes == True:
@@ -78,8 +80,6 @@ class HomeScreen(Screen):
         if stateGifs == True:
             gifs = GifsWidget()
             self.add_widget(gifs)
-
-        #print("After adding", self.children)
 
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)
