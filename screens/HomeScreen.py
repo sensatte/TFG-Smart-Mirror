@@ -54,7 +54,9 @@ class HomeScreen(Screen):
         stateInfo = dbWrapper.getInfoState().state
         stateGifs = dbWrapper.getGifState().state
 
-        for child in self.children:
+        copiedList = self.children.copy()
+
+        for child in copiedList:
             if not isinstance(child, ImageButton) and not isinstance(child, SpotifyWidget):
                 self.remove_widget(child)
 
