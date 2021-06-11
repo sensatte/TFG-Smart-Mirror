@@ -16,12 +16,16 @@ from kivy.app import App
 
 from kivy.core.window import Window
 
+from kivy.properties import BooleanProperty
+
 #import kv
 from kivy.lang import Builder
 Builder.load_file("kv/homeScreen.kv")
 
 
 class HomeScreen(Screen):
+
+    spotifyFirstLoad = BooleanProperty(True)
 
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
@@ -50,12 +54,9 @@ class HomeScreen(Screen):
         stateInfo = dbWrapper.getInfoState().state
         stateGifs = dbWrapper.getGifState().state
 
-        i = 0
-        while len(self.children) > 1:
-            if not isinstance(self.children[i], ImageButton):
-                self.remove_widget(self.children[i])
-            else:
-                i = 1
+        for child in self.children:
+            if not isinstance(child, ImageButton) and not isinstance(child, SpotifyWidget):
+                self.remove_widget(child)
 
         if state == True:
             quote = QuotesWidget()
@@ -65,9 +66,10 @@ class HomeScreen(Screen):
             twitter = TwitterWidget()
             self.add_widget(twitter)
 
-        if stateSpotify == True:
+        if stateSpotify == True and self.spotifyFirstLoad:
             spotify = SpotifyWidget()
             self.add_widget(spotify)
+            self.spotifyFirstLoad = False
 
         if stateNotes == True:
             notes = NotesWidget()
