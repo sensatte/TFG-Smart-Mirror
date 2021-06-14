@@ -93,7 +93,7 @@ class Actives(Document):
 
 class SaveScreen(Document):
     image = StringField(required=True)
-    _id = StringField(required=True, max_length=100)
+    _id = StringField(required=False, max_length=100)
 
 class Draggable(Document):
     draggableName = StringField(required=True, max_length=500)

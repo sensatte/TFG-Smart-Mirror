@@ -20,7 +20,8 @@ from kivy.uix.vkeyboard import VKeyboard
 from kivy.config import Config
 kivy.require('2.0.0')
 
-Window.size = (540, 960)
+Window.size = (540, 760)
+#Window.size = (540, 960)
 Window.minimum_width, Window.minimum_height = Window.size
 
 
@@ -51,8 +52,7 @@ class SmartMirrorApp(App):
         infoDay.add_widget(InfoDayConfig())
         scMenu.add_widget(infoDay)
 
-        save = Screen(name="save")
-        save.add_widget(SaveScreen())
+        save = SaveScreen(name="save")
         scMenu.add_widget(save)
 
         notes = Screen(name="notes")

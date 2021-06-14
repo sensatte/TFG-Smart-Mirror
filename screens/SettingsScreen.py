@@ -28,23 +28,25 @@ class SettingsScreen(Screen):
 
     formatoClima=Properties.NumericProperty(2)
 
-    image=Properties.StringProperty('wolf')
+    image=Properties.StringProperty(dbWrapper.getSaveScreen().image)
     showNotes=Properties.ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(SettingsScreen, self).__init__(**kwargs)
         self.pos_hint={'center_y': 0.5, 'center_x': 0.5}    
         self.showNotes.bind(minimum_height=self.showNotes.setter('height'))
-        self.showSaveScreenFunc()  
+        self.showSaveScreenFunc()
 
 
     def showSaveScreenFunc(self):
         imagenes = dbWrapper.getAllSaveScreen()
         for imagen in imagenes:
-            self.ids.showNotes.add_widget(Fondo(imagen=imagen.image))
+            selected = imagen.image == self.image
+            fondo = Fondo(imagen=imagen.image, state="down" if selected else "normal")
+            self.ids.showNotes.add_widget(fondo)
 
-    def saveConfig(self):
-        dbWrapper.saveSaveScreen(self.image)        
+    #def saveConfig(self):
+    #    dbWrapper.saveSaveScreen(self.image)
 
     def pressedBack(self, widget):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)
@@ -53,7 +55,7 @@ class SettingsScreen(Screen):
         anim.start(widget)
 
     def goToMenuScreen(self, widget, selected):        
-        self.saveConfig()
+        #self.saveConfig()
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "menu"
 
@@ -65,9 +67,6 @@ class Fondo(ToggleButtonBehavior, Image):
         self.imagen=imagen
         self.source="images/saveScreen/"+imagen
 
-    def saveSaveScreen(self):
-        dbWrapper.saveSaveScreen(self.imagen)
-
     def on_state(self, widget, value):
-        if value == 'down':
-            self.saveSaveScreen()
+        print("chosen "+self.imagen)
+            dbWrapper.saveSaveScreen(self.imagen)
