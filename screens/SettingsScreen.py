@@ -68,5 +68,5 @@ class Fondo(ToggleButtonBehavior, Image):
         self.source="images/saveScreen/"+imagen
 
     def on_state(self, widget, value):
-        print("chosen "+self.imagen)
+        if value == 'down' and self.imagen != "":
             dbWrapper.saveSaveScreen(self.imagen)
