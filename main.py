@@ -20,8 +20,9 @@ from kivy.uix.vkeyboard import VKeyboard
 from kivy.config import Config
 kivy.require('2.0.0')
 
-Window.size = (540, 760)
+#Window.size = (540, 760)
 #Window.size = (540, 960)
+Window.fullscreen = True
 Window.minimum_width, Window.minimum_height = Window.size
 
 
