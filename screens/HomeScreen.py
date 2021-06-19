@@ -25,7 +25,7 @@ Builder.load_file("kv/homeScreen.kv")
 
 class HomeScreen(Screen):
 
-    spotifyFirstLoad = BooleanProperty(True)
+    firstLoad = BooleanProperty(True)
 
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
@@ -56,34 +56,41 @@ class HomeScreen(Screen):
 
         copiedList = self.children.copy()
 
+        # for child in copiedList:
+        #     if not isinstance(child, ImageButton) and not isinstance(child, SpotifyWidget):
+        #         self.remove_widget(child)
+
         for child in copiedList:
-            if not isinstance(child, ImageButton) and not isinstance(child, SpotifyWidget):
+            if isinstance(child, InfoDayWidget):
                 self.remove_widget(child)
-
-        if state == True:
-            quote = QuotesWidget()
-            self.add_widget(quote)
-
-        if stateTwitter == True:
-            twitter = TwitterWidget()
-            self.add_widget(twitter)
-
-        if stateSpotify == True and self.spotifyFirstLoad:
-            spotify = SpotifyWidget()
-            self.add_widget(spotify)
-            self.spotifyFirstLoad = False
-
-        if stateNotes == True:
-            notes = NotesWidget()
-            self.add_widget(notes)
 
         if stateInfo == True:
             info = InfoDayWidget()
             self.add_widget(info)
 
-        if stateGifs == True:
-            gifs = GifsWidget()
-            self.add_widget(gifs)
+        if self.firstLoad:
+
+            if state == True:
+                quote = QuotesWidget()
+                self.add_widget(quote)
+
+            if stateTwitter == True:
+                twitter = TwitterWidget()
+                self.add_widget(twitter)
+
+            if stateSpotify == True:
+                spotify = SpotifyWidget()
+                self.add_widget(spotify)
+
+            if stateNotes == True:
+                notes = NotesWidget()
+                self.add_widget(notes)
+
+            if stateGifs == True:
+                gifs = GifsWidget()
+                self.add_widget(gifs)
+
+            self.firstLoad = False
 
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)
