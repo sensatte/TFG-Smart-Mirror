@@ -41,6 +41,7 @@ class SmartMirrorApp(App):
         # TODO forma bonita de meter las pantallas
 
         Config.set("kivy", "keyboard_mode", "systemanddock")
+        Config.write()
 
         # Create the screen manager
         scMenu = ScreenManager()
