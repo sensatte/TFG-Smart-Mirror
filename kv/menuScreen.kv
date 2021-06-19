@@ -1,0 +1,78 @@
+#:kivy 1.0
+#:set gridLayoutSpacing 40
+#:set gridLayoutSize (.7, .5)
+
+<MenuScreen>:
+
+    #:set gridLayoutSpacing 15
+    #:set gridLayoutSize (.8,.75)
+    on_pre_enter: root.fadeIn()
+    FloatLayout:
+        id: caja
+        size_hint: .4,.3
+        pos_hint: {'center_x':0.5, 'center_y':-.5}
+        
+
+        Carousel:
+            id:car
+            direction: 'right'
+            anim_type: 'out_quart'
+            pos_hint: {'center_x':.5, 'center_y':.5}
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        width: 2.
+                        rectangle: self.x, self.y, self.width, self.height
+                id: optionsGridone
+                cols: 3
+                rows: 3
+                pos_hint: {"center_x": .5, "center_y": .5}
+                size_hint: gridLayoutSize
+                padding: gridLayoutSpacing
+                spacing: gridLayoutSpacing
+              
+
+            GridLayout:
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        width: 2.
+                        rectangle: self.x, self.y, self.width, self.height
+                id: optionsGrid2
+                cols: 3
+                rows: 3
+                pos_hint: {"center_x": .5, "center_y": .5}
+                size_hint: gridLayoutSize
+                padding: gridLayoutSpacing
+                spacing: gridLayoutSpacing
+
+                Button:
+                    text: "Hello 10"
+                Button:
+                    text: "Hello 11"
+                Button:
+                    text: "Hello 12"
+                Button:
+                    text: "Hello 13"
+                Button:
+                    text: "Hello 14"
+                Button:
+                    text: "Hello 15"
+                Button:
+                    text: "Hello 16"
+                Button:
+                    text: "Hello 17"
+                Button:
+                    text: "Hello 18"
+
+            
+        ImageButton:
+            id: homeButton
+            size_hint_y: None
+            source: "images/menu/home.png"
+            pos_hint: {"center_x": .5, "y": 0}
+            size_hint: (.15, .11)
+            on_press: root.pressedBack(self)

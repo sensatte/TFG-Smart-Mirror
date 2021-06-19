@@ -1,0 +1,33 @@
+#:kivy 1.0
+
+<TwitterWidget>:
+    id:panel
+    cols: 1
+    size_hint:(.25, None)
+    pos_hint:{"x": .015, "top": .8}
+    spacing:10
+    padding: 15
+    height: self.minimum_height
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Line:
+            width: 1.
+            rectangle: self.x, self.y, self.width, self.height     
+
+<LabelAjustado>:
+    text_size: self.width, None
+    size: self.texture_size
+    size_hint: 1, None
+    height: self.texture_size[1]
+    markup: True
+    font_size: 8
+    colorb:self.colorb
+    max:self.max
+
+    canvas.before:
+        Color:
+            rgba: (1,1,1,1) if self.colorb!=self.max else (1,1,1,0)
+        Line:
+            width: .2
+            rectangle: self.x, self.y-5, self.width, .2                    

@@ -1,0 +1,548 @@
+#LyX file created by tex2lyx 2.3
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin D:/TFG-Smart-Mirror/documentation/Capitulos/
+\textclass article
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% !TEX root = ../proyect.tex
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+chapter{Formato}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "cap1"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:intro"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La memoria del Trabajo fin de Grado se entrega utilizando la aplicación de la escuela para Trabajos fin de Carrera, sita en 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+https://tfc.eii.us.es/TfG/
+\end_layout
+
+\end_inset
+
+. Debe entregarse en formato 
+\shape smallcaps
+pdf
+\shape default
+ y podrá utilizarse cualquier aplicación informática para generar la misma, siempre que el resultado final verifique los requisitos que se exponen en este documento.
+\end_layout
+
+\begin_layout Section
+Formato general
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:general"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Salvo excepciones justificadas, el 
+\shape smallcaps
+pdf
+\shape default
+ a entregar debe tener sus páginas del tama
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+ñ
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+o estandarizado más común en Europa: 
+\shape smallcaps
+din a4
+\shape default
+. Con el objetivo de facilitar su lectura en dispositivos electrónicos, se considerarÃ¡ que se imprime a una sóla cara (ver 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:impresion"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ para los casos en que la memoria deba ser impresa).
+\end_layout
+
+\begin_layout Section
+Cuerpo y tipos de letra
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:letra"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se recomienda utilizar, dada su simplicidad, claridad y legibilidad, los tipos de letra Arial (preferiblemente en caja alta) o Helvética, en un tamaÃ±o para el cuerpo del texto de 11 pt, con un interlineado sencillo o de 1,5.
+\end_layout
+
+\begin_layout Standard
+Los t
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+í
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+tulos de cap
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+í
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+tulos, secciones y subsecciones, as
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+í
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ como las notas al pie de texto
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+Por favor, no abusad de las notas a pie de texto
+\end_layout
+
+\end_inset
+
+ y las cabeceras o pies de cuadros, figuras y trozos de código quedan a libertad del redactor de la memoria. Sin embargo, es buena idea que los t
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+í
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+tulos tengan un tamaÃ±o igual o superior a 11pt. y los pies y cabeceras sean de tama
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+ñ
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+o igual o inferior a 11pt. Se ruega encarecidamente que, en lo posible, se evite el 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+underline{subrayado}
+\end_layout
+
+\end_inset
+
+. Este puede sustituirse por el uso de 
+\series bold
+negritas
+\series default
+ o 
+\shape italic
+cursivas
+\shape default
+ o por el cambio de formato del tipo de letra (Se recomienda prestar atención y no abusar del cambio de 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+color
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+, pues puede dar problemas de accesibilidad).
+\end_layout
+
+\begin_layout Section
+MÃ¡rgenes y pÃ¡rrafos
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:margenes"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es necesario configurar la pÃ¡gina seleccionando los mÃ¡rgenes siguientes: 
+\end_layout
+
+\begin_layout Itemize
+MÃ¡rgenes superior e inferior: 2,5 cm. 
+\end_layout
+
+\begin_layout Itemize
+MÃ¡rgenes laterales (izquierdo y derecho): 3 cm. 
+\end_layout
+
+\begin_layout Standard
+En el caso de no usar cabeceras, las pÃ¡ginas deberán ir numeradas en el centro del pie. Si se usan cabeceras, no se utilizarÃ¡n estas en las páginas que comienzan capÃ­tulo, las cuales se numerarán en el centro del pie. Las restantes páginas pueden ir numeradas en el pie o en la cabecera, pero deberán mantener coherencia de formato a lo largo de todo el cap
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+í
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+tulo.
+\end_layout
+
+\begin_layout Standard
+Las páginas previas al cuerpo de la memoria del Trabajo fin de Grado (agradecimientos, resumen, 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+í
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ndices,…) pueden no numerarse o numerarse independientemente de la misma, en cuyo caso se numerarán con números romanos. Se recuerda que los números romanos se escriben con letras mayúsculas (la numeración i,ii,iii,iv…es propia del idioma inglés y no es admisible en espa
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+ñ
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ol, ni siquiera para enumeraciones)
+\end_layout
+
+\begin_layout Standard
+Los párrafos comenzarán con sangrado. El espacio entre los mismos no debe ser excesivo.
+\end_layout
+
+\begin_layout Section
+Lengua
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:lengua"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La Normativa acadÃ©mica de los Trabajos fin de Grado indica:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Como norma general, el TfG deberÃ¡ estar escrito y ser expuesto oralmente en castellano. PodrÃ¡ tambiÃ©n estar escrito y ser expuesto en inglÃ©s, previa solicitud.
+\emph default
+
+\end_layout
+
+\begin_layout Standard
+En cualquier caso, la memoria debe respetar los usos y costumbres del idioma en que sea escrita. Debe prestarse especial atención al guionado de las palabras, debido a que muchas aplicaciones informáticas usan el propio del inglés y no el del castellano.
+\end_layout
+
+\begin_layout Standard
+En cuanto a la portada, se debe utilizar la portada oficial de la ETSII. Un ejemplo de la misma puede encontrarse al principio (como portada) de este documento.
+\end_layout
+
+\end_body
+\end_document

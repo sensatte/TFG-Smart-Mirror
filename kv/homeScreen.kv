@@ -1,0 +1,12 @@
+#:kivy 1.0
+<HomeScreen>:
+    on_pre_enter: root.refreshPage()
+
+    ImageButton:
+        id: menuButton
+        keep_ratio: True
+        allow_stretch: True
+        source: "images/menu/app-drawer.png"
+        pos_hint: {"center_x": .5, "y": 0}
+        size_hint: (.1, .1)
+        on_press: root.goToConfigScreen()

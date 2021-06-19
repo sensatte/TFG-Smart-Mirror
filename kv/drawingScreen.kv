@@ -1,0 +1,81 @@
+#:kivy 1.7.0
+
+<DrawingScreen>:
+
+    CanvasWidget:
+        id: painter
+        size_hint: 1,.9
+
+    ColorWheel:
+        id: rueda
+        pos_hint:{'center_y': .5, 'center_x': 0}
+        size_hint:(0.4, 0.3)
+        opacity:0
+        color: [1,0,0,1]
+        on_color: root.colorPincel = self.color
+
+    Slider:
+        id: grosor
+        pos_hint:{'center_y': .5, 'center_x': 1}
+        size_hint:(0.4, 0.3)
+        opacity:0      
+        cursor_image: 'images\icons\dot.png'
+
+        value: 15
+        min: 5
+        max: 20
+        step: 1
+        orientation: 'vertical'
+        
+        on_value: root.grosorLinea = self.value
+
+    ImageButton:
+        id: homeButton
+        source: "images/menu/previous.png"
+        on_press: root.pressedBack(self)
+        height: 40
+        size_hint_y: None
+        width: 40
+        size_hint_x: None
+        pos_hint: {"x": .1, "y": .05}
+
+
+    BoxLayout:
+        id: caja
+        orientation: 'horizontal'
+        size_hint: .2,.1
+        pos_hint: {"center_x": .5, "y": .05}
+
+
+        ImageButton:
+            id:clear
+            on_press: root.clearDrawing(self)
+            source: "images\icons\rubber.png"
+
+        ImageButton:
+            id:guardar
+            on_press: root.guardarImagen()
+            source: "images\icons\download.png"
+
+    FloatLayout:
+        size_hint: .1,.1
+        pos_hint: {"y": .08, "right": .95}
+        Button:
+            id:grosorcito
+            on_press: root.grosorOut = not root.grosorOut
+            on_press: root.ruedaOut = not root.ruedaOut
+
+            pos_hint: {"center_y": .05, "center_x": .5}
+            height: root.grosorLinea
+            size_hint_y: None
+            width: root.grosorLinea
+            size_hint_x: None
+            background_color: 0,0,0,0
+
+            canvas:
+                Color:
+                    rgb: rueda.color if rueda.color!=[0,0,0,1] else [.1,.1,.1,1]
+                Ellipse:
+                    pos: self.pos
+                    size: self.size[0],self.size[1]
+            

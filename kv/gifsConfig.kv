@@ -1,0 +1,184 @@
+#:kivy 1.0
+#:set buttonNormal [1,1,1,.7]
+#:set buttonPressed [1,1,1,1]
+<GifsConfig>:
+    size_hint:.4,.4
+    id: main
+    TabbedPanel:
+        size_hint: 1,.75
+        background_color: 0,0,0,0
+        do_default_tab: False
+        padding: [0,5,0,5]
+        tab_width: self.parent.width / 2
+        tab_height: 30
+        pos_hint: {"center_x": .5, "center_y": .5}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2.
+                rectangle: self.x, self.y, self.width, self.height 
+
+    #Elegir Gifs
+        TabbedPanelItem:
+            background_color: 1,0,0,0
+            width: 10
+            id:elegir
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images/menu/notes.png"
+                    size: 30,30
+                    pos: self.center_x-15, self.center_y-15
+
+                    
+            RecycleView:
+                viewclass: 'GifConfig2'
+                data: root.currentGifsData
+                RecycleGridLayout:
+                    cols: 1
+                    spacing: 10
+                    padding: 10
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+    # Search GIF
+        TabbedPanelItem:
+            background_color: 1,0,0,0
+            width: 10
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images/menu/writing.png"
+                    size: 30,30
+                    pos: self.center_x-15, self.center_y-15
+
+            GridLayout:
+                cols: 1
+                padding: 15
+                spacing: 10
+
+
+
+    #--------------------------------
+                BoxLayout:
+                    size_hint_y: None
+                    orientation: "horizontal"
+                    height: 20
+                    Label:
+                        text: "Desactivar:"  if main.ids.switch.active else 'Activar:'
+                    Switch:
+                        id:switch
+                        active: True
+                        on_touch_down: root.activeInter = not self.active
+                        canvas.after:
+                            Color:
+                                rgb: 1,1,1
+                            Rectangle:
+                                source: 'images/icon.png'        # make or download your background jpg
+                                size: sp(86), sp(32)
+                                pos: int(self.center_x - sp(41)), int(self.center_y - sp(16))
+                            Rectangle:
+                                source: 'images/icon_slider.png' # make or download your slider jpg
+                                size: sp(43), sp(32)
+                                pos: int(self.center_x - sp(41) + self.active_norm_pos * sp(41)), int(self.center_y - sp(16))
+
+        #--------------------------------
+                Widget:
+                    padding:[10,0,0,0]
+                    size_hint_y: None
+                    height: 6
+                    canvas:
+                        Color:
+                            rgba: 1., 1., 1., .6
+                        Rectangle:
+                            pos: root.width/20, self.center_y
+                            size: root.width-root.width/10, 2
+        #--------------------------------
+                
+            
+                TextInput:
+                    id: textinput
+                    hint_text:'Enter text'
+                    hint_text_color: [1,1,1,1]
+                    pos_hint: {'center_x': 0.5, 'y': 0}
+                    on_text: root.textChanged(self.text) 
+                    size_hint: 0.95, .4
+                    background_color: [1,1,1,0]
+                    valign: 'center'
+                    font_size: 11
+                    cursor_color: [1,1,1,.8]
+                    canvBack:[1,1,1,.4]
+                    canvas.before:
+                        Color:
+                            rgba: self.canvBack
+                        Line:
+                            width: 1.
+                            rectangle: self.x, self.y, self.width, self.height
+
+        #--------------------------------
+                Widget:
+                    size_hint_y: None
+                    height: 6
+                    canvas:
+                        Color:
+                            rgba: 1., 1., 1., .6
+                        Rectangle:
+                            pos: root.width/20, self.center_y
+                            size: root.width-root.width/10, 2
+        #--------------------------------
+
+                RecycleView:
+                    id: imgurRV
+                    viewclass: 'AsyncImageButton'
+                    RecycleGridLayout:
+                        cols: 2
+                        default_size: None, dp(56)
+                        default_size_hint: 1, None
+                        size_hint_y: None
+                        height: self.minimum_height
+
+    ImageButton:
+        id: homeButton
+        size_hint_y: None
+        source: "images/menu/previous.png"
+        pos_hint: {"center_x": .5, "y": 0}
+        size_hint: (.17, .11)
+        on_press: root.pressedBack(self)
+
+<GifConfig>:
+    text_size: self.width, None
+    size: self.texture_size
+    on_press: self.pinGif()
+
+    canvas.after:
+        Color:
+            rgba: (1,1,1,1) if self.pinned==True else (1,1,1,0)
+
+        Line:
+            width: 1.
+            rectangle: self.x, self.y, self.width, self.height 
+
+<GifConfig2>:
+    orientation: "vertical"
+
+    AsyncImageButton:
+        on_press: root.pinGif()
+        source: root.source
+        delay: root.delay
+        canvas.after:
+            Color:
+                rgba: (1,1,1,1) if root.pinned==True else (1,1,1,0)
+
+            Line:
+                width: 1.
+                rectangle: self.x, self.y, self.width, self.height
+
+    ImageButton:
+        source: "images/menu/trash.png"
+        on_press: root.deleteGif()
+        size_hint: .5, .5
+        pos_hint: {"center_x":.5}

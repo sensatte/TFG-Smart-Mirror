@@ -1,1 +1,7 @@
 \.vscode
+__pycache__/
+api_credentials.py
+*.pyc
+\.pytest_cache
+.cache
+spotifyPlaylistURI.txt

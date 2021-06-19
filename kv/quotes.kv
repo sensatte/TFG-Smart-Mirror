@@ -1,0 +1,19 @@
+#:kivy 1.0
+
+<QuotesWidget>:
+
+    AnchorLayout:
+        size_hint: .5,.2
+        padding: [0,0,20,0]
+
+        Label:
+            id: quoteid
+            text: 'Es fácil matar, solo tienes que olvidar el sabor del azúcar'
+            italic: True
+            markup:True
+            text_size: self.width, None
+            size: self.texture_size
+            halign: 'right'
+            font_size: 20
+
+        

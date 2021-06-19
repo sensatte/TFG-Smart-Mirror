@@ -1,0 +1,313 @@
+#:kivy 1.0
+
+<SettingsScreen>:
+    size_hint:.4,.4
+    showNotes: showNotes
+    id: main
+    TabbedPanel:
+        size_hint: 1,.75
+        background_color: 0,0,0,0
+        do_default_tab: False
+        padding: [0,5,0,0]
+        tab_width: self.parent.width / 3
+        tab_height: 30
+        pos_hint: {"center_x": .5, "center_y": .5}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 2.
+                rectangle: self.x, self.y, self.width, self.height 
+
+    #Hora
+        TabbedPanelItem:
+            background_color: 1,0,0,0
+            width: 10
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images/menu/settings.png"
+                    size: 30,30
+                    pos: self.center_x-15, self.center_y-15
+            Scrolling:
+                GridLayout:
+                    cols: 1
+                    padding: 15
+                    spacing: 10
+                    size_hint_y: None
+                    height: self.minimum_height
+                    
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 40
+                        Image:
+                            source: "images/menu/clock.png"
+
+                        Label:
+                            text: "Hora"
+                            font_size:"22"
+
+                    Label:
+                        height: 20
+                        size_hint_y: None
+                        text: "Formato:"
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 40
+                        ToggleButton:
+                            group: "horaFormato"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "12h"
+                            
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.formatoHora[0]=self.text
+                            canvas.before:
+                                Color:
+                                    rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+                        ToggleButton:
+                            group: "horaFormato"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "24h"     
+                            state: "down"                      
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.formatoHora[0]=self.text
+                            canvas.before:
+                                Color:
+                                    rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+                   
+        #--------------------------------
+                    Widget:
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+        #--------------------------------
+
+                    Label:
+                        height: 20
+                        size_hint_y: None
+                        text: "Segundos:"
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 40
+                        ToggleButton:
+                            group: "horaSegundos"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "Sí"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.formatoHora[1]=True
+                            canvas.before:
+                                Color:
+                                    rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+
+                        ToggleButton:
+                            group: "horaSegundos"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "No"                           
+                            background_color:[0, 0, 0, 0]
+                            state: "down"
+                            allow_no_selection: False
+                            on_press: root.formatoHora[1]=False
+                            canvas.before:
+                                Color:
+                                    rgba: [1,1,1,.2] if self.state == "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+        
+        
+        
+    #SaveScreen
+        TabbedPanelItem:
+            background_color: 0,0,0,0
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images/menu/gallery.png"
+                    size: 30,30
+                    pos: self.center_x-15, self.center_y-15
+            Scrolling:
+
+                GridLayout:
+                    cols: 1
+                    padding: 15
+                    spacing: 10
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 40
+                        Image:
+                            source: "images/menu/gallery.png"
+
+                        Label:
+                            text: "Salvapantallas"
+                            font_size:"12"
+
+            #--------------------------------
+                    Widget:
+                        padding:[10,0,0,0]
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+            #--------------------------------
+
+                    GridLayout:
+                        id: showNotes
+                        cols: 2
+                        padding: 15
+                        spacing: 10
+                        size_hint_y: None
+                        row_force_default:True
+                        row_default_height:100
+
+    #Tiempo
+        TabbedPanelItem:
+            background_color: 0,0,0,0
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images/menu/weather.png"
+                    size: 30,30
+                    pos: self.center_x-15, self.center_y-15
+            Scrolling:
+                GridLayout:
+                    cols: 1
+                    padding: 15
+                    spacing: 10
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 40
+                        Image:
+                            source: "images/menu/weather.png"
+
+                        Label:
+                            text: "Tiempo"
+                            font_size:"22"
+
+        #--------------------------------
+                    Label:
+                        height: 20
+                        size_hint_y: None
+                        text: "Tema:"
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 60
+
+                        BoxLayout:
+                            orientation: "vertical"
+                            ImageButton:
+                                source: "images/icons/weather_min/01.png"   
+                                on_press: main.ids.simple.state="down"
+                                on_press: root.formatoClima=1                
+                            ToggleButton:
+                                group: "weatherTheme"
+                                id: simple
+                                color: [1, 1, 1, 1] if simple.state == "down" else [1,1,1,.6]
+                                text: "Simple"
+                                background_color:[0, 0, 0, 0]
+                                allow_no_selection: False
+                                on_press: root.formatoClima=1                                 
+                                canvas.before:
+                                    Color:
+                                        rgba: [1,1,1,.2] if simple.state == "down" else [1,1,1,0]
+                                    RoundedRectangle:
+                                        size:self.size[0], self.size[1]+35
+                                        pos:self.pos
+                                        radius: [15]
+                          
+                        BoxLayout:
+                            canvas.before:
+                                Color:
+                                    rgba: [1,1,1,.2] if simple.state != "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size[0], self.size[1]+5
+                                    pos:self.pos
+                                    radius: [15]
+                            orientation: "vertical"
+                            
+                            ImageButton:
+                                source: "images/icons/weather_medmin/01.png"
+                                on_press: simple.state="normal"  
+                                on_press: root.formatoClima=2                                      
+                            ToggleButton:
+                                group: "weatherTheme"
+                                id: detail
+                                color: [1, 1, 1, 1] if simple.state != "down" else [1,1,1,.6]
+                                text: "Detallado"   
+                                state: "down"                        
+                                background_color:[0, 0, 0, 0]
+                                allow_no_selection: False
+                                on_press: root.formatoClima=2                                   
+   
+
+    ImageButton:
+        id: homeButton
+        size_hint_y: None
+        source: "images/menu/previous.png"
+        pos_hint: {"center_x": .5, "y": 0}
+        size_hint: (.17, .11)
+        on_press: root.pressedBack(self)
+
+<Scrolling>:
+    do_scroll_x: False
+    bar_margin: 5
+    bar_width: 3
+    bar_color: [1,1,1,.5]
+    bar_inactive_color: [1,1,1,.2]
+    scroll_type: ['content']
+
+<Fondo>:
+    id: pin
+    checked: False
+    #source: ""
+    group: "horaColor"
+    background_color:[0, 0, 0, 0]
+    allow_no_selection: False
+    canvas.after:
+        Color:
+            rgba: (1,1,1,1) if self.state=='down' else (1,1,1,0)
+
+        Line:
+            width: 1.
+            rectangle: self.x, self.y, self.width, self.height

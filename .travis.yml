@@ -1,0 +1,12 @@
+language: python
+os: linux
+dist: xenial
+before_install:
+  - sudo apt-get update -q
+  - sudo apt-get install python-pip build-essential git python-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev
+python:
+  - "3.7"
+install:
+  - python -m pip install kivy
+script:
+  - pytest

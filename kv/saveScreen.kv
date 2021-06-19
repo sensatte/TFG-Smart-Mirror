@@ -1,0 +1,17 @@
+#:kivy 1.0
+<SaveScreen>:
+
+    on_pre_enter: self.refreshImage()
+
+    FloatLayout:
+      
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: root.fondo
+
+        Button:
+            text:""
+            background_color:[0, 0, 0, 0]
+            on_press: root.goToHomeScreen(self)
