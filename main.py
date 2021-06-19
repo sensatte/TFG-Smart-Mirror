@@ -21,13 +21,8 @@ from kivy.config import Config
 kivy.require('2.0.0')
 
 #Window.size = (1280, 720)
-# Window.borderless = True
-# Window.left = 0
-# Window.top = 0
 
 Window.fullscreen = "auto"
-
-Window.on_minimize = Window.maximize
 
 # Window.size = (540, 760)
 
@@ -100,8 +95,6 @@ class SmartMirrorApp(App):
         scMenu.current = "home"
 
         self.set_keyboard()
-
-        Window.maximize()
 
         return scMenu
 
