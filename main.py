@@ -99,6 +99,8 @@ class SmartMirrorApp(App):
 
         self.set_keyboard()
 
+        Window.maximize()
+
         return scMenu
 
     def set_keyboard(self):
