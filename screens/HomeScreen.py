@@ -45,6 +45,15 @@ class HomeScreen(Screen):
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "save"
 
+    def reloadSpotify(self):
+        for child in self.children:
+            if isinstance(child, SpotifyWidget):
+                self.remove_widget(child)
+                break
+        
+        spotify = SpotifyWidget()
+        self.add_widget(spotify)
+
     def refreshPage(self):
         #Clock.schedule_once(self.saveScreen, 100)
         state = dbWrapper.getQuote().state

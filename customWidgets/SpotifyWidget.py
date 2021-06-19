@@ -28,6 +28,27 @@ class SpotifyWidget(RelativeLayout, EventDispatcher):
     playListURI = StringProperty("")
     shuffle = StringProperty("")
 
+    def pauseResume(self):
+        try:
+            self.wrapper.pauseResume(self.deviceId)
+        except:
+            #PETA PORQUE NO ESTA EL DEVICE, ASI QUE RECARGAMOS EL WIDGET
+            self.parent.reloadSpotify()
+
+    def next(self):
+        try:
+            self.wrapper.next(self.deviceId)
+        except:
+            #PETA PORQUE NO ESTA EL DEVICE, ASI QUE RECARGAMOS EL WIDGET
+            self.parent.reloadSpotify()
+
+    def previous(self):
+        try:
+            self.wrapper.previous(self.deviceId)
+        except:
+            #PETA PORQUE NO ESTA EL DEVICE, ASI QUE RECARGAMOS EL WIDGET
+            self.parent.reloadSpotify()
+
     def __init__(self, **kwargs):
         super(SpotifyWidget, self).__init__(**kwargs)
 
@@ -36,7 +57,11 @@ class SpotifyWidget(RelativeLayout, EventDispatcher):
 
     def on_volume(self, instance, value):
         if (self.deviceId != None):
-            self.wrapper.setVolume(deviceId=self.deviceId, volume=value)
+            try:
+                self.wrapper.setVolume(deviceId=self.deviceId, volume=value)
+            except:
+                #PETA PORQUE NO ESTA EL DEVICE, ASI QUE RECARGAMOS EL WIDGET
+                self.parent.reloadSpotify()
 
     def on_playListURI(self, instance, value):
         self.wrapper.setPlaylist(
