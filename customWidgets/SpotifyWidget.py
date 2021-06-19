@@ -44,8 +44,9 @@ class SpotifyWidget(RelativeLayout, EventDispatcher):
         animSpin(self)
 
     def on_shuffle(self, instance, value):
-        self.wrapper.shuffle(deviceId=self.deviceId, value=value)
-
+        #self.wrapper.shuffle(deviceId=self.deviceId, value=value)
+        pass
+    
     def on_deviceId(self, instance, value):
         self.relaxing = False
 
