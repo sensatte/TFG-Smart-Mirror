@@ -17,22 +17,12 @@ class SaveScreen(Screen):
 
     def __init__(self, **kwargs):
         super(SaveScreen, self).__init__(**kwargs)
-        self.fondo=dbWrapper.getSaveScreen().image
-        print(self.fondo)
+        imageName = dbWrapper.getSaveScreen().image
+        self.fondo="images/saveScreen/"+imageName
 
-    def saveConfig(self):
-        #guardar las configs
-        if self.ids.textinput.text=="":
-            self.c_id=self.ids.textinput.hint_text
-        else:
-            self.c_id=self.ids.textinput.text
-        dbWrapper.saveHora("hora", self.formatoHora, self.colorHora)
-        dbWrapper.saveFecha("fecha", self.formatoFecha, self.colorFecha)
-        dbWrapper.saveTemp("temp", self.formatoTemp, self.colorTemp, self.c_id)
-        dbWrapper.saveClima("weather", self.formatoClima, self.c_id)
-        dbWrapper.saveInfoState(self.activeInter)
-        
-       
+    def refreshImage(self):
+        imageName = dbWrapper.getSaveScreen().image
+        self.fondo="images/saveScreen/"+imageName
 
     def goToHomeScreen(self, widget):
         App.get_running_app().root.transition = FadeTransition(duration=.3)

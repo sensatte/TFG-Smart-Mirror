@@ -7,6 +7,8 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.animation import Animation
 from kivy.app import App
 from functools import partial
+from kivy.properties import BooleanProperty
+
 
 from customWidgets.utils import Animations
 
@@ -19,6 +21,8 @@ class MenuScreen(Screen):
     # TODO que las animacines se cojan de un archivo distinto
     # TODO poner botones que lleven a la otra pagina?)
     # TODO poner bolitasw que indiquen en que pagina estas
+
+    firstPress = BooleanProperty(True)
 
     def __init__(self, **kwargs):
         super(MenuScreen, self).__init__(**kwargs)
@@ -56,17 +60,23 @@ class MenuScreen(Screen):
         self.parent.current = 'home'
 
     def pressedOption(self, widget, selected):
-        anim = Animation(size_hint=(0.2, 0.2), duration=.1)
-        anim += Animation(opacity=0, size_hint=(0.3, 0.3), duration=.2)
 
-        anim.bind(on_complete=partial(self.openSelected, selected))
-        anim += Animation(opacity=1, size_hint=(0.25, 0.25), duration=.2)
-        anim.start(widget)
+        if self.firstPress:
+
+            anim = Animation(size_hint=(0.2, 0.2), duration=.1)
+            anim += Animation(opacity=0, size_hint=(0.3, 0.3), duration=.2)
+
+            anim.bind(on_complete=partial(self.openSelected, selected))
+            anim += Animation(opacity=1, size_hint=(0.25, 0.25), duration=.2)
+            anim.start(widget)
+
+            self.firstPress = False
 
     def openSelected(self, selected, *args):
         # #llama al método de la animación con el widget de selected item
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = selected
+        self.firstPress = True
 
     def pressedBack(self, widget):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)

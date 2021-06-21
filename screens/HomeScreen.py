@@ -16,12 +16,16 @@ from kivy.app import App
 
 from kivy.core.window import Window
 
+from kivy.properties import BooleanProperty
+
 #import kv
 from kivy.lang import Builder
 Builder.load_file("kv/homeScreen.kv")
 
 
 class HomeScreen(Screen):
+
+    firstLoad = BooleanProperty(True)
 
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
@@ -41,6 +45,15 @@ class HomeScreen(Screen):
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "save"
 
+    def reloadSpotify(self):
+        for child in self.children:
+            if isinstance(child, SpotifyWidget):
+                self.remove_widget(child)
+                break
+        
+        spotify = SpotifyWidget()
+        self.add_widget(spotify)
+
     def refreshPage(self):
         #Clock.schedule_once(self.saveScreen, 100)
         state = dbWrapper.getQuote().state
@@ -50,36 +63,43 @@ class HomeScreen(Screen):
         stateInfo = dbWrapper.getInfoState().state
         stateGifs = dbWrapper.getGifState().state
 
-        i = 0
-        while len(self.children) > 1:
-            if not isinstance(self.children[i], ImageButton):
-                self.remove_widget(self.children[i])
-            else:
-                i = 1
+        copiedList = self.children.copy()
 
-        if state == True:
-            quote = QuotesWidget()
-            self.add_widget(quote)
+        # for child in copiedList:
+        #     if not isinstance(child, ImageButton) and not isinstance(child, SpotifyWidget):
+        #         self.remove_widget(child)
 
-        if stateTwitter == True:
-            twitter = TwitterWidget()
-            self.add_widget(twitter)
-
-        if stateSpotify == True:
-            spotify = SpotifyWidget()
-            self.add_widget(spotify)
-
-        if stateNotes == True:
-            notes = NotesWidget()
-            self.add_widget(notes)
+        for child in copiedList:
+            if isinstance(child, InfoDayWidget):
+                self.remove_widget(child)
 
         if stateInfo == True:
             info = InfoDayWidget()
             self.add_widget(info)
 
-        if stateGifs == True:
-            gifs = GifsWidget()
-            self.add_widget(gifs)
+        if self.firstLoad:
+
+            if state == True:
+                quote = QuotesWidget()
+                self.add_widget(quote)
+
+            if stateTwitter == True:
+                twitter = TwitterWidget()
+                self.add_widget(twitter)
+
+            if stateSpotify == True:
+                spotify = SpotifyWidget()
+                self.add_widget(spotify)
+
+            if stateNotes == True:
+                notes = NotesWidget()
+                self.add_widget(notes)
+
+            if stateGifs == True:
+                gifs = GifsWidget()
+                self.add_widget(gifs)
+
+            self.firstLoad = False
 
     def goToConfigScreen(self):
         self.parent.transition = FadeTransition(duration=.35)

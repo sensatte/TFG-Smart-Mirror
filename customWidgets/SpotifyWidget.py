@@ -8,8 +8,7 @@ from threading import Thread
 import logging
 from kivy.loader import Loader
 from customWidgets.AsyncImageButton import AsyncImageButton
-
-import socket
+import webbrowser
 
 from kivy.lang import Builder
 Builder.load_file('kv/spotify.kv')
@@ -30,6 +29,27 @@ class SpotifyWidget(RelativeLayout, EventDispatcher):
     playListURI = StringProperty("")
     shuffle = StringProperty("")
 
+    def pauseResume(self):
+        try:
+            self.wrapper.pauseResume(self.deviceId)
+        except:
+            #PETA PORQUE NO ESTA EL DEVICE, ASI QUE RECARGAMOS EL WIDGET
+            self.parent.reloadSpotify()
+
+    def next(self):
+        try:
+            self.wrapper.next(self.deviceId)
+        except:
+            #PETA PORQUE NO ESTA EL DEVICE, ASI QUE RECARGAMOS EL WIDGET
+            self.parent.reloadSpotify()
+
+    def previous(self):
+        try:
+            self.wrapper.previous(self.deviceId)
+        except:
+            #PETA PORQUE NO ESTA EL DEVICE, ASI QUE RECARGAMOS EL WIDGET
+            self.parent.reloadSpotify()
+
     def __init__(self, **kwargs):
         super(SpotifyWidget, self).__init__(**kwargs)
 
@@ -38,7 +58,11 @@ class SpotifyWidget(RelativeLayout, EventDispatcher):
 
     def on_volume(self, instance, value):
         if (self.deviceId != None):
-            self.wrapper.setVolume(deviceId=self.deviceId, volume=value)
+            try:
+                self.wrapper.setVolume(deviceId=self.deviceId, volume=value)
+            except:
+                #PETA PORQUE NO ESTA EL DEVICE, ASI QUE RECARGAMOS EL WIDGET
+                self.parent.reloadSpotify()
 
     def on_playListURI(self, instance, value):
         self.wrapper.setPlaylist(
@@ -46,7 +70,8 @@ class SpotifyWidget(RelativeLayout, EventDispatcher):
         animSpin(self)
 
     def on_shuffle(self, instance, value):
-        self.wrapper.shuffle(deviceId=self.deviceId, value=value)
+        #self.wrapper.shuffle(deviceId=self.deviceId, value=value)
+        pass
 
     def on_deviceId(self, instance, value):
         self.relaxing = False
@@ -183,11 +208,15 @@ def getNewSongThread(widget):
                 pass
         else:
             pass
-        time.sleep(1)
+        time.sleep(2.5)
 
 
 def getDeviceIdThread(widget):
-    deviceName = socket.gethostname()
+    deviceName = "Web Player (Chrome)"
+
+    webbrowser.open("https://open.spotify.com")
+
+    time.sleep(60)
 
     while (widget.deviceId == None):
         logging.info('Spotipy: Looking for device ID')
