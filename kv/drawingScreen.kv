@@ -51,11 +51,12 @@
             id:clear
             on_press: root.clearDrawing(self)
             source: "images/icons/rubber.png"
-
+            on_press: root.pressedButton(self)
         ImageButton:
             id:guardar
             on_press: root.guardarImagen()
             source: "images/icons/download.png"
+            on_press: root.pressedButton(self)
 
     FloatLayout:
         size_hint: .1,.1

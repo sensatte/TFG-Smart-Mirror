@@ -38,7 +38,7 @@ class HomeScreen(Screen):
             except:
                 pass
 
-        Clock.schedule_once(self.saveScreen, 10)
+        Clock.schedule_once(self.saveScreen, 100)
 
     def saveScreen(self, a):
         #Clock.unschedule(self.saveScreen)

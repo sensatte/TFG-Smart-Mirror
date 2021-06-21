@@ -26,7 +26,7 @@ class MenuScreen(Screen):
 
     def __init__(self, **kwargs):
         super(MenuScreen, self).__init__(**kwargs)
-        widgetList = ['gym', "international", "clock", "drawing",
+        widgetList = ['gym', "twitter", "clock", "drawing",
                       "quotes", "notes", "spotify", "gifs", "gallery"]
         self.maxCols = 3
         self.maxRows = 3

@@ -34,8 +34,7 @@ class InternationalWidget(Image):
             datetime.date.today().strftime('%d/%m'))
         self.text = hoy[0]['info'] if len(
             hoy) != 0 else "Día Mundial del Teatro"
-        self.color = self.chosenColor if len(hoy) != 0 else [1, 1, 1, 0]
-
+        self.color = self.chosenColor if len(hoy) != 0 else [1, 1, 1, 1]
 
 # --------------------------------
 

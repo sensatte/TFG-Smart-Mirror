@@ -50,6 +50,11 @@ class DrawingScreen(Screen):
         anim.bind(on_complete=partial(self.goToMenuScreen))
         anim.start(widget)
 
+    def pressedButton(self, widget):
+        anim = Animation(opacity=.7, duration=.15)
+        anim += Animation(opacity=1, duration=.15)
+        anim.start(widget)
+
     def goToMenuScreen(self, widget, selected):
         App.get_running_app().root.transition = FadeTransition(duration=.3)
         App.get_running_app().root.current = "menu"
@@ -124,7 +129,7 @@ class DrawingScreen(Screen):
 
         dbWrapper.addNewSaveScreen(imageName)
 
-        #TODO ENVIARTE ATRÁS?
+        
 
 
 class CanvasWidget(Widget):

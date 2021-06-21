@@ -1,6 +1,8 @@
 #:kivy 1.0
 
 <SettingsScreen>:
+    on_pre_enter: self.refreshImageList()
+
     size_hint:.4,.4
     showNotes: showNotes
     id: main

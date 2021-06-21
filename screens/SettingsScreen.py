@@ -20,13 +20,6 @@ from kivy.lang import Builder
 Builder.load_file('kv/settingsScreen.kv')
 
 class SettingsScreen(Screen):
-    colorHora=Properties.ListProperty([1,1,1,1])
-    formatoHora=Properties.ListProperty(["24h", False])
-
-    colorTemp=Properties.ListProperty([1,1,1,1])
-    formatoTemp=Properties.StringProperty("metric")
-
-    formatoClima=Properties.NumericProperty(2)
 
     image=Properties.StringProperty(dbWrapper.getSaveScreen().image)
     showNotes=Properties.ObjectProperty(None)
@@ -45,8 +38,9 @@ class SettingsScreen(Screen):
             fondo = Fondo(imagen=imagen.image, state="down" if selected else "normal")
             self.ids.showNotes.add_widget(fondo)
 
-    #def saveConfig(self):
-    #    dbWrapper.saveSaveScreen(self.image)
+    def refreshImageList(self):
+        imageName = dbWrapper.getSaveScreen().image
+        self.fondo="images/saveScreen/"+imageName
 
     def pressedBack(self, widget):
         anim = Animation(pos_hint={"center_x": .5, "y": -.03}, duration=.1)

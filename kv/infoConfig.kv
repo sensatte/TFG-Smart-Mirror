@@ -8,7 +8,7 @@
         background_color: 0,0,0,0
         do_default_tab: False
         padding: [0,5,0,0]
-        tab_width: self.parent.width / 3
+        tab_width: self.parent.width / 4
         tab_height: 30
         pos_hint: {"center_x": .5, "center_y": .5}
         canvas.before:
@@ -661,8 +661,117 @@
                                     width: 1.
                                     rectangle: self.x, self.y, self.width, self.height                    
 
-   
+    #International
+        TabbedPanelItem:
+            background_color: 0,0,0,0
+            canvas:
+                Color:
+                    rgba: (1,1,1,.5) if self.state != 'down' else (1,1,1,1)
+                Rectangle:
+                    source: "images/menu/international.png"
+                    size: 30,30
+                    pos: self.center_x-15, self.center_y-15
+            Scrolling:
+                GridLayout:
+                    cols: 1
+                    padding: 15
+                    spacing: 10
+                    size_hint_y: None
+                    height: self.minimum_height
 
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: "horizontal"
+                        height: 40
+                        Image:
+                            source: "images/menu/international.png"
+
+                        Label:
+                            text: "Festivos"
+                            font_size:"22"
+
+            #--------------------------------
+                    Widget:
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+            #--------------------------------
+                    Label:
+                        height: 30
+                        size_hint_y: None
+                        text: "Color:"
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'horizontal'
+                        height: 40
+                        ToggleButton:
+                            group: "tempColor"
+                            color: [1, 1, 1, 1] if self.state == "down" else [1,1,1,.6]
+                            text: "Blanco"
+                            state: "down"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.colorInter=self.color
+                            canvas.before:
+                                Color:
+                                    rgba: [1, 1, 1,.2] if self.state == "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+                        ToggleButton:
+                            group: "tempColor"
+                            color: [149/255, 125/255, 173/255, 1] if self.state == "down" else [149/255, 125/255, 173/255, .6]
+                            text: "Morado"                           
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.colorInter=self.color
+                            canvas.before:
+                                Color:
+                                    rgba: [149/255, 125/255, 173/255,.2] if self.state == "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+                        ToggleButton:
+                            group: "tempColor"
+                            color: [140/255, 183/255, 141/255, 1] if self.state == "down" else [140/255, 183/255, 141/255, .6]
+                            text: "Verde"
+                            background_color:[0, 0, 0, 0]
+                            allow_no_selection: False
+                            on_press: root.colorInter=self.color
+                            canvas.before:
+                                Color:
+                                    rgba: [140/255, 183/255, 141/255,.2] if self.state == "down" else [1,1,1,0]
+                                RoundedRectangle:
+                                    size:self.size
+                                    pos:self.pos
+                                    radius: [15]
+            #--------------------------------
+                    Widget:
+                        size_hint_y: None
+                        height: 6
+                        canvas:
+                            Color:
+                                rgba: 1., 1., 1., .6
+                            Rectangle:
+                                pos: root.width/20, self.center_y
+                                size: root.width-root.width/10, 2
+            #--------------------------------
+                    GridLayout:
+                        id:todos
+                        cols:1
+                        size_hint_y: None
+                        height: self.minimum_height
+
+
+    
     ImageButton:
         id: homeButton
         size_hint_y: None
