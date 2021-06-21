@@ -26,17 +26,16 @@ Builder.load_file('kv/drawingScreen.kv')
 
 
 class DrawingScreen(Screen):
-    # TODO poner bonitos los botones grosorcito y colorcito
-
     ruedaOut = Properties.BooleanProperty(False)
     grosorOut = Properties.BooleanProperty(False)
     colorPincel = Properties.ListProperty((.4, 1, 1))
-    grosorLinea = Properties.NumericProperty(10)
+    grosorLinea = Properties.NumericProperty(20)
 
     def on_colorPincel(self, instance, value):
         self.ids.painter.colorLinea = value
 
     def on_grosorLinea(self, instance, value):
+        print(value)
         self.ids.painter.grosorLinea = value
 
     def __init__(self, **kwargs):

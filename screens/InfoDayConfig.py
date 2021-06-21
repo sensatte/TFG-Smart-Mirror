@@ -13,12 +13,13 @@ from customWidgets.infoDayResources.DateWidget import DateWidget
 from customWidgets.infoDayResources.WeatherWidget import WeatherWidget
 from customWidgets.infoDayResources.TempWidget import TempWidget
 from customWidgets.infoDayResources.ClockWidget import ClockWidget
-
+from kivy.core.window import Window
+import time
 import db.dbWrapper as dbWrapper
 
 #import kv
 from kivy.lang import Builder
-Builder.load_file('kv/infoConfig.kv')
+Builder.load_file('kv\\infoConfig.kv')
 
 class InfoDayConfig(Screen):
     #TODO buscador ue te traduzca de ciudad a id
@@ -36,10 +37,10 @@ class InfoDayConfig(Screen):
 
     c_id=Properties.StringProperty('6361046')
     activeInter = Properties.BooleanProperty(True)
-
+    
     def __init__(self, **kwargs):
         super(InfoDayConfig, self).__init__(**kwargs)
-        self.pos_hint={'center_y': 0.5, 'center_x': 0.5}        
+        self.pos_hint={'center_y': 0.5, 'center_x': 0.5}
 
     def saveConfig(self):
         #guardar las configs

@@ -19,9 +19,9 @@
         pos_hint:{'center_y': .5, 'center_x': 1}
         size_hint:(0.4, 0.3)
         opacity:0      
-        cursor_image: 'images\icons\dot.png'
+        cursor_image: 'images/icons/dot.png'
 
-        value: 15
+        value: 20
         min: 5
         max: 20
         step: 1
@@ -50,12 +50,12 @@
         ImageButton:
             id:clear
             on_press: root.clearDrawing(self)
-            source: "images\icons\rubber.png"
+            source: "images/icons/rubber.png"
 
         ImageButton:
             id:guardar
             on_press: root.guardarImagen()
-            source: "images\icons\download.png"
+            source: "images/icons/download.png"
 
     FloatLayout:
         size_hint: .1,.1

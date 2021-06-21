@@ -43,7 +43,7 @@ class SmartMirrorApp(App):
         menu = MenuScreen(name="menu")
         scMenu.add_widget(menu)
 
-        settings = Screen(name="settings")
+        settings = Screen(name="gallery")
         settings.add_widget(SettingsScreen())
         scMenu.add_widget(settings)
 
@@ -87,7 +87,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "home"
+        scMenu.current = "menu"
 
         self.set_keyboard()
 
