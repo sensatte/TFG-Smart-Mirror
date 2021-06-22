@@ -131,9 +131,9 @@ if __name__ == '__main__':
 
     webbrowser.open("https://open.spotify.com")
 
-    #t = threading.Thread(name='minimize_spotify', target=minimizeSpotify)
+    t = threading.Thread(name='minimize_spotify', target=minimizeSpotify)
 
-    #t.start()
+    t.start()
 
 
     # GPIO to Keyboard Translate
