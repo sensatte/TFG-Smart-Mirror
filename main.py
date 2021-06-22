@@ -24,9 +24,9 @@ kivy.require('2.0.0')
 
 # Window.size = (1280, 720)
 
-# Window.fullscreen = "auto"
+Window.fullscreen = "auto"
 
-Window.size = (540, 760)
+# Window.size = (540, 760)
 
 Window.minimum_width, Window.minimum_height = Window.size
 
