@@ -19,6 +19,7 @@ import kivy
 from kivy.uix.vkeyboard import VKeyboard
 from kivy.config import Config
 import webbrowser
+import threading
 
 kivy.require('2.0.0')
 
@@ -130,7 +131,10 @@ if __name__ == '__main__':
 
     webbrowser.open("https://open.spotify.com")
 
-    minimizeSpotify()
+    t = threading.Thread(name='minimize_spotify', target=minimizeSpotify)
+
+    t.start()
+
 
     # GPIO to Keyboard Translate
     # gpio_translate_thread = threading.Thread(target=gpio_translate, name='GPIO Translation')
