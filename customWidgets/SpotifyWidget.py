@@ -8,7 +8,6 @@ from threading import Thread
 import logging
 from kivy.loader import Loader
 from customWidgets.AsyncImageButton import AsyncImageButton
-import webbrowser
 
 from kivy.lang import Builder
 Builder.load_file('kv/spotify.kv')

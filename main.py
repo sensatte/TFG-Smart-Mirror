@@ -18,6 +18,8 @@ from kivy.app import App
 import kivy
 from kivy.uix.vkeyboard import VKeyboard
 from kivy.config import Config
+import webbrowser
+
 kivy.require('2.0.0')
 
 # Window.size = (1280, 720)
