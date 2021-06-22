@@ -214,6 +214,25 @@ def getNewSongThread(widget):
 def getDeviceIdThread(widget):
     deviceName = "Web Player (Chrome)"
 
+    try:
+
+        import gi                         #Import gi pageage
+        gi.require_version('Wnck','3.0')
+        from gi.repository import Wnck    #Import Wnck module
+        from time import sleep            #Used for 5 second delay
+
+        screen=Wnck.Screen.get_default()  #Get screen information
+        screen.force_update()             #Update screen object
+        windows=screen.get_windows()      #Get all windows in task bar. The first 2 elements I believe relate to the OS GUI interface itself and the task bar. All other elements are the open windows in the task bar in that order.
+        for w in windows:                 #Go through each window one by one.
+            if 'Chromium' in w.get_name(): #Get name of window and check if it includes 'Chromium'
+                w.minimize()              #If so, minimize ask the task manager to minimize that window.
+
+    except:
+        pass
+
+    
+
     webbrowser.open("https://open.spotify.com")
 
     time.sleep(60)
