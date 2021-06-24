@@ -8,7 +8,6 @@ from threading import Thread
 import logging
 from kivy.loader import Loader
 from customWidgets.AsyncImageButton import AsyncImageButton
-import webbrowser
 
 from kivy.lang import Builder
 Builder.load_file('kv/spotify.kv')
@@ -210,11 +209,8 @@ def getNewSongThread(widget):
             pass
         time.sleep(2.5)
 
-
 def getDeviceIdThread(widget):
     deviceName = "Web Player (Chrome)"
-
-    webbrowser.open("https://open.spotify.com")
 
     time.sleep(60)
 

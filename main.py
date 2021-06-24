@@ -18,13 +18,16 @@ from kivy.app import App
 import kivy
 from kivy.uix.vkeyboard import VKeyboard
 from kivy.config import Config
+import webbrowser
+import threading
+
 kivy.require('2.0.0')
 
 # Window.size = (1280, 720)
 
-# Window.fullscreen = "auto"
+Window.fullscreen = "auto"
 
-Window.size = (540, 760)
+# Window.size = (540, 760)
 
 Window.minimum_width, Window.minimum_height = Window.size
 
@@ -103,8 +106,35 @@ class SmartMirrorApp(App):
         VKeyboard.key_background_down = "images/keyboard/down.png"
         VKeyboard.background = "images/keyboard/transparent.png"
 
+def minimizeSpotify():
+    try:
+
+        import gi                         #Import gi pageage
+        gi.require_version('Wnck','3.0')
+        from gi.repository import Wnck    #Import Wnck module
+
+        screen=Wnck.Screen.get_default()  #Get screen information
+        screen.force_update()             #Update screen object
+        windows=screen.get_windows()      #Get all windows in task bar. The first 2 elements I believe relate to the OS GUI interface itself and the task bar. All other elements are the open windows in the task bar in that order.
+        print("WINDOWES")
+        while True:
+            for w in windows:                #Go through each window one by one.
+                if 'Spotify' in w.get_name(): #Get name of window and check if it includes 'Chromium'
+                    w.minimize()
+                    print("minimized spotify")
+                    return              #If so, minimize ask the task manager to minimize that window.
+
+    except:
+        pass
 
 if __name__ == '__main__':
+
+    webbrowser.open("https://open.spotify.com")
+
+    #t = threading.Thread(name='minimize_spotify', target=minimizeSpotify)
+
+    #t.start()
+
 
     # GPIO to Keyboard Translate
     # gpio_translate_thread = threading.Thread(target=gpio_translate, name='GPIO Translation')
