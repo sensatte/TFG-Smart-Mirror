@@ -9,7 +9,6 @@ Builder.load_file('kv/notes.kv')
 
 
 class NotesWidget(FloatLayout):
-    # TODO textos laargos comprimir
 
     def __init__(self, **kwargs):
         super(NotesWidget, self).__init__(**kwargs)

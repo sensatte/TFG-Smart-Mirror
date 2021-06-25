@@ -16,10 +16,9 @@ import db.dbWrapper as dbWrapper
 
 
 class TwitterConfig(Screen):
-    #TODO no hay hueco en el menu
 
     colorInter = Properties.ListProperty([1, 1, 1, 1])
-    activeInter = Properties.BooleanProperty(True)
+    activeInter = Properties.BooleanProperty(False)
     halign = Properties.StringProperty('left')
 
     def __init__(self, **kwargs):

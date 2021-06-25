@@ -37,7 +37,7 @@ class GifsConfig(Screen):
 
     waitUntilFinishesTypingEvent = Properties.ObjectProperty()
 
-    activeInter = Properties.BooleanProperty(True)
+    activeInter = Properties.BooleanProperty(False)
 
     def __init__(self, **kwargs):
         super(GifsConfig, self).__init__(**kwargs)

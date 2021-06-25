@@ -19,11 +19,6 @@ Builder.load_file('kv/notesConfig.kv')
 
 
 class NotesConfig(Screen):
-    # TODO color picker
-    # TODO que las anim las coja de otro archivo
-    # TODO solo poder coger 9
-    # TODO que el tamñao de la nota sea para que no esté encojido
-
     activeInter = Properties.BooleanProperty(True)
     showNotes = Properties.ObjectProperty(None)
     backg = Properties.ListProperty([224, 187, 228, 1])

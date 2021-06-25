@@ -24,7 +24,7 @@ Builder.load_file('kv/spotifyConfig.kv')
 class SpotifyConfig(Screen):
 
     wrapper = ObjectProperty(SpotifyWrapper())
-    activeInter = Properties.BooleanProperty(True)
+    activeInter = Properties.BooleanProperty(False)
 
     def __init__(self, **kwargs):
         super(SpotifyConfig, self).__init__(**kwargs)

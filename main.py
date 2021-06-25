@@ -36,10 +36,6 @@ class SmartMirrorApp(App):
 
     def build(self):
 
-        # TODO es probable que pasen las mierdas de las screens negras y
-        # no transparentes porque metemos las screens dentro de las screens
-        # TODO forma bonita de meter las pantallas
-
         Config.set("kivy", "keyboard_mode", "systemanddock")
         Config.write()
 
@@ -95,7 +91,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "home"
+        scMenu.current = "gym"
 
         self.set_keyboard()
 

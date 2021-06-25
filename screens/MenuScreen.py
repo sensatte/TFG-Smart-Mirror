@@ -18,10 +18,6 @@ Builder.load_file("kv/menuScreen.kv")
 
 class MenuScreen(Screen):
 
-    # TODO que las animacines se cojan de un archivo distinto
-    # TODO poner botones que lleven a la otra pagina?)
-    # TODO poner bolitasw que indiquen en que pagina estas
-
     firstPress = BooleanProperty(True)
 
     def __init__(self, **kwargs):

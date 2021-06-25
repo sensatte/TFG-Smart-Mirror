@@ -16,7 +16,6 @@ class TwitterWidget(GridLayout):
     halign = Properties.StringProperty('right')
 
     def __init__(self, **kwargs):
-        #TODO que puedas elegir si quieres RT, aunque entonces sería mejor aumentar los tweets que llegan
         super(TwitterWidget, self).__init__(**kwargs)
         fields = dbWrapper.getTwitter()
         self.colorInter = fields.color

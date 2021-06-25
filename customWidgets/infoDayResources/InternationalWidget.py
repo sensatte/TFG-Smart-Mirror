@@ -13,7 +13,6 @@ import kivy.properties as Properties
 
 class InternationalWidget(Image):
     # TODO mirar si cuando es un dia <10 no de problemas
-    # TODO se actualizara?
     text = Properties.StringProperty('')
     chosenColor = Properties.ListProperty()
 

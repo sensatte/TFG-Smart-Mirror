@@ -8,7 +8,6 @@ from db.dbWrapper import getFecha
 from datetime import datetime
 
 class DateWidget(Image):
-    #TODO qie se actualice al ser las 00:00
     text = Properties.StringProperty('')
     chosenColor = Properties.ListProperty()
     formato= Properties.StringProperty()

@@ -151,6 +151,37 @@
                             pos:self.pos[0]+25, self.pos[1]-5
                             radius: [18]
 
+    Label:
+        text: str(round(root.number))
+        text_size: self.size
+        font_size: '50sp'
+        halign: 'center'
+        valign: 'middle'
+        pos_hint: {"center_x": .5, "y": .7}
+
+    ImageButton:
+        id: play
+        size_hint_y: None
+        source: "images/crono/play.png"
+        pos_hint: {"center_x": .25, "y": 1}
+        size_hint: (.1, .1)
+        on_press: root.start(self)
+
+    ImageButton:
+        id: pause
+        size_hint_y: None
+        source: "images/crono/pause.png"
+        pos_hint: {"center_x": .5, "y": 1}
+        size_hint: (.1, .1)
+        on_press: root.stop(self)
+
+    ImageButton:
+        id: restart
+        size_hint_y: None
+        source: "images/crono/restart.png"
+        pos_hint: {"center_x": .75, "y": 1}
+        size_hint: (.1, .1)
+        on_press: root.restart(self)
 
     ImageButton:
         id: homeButton

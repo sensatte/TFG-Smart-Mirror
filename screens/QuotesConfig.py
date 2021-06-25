@@ -21,15 +21,13 @@ Builder.load_file('kv/quotesConfig.kv')
 
 
 class QuotesConfig(Screen):
-    # TODO tema de longituf
-
     quoteList = Properties.ListProperty()
     colorInter = Properties.ListProperty([1, 1, 1, 1])
     currentQuote = Properties.StringProperty(
         'Genius is one percent inspiration and ninety-nine percent perspiration.'
         + "\n- " + 'Thomas Edison')
     currentFont = Properties.StringProperty('Good Mood')
-    activeInter = Properties.BooleanProperty(True)
+    activeInter = Properties.BooleanProperty(False)
     halign = Properties.StringProperty('right')
 
     def __init__(self, **kwargs):
@@ -66,7 +64,9 @@ class QuotesConfig(Screen):
         else:
             res = json.loads(request.text)
 
-        return res
+        lista = [frase for frase in res if len(frase['text'])<60]
+
+        return lista
 
     def changeQuote(self):
         quoteList = self.quoteList

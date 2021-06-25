@@ -24,7 +24,6 @@ from kivy.uix.screenmanager import FadeTransition, Screen, ScreenManager
 Builder.load_file('kv/infoConfig.kv')
 
 class InfoDayConfig(Screen):
-    #TODO al abrirse se pone la config por defecto pero no funciona cambiar el state para que mire la db
     colorHora=Properties.ListProperty([1,1,1,1])
     formatoHora=Properties.ListProperty(["24h", False])
 

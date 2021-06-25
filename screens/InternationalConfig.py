@@ -22,8 +22,6 @@ Builder.load_file('kv/internationalConfig.kv')
 
 
 class InternationalConfig(Screen):
-    # TODO color picker
-    # TODO al abrirse se pone la config por defecto pero no funciona cambiar el state para que mire la db
     colorInter = Properties.ListProperty([1, 1, 1, 1])
     activeInter = Properties.BooleanProperty(True)
 
