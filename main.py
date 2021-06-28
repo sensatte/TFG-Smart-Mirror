@@ -95,7 +95,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "drawing"
+        scMenu.current = "home"
 
         self.set_keyboard()
 
@@ -116,12 +116,13 @@ def minimizeSpotify():
         screen=Wnck.Screen.get_default()  #Get screen information
         screen.force_update()             #Update screen object
         windows=screen.get_windows()      #Get all windows in task bar. The first 2 elements I believe relate to the OS GUI interface itself and the task bar. All other elements are the open windows in the task bar in that order.
-        print("WINDOWES")
+        logging.info('whez')
         while True:
             for w in windows:                #Go through each window one by one.
+                logging.info(str(w))
                 if 'Spotify' in w.get_name(): #Get name of window and check if it includes 'Chromium'
                     w.minimize()
-                    print("minimized spotify")
+                    logging.info('MINIMIZADO SPOTI')
                     return              #If so, minimize ask the task manager to minimize that window.
 
     except:
@@ -129,11 +130,11 @@ def minimizeSpotify():
 
 if __name__ == '__main__':
 
-    #webbrowser.open("https://open.spotify.com")
+    webbrowser.open("https://open.spotify.com")
 
-    #t = threading.Thread(name='minimize_spotify', target=minimizeSpotify)
+    t = threading.Thread(name='minimize_spotify', target=minimizeSpotify, daemon=True)
 
-    #t.start()
+    t.start()
 
 
     # GPIO to Keyboard Translate
