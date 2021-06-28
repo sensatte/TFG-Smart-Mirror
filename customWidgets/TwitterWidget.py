@@ -5,7 +5,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.clock import Clock
 import kivy.properties as Properties
-
+import logging
 from kivy.lang import Builder
 Builder.load_file('kv/twitter.kv')
 import db.dbWrapper as dbWrapper

@@ -55,6 +55,7 @@ class HomeScreen(Screen):
         self.add_widget(spotify)
 
     def refreshPage(self):
+        print("Refreshing...")
         #Clock.schedule_once(self.saveScreen, 100)
         state = dbWrapper.getQuote().state
         stateTwitter = dbWrapper.getTwitter().state

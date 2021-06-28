@@ -72,7 +72,7 @@
                         text: "Desactivar:"  if main.ids.switch.active else 'Activar:'
                     Switch:
                         id:switch
-                        active: True
+                        active: False
                         on_touch_down: root.activeInter = not self.active
                         canvas.after:
                             Color:
