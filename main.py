@@ -25,12 +25,10 @@ kivy.require('2.0.0')
 
 # Window.size = (1280, 720)
 
-# Window.fullscreen = "auto"
+Window.fullscreen = "auto"
 
 #Window.size = (540, 760)
 
-Window.size = (720, 1280)
-Window.borderless = True
 Window.top = 0
 Window.left = 0
 
