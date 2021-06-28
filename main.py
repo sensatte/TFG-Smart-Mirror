@@ -29,7 +29,7 @@ kivy.require('2.0.0')
 
 #Window.size = (540, 760)
 
-Window.size = (1080, 1920)
+Window.size = (720, 1280)
 Window.borderless = True
 Window.top = 0
 Window.left = 0
@@ -96,7 +96,7 @@ class SmartMirrorApp(App):
         quotes.add_widget(QuotesConfig())
         scMenu.add_widget(quotes)
 
-        scMenu.current = "home"
+        scMenu.current = "drawing"
 
         self.set_keyboard()
 
