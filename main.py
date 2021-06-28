@@ -27,7 +27,8 @@ kivy.require('2.0.0')
 
 Window.fullscreen = "auto"
 
-#Window.size = (540, 760)
+Window.size = (720, 1280)
+Window.borderless = True
 
 Window.top = 0
 Window.left = 0
@@ -128,7 +129,7 @@ def minimizeSpotify():
 
 if __name__ == '__main__':
 
-    webbrowser.open("https://open.spotify.com")
+    #webbrowser.open("https://open.spotify.com")
 
     #t = threading.Thread(name='minimize_spotify', target=minimizeSpotify)
 
