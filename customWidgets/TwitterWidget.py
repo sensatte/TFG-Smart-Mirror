@@ -14,6 +14,7 @@ class TwitterWidget(GridLayout):
 
     colorInter = Properties.ListProperty([1, 1, 1, 1])
     halign = Properties.StringProperty('right')
+    refreshContentSchedule = Properties.ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(TwitterWidget, self).__init__(**kwargs)
@@ -22,8 +23,13 @@ class TwitterWidget(GridLayout):
         self.halign = fields.halign
         self.chargeTweets("nada")
 
-        Clock.schedule_interval(self.chargeTweets, 60)
-
+        try:
+            self.refreshContentSchedule.cancel()
+        except:
+            logging.info('Twitter: No previous refresh schedule')
+        finally:
+            logging.info('Twitter: Created refresh schedule')
+            refreshContentSchedule = Clock.schedule_interval(self.chargeTweets, 60)
         
 
     # Aquí introducimos nuestras claves de Twitter
