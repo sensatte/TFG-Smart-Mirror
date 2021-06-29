@@ -130,7 +130,7 @@ def minimizeSpotify():
 
 if __name__ == '__main__':
 
-    #webbrowser.open("https://open.spotify.com")
+    webbrowser.open("https://open.spotify.com")
 
     #t = threading.Thread(name='minimize_spotify', target=minimizeSpotify, daemon=True)
 
