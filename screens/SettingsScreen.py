@@ -11,6 +11,7 @@ from kivy.uix.screenmanager import FadeTransition
 import kivy.properties as Properties
 from kivy.uix.behaviors.togglebutton import ToggleButtonBehavior
 from kivy.uix.image import Image
+from kivy.clock import Clock
 
 import db.dbWrapper as dbWrapper
 import datetime
@@ -23,16 +24,25 @@ class SettingsScreen(Screen):
 
     image=Properties.StringProperty(dbWrapper.getSaveScreen().image)
     showNotes=Properties.ObjectProperty(None)
+    refreshImagesSchedule = Properties.ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(SettingsScreen, self).__init__(**kwargs)
         self.pos_hint={'center_y': 0.5, 'center_x': 0.5}    
         self.showNotes.bind(minimum_height=self.showNotes.setter('height'))
         self.showSaveScreenFunc()
+        Clock.schedule_interval(self.showSaveScreenFunc, 20)
 
-
-    def showSaveScreenFunc(self):
+    def showSaveScreenFunc(self, *args):
         imagenes = dbWrapper.getAllSaveScreen()
+
+        try:
+            children = self.showNotes.children.copy()
+            for child in children:
+                self.showNotes.remove_widget(child)
+        except:
+            pass
+
         for imagen in imagenes:
             selected = imagen.image == self.image
             fondo = Fondo(imagen=imagen.image, state="down" if selected else "normal")
