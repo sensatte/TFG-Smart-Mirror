@@ -186,10 +186,13 @@ def getNewSongThread(widget):
         currentPlaylistURI = f.read()
         f.close()
         widget.playListURI = currentPlaylistURI
-        f = open("spotifyShuffle.txt", "r")
-        shuffle = f.read()
+        try:
+            f = open("spotifyShuffle.txt", "r")
+            shuffle = f.read()
+            f.close()
+        except:
+            shuffle = False
         widget.shuffle = shuffle
-        f.close()
         logging.info('Spotipy: Looking for new song')
         song = widget.wrapper.getCurrentSong()
         if (song != None):
